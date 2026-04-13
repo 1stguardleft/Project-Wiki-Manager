@@ -7,6 +7,15 @@
 | **Phase** | MVP 개발의 Sprint 단위. 독립적으로 검증 가능한 목표를 가진다. |
 | **Stage** | Phase 내 개별 Task의 구현 단계. 하나의 Stage가 완료되어야 다음 Stage로 진행한다. |
 
+## 개발 상태 범례
+
+| 상태 | 의미 |
+|------|------|
+| ✅ Done | 구현 완료, 커밋됨 |
+| 🚧 In Progress | 현재 작업 중 |
+| ⏳ Pending | 미착수 |
+| 🔧 Stub | 파일 생성됨, 로직 미구현 (NotImplementedError) |
+
 ---
 
 ## MVP 범위
@@ -36,22 +45,25 @@
 
 ### Orchestrator
 
-| Stage | 내용 |
-|-------|------|
-| Stage 1 | 명령 수신 → 에이전트 호출 흐름 골격 구현 |
+| Stage | 내용 | 상태 | 파일 |
+|-------|------|------|------|
+| Stage 1 | 명령 수신 → 에이전트 호출 흐름 골격 구현, source_id 생성, 소스 타입별 조건 분기 | ✅ Done | `agents/orchestrator/graph.py` |
 
 ### Fetcher
 
-| Stage | 대상 | 내용 |
-|-------|------|------|
-| Stage 1 | Web | 웹페이지 URL fetch, 원문 HTML을 `output/fetcher/web/`에 저장 |
-| Stage 2 | Confluence | Confluence REST API로 페이지 획득, 원문을 `output/fetcher/confluence/`에 저장 |
+| Stage | 대상 | 내용 | 상태 | 파일 |
+|-------|------|------|------|------|
+| Stage 1 | Web | HTTP GET → `output/fetcher/web/{source_id}.html` 저장 | ✅ Done | `agents/fetcher/web/fetcher.py` |
+| Stage 2 | Confluence | REST API (`/rest/api/content/{id}?expand=body.storage`) → `output/fetcher/confluence/{source_id}.xml` 저장 | ✅ Done | `agents/fetcher/confluence/fetcher.py` |
+| Stage 3 | Local MD | 로컬 파일 복사 → `output/fetcher/local/{source_id}.md` | ✅ Done | `agents/fetcher/local/fetcher.py` |
 
 ### Normalizer
 
-| Stage | 대상 | 내용 |
-|-------|------|------|
-| Stage 1 | Web / Confluence | **Markdown best-effort 변환** — 원문을 markdown으로 최대한 변환, 표현 불가 요소는 손실 허용. 결과를 `output/normalizer/{web\|confluence}/`에 저장 |
+| Stage | 대상 | 내용 | 상태 | 파일 |
+|-------|------|------|------|------|
+| Stage 1 | Web | trafilatura(primary) + Jina AI Reader(fallback) → `output/normalizer/web/{source_id}.md` | ✅ Done | `agents/normalizer/web/normalizer.py` |
+| Stage 1 | Confluence | beautifulsoup4 XML 파싱 → `output/normalizer/confluence/{source_id}.md` | ✅ Done | `agents/normalizer/confluence/normalizer.py` |
+| Stage 1 | Local MD | 복사만 수행 → `output/normalizer/local/{source_id}.md` | ✅ Done | `agents/normalizer/local/normalizer.py` |
 
 best-effort 변환 기준:
 
@@ -67,17 +79,17 @@ best-effort 변환 기준:
 
 Wiki-centric 방식으로 동작한다. 소스를 청크로 배분하는 것이 아니라 wiki 페이지를 최적 상태로 유지하는 것을 목표로 한다.
 
-| Stage | 내용 |
-|-------|------|
-| Stage 1 | **Wiki-centric Ingest** — 소스 전체 이해 → 영향 페이지 파악(2단계 탐색) → 페이지 정체성 검증 → 페이지별 재합성. frontmatter `sources` 필드로 역추적 지원 |
+| Stage | 내용 | 상태 | 파일 |
+|-------|------|------|------|
+| Stage 1 | Wiki-centric Ingest — Step A(소스 이해) → B(2단계 영향 페이지 탐색) → C(페이지명 정규화) → D(변경 계획) → E(실행 + mapping.json 생성) → F(IngestState 갱신) | ✅ Done | `agents/ingest/ingest.py` |
 
 **Phase 1 적용 고도화 포인트**
 
-| 번호 | 포인트 | 내용 |
-|------|--------|------|
-| 4 | 소스 역추적 (Traceability) | wiki 페이지 frontmatter에 `sources: [source_id]` 유지. 합성 시 갱신 |
-| 5 | 영향 페이지 탐색 정확도 | index.md 1차 후보 선별 → 후보 페이지 본문 읽기 → 최종 확정 (2단계 탐색) |
-| 6 | 페이지 정체성 일관성 | 신규 페이지 생성 전 유사 이름 페이지 존재 여부 확인. 페이지명 정규화 규칙 적용 |
+| 번호 | 포인트 | 내용 | 상태 |
+|------|--------|------|------|
+| 4 | 소스 역추적 (Traceability) | wiki 페이지 frontmatter에 `sources: [source_id]` 유지. 합성 시 갱신 | ✅ Done |
+| 5 | 영향 페이지 탐색 정확도 | index.md 1차 후보 선별 → 후보 페이지 본문 읽기 → 최종 확정 (2단계 탐색) | ✅ Done |
+| 6 | 페이지 정체성 일관성 | 신규 페이지 생성 전 유사 이름 페이지 존재 여부 확인. 페이지명 정규화 규칙 적용 | ✅ Done |
 
 **이후 Phase로 이월된 포인트**
 
@@ -90,9 +102,23 @@ Wiki-centric 방식으로 동작한다. 소스를 청크로 배분하는 것이 
 
 ### Index / Log
 
-| Stage | 내용 |
-|-------|------|
-| Stage 1 | `wiki/index.md` 카탈로그 갱신 (신규/추가 시에만), `wiki/log.md` 항목 추가 |
+| Stage | 내용 | 상태 | 파일 |
+|-------|------|------|------|
+| Stage 1 | `wiki/index.md` 카탈로그 갱신 (신규/추가 시에만), `wiki/log.md` 항목 추가 | ✅ Done | `agents/index_log/index_log.py` |
+
+### FastAPI / 배치 실행
+
+| Stage | 내용 | 상태 | 파일 |
+|-------|------|------|------|
+| Stage 1 | FastAPI 엔드포인트 골격 (`/health`, `/status`, `/files`, `/files/content`) | ✅ Done | `api/main.py` |
+| Stage 2 | `POST /ingest/batch` 배치 실행 + `GET /ingest/batch/{id}/stream` SSE 스트리밍 | ⏳ Pending | `api/main.py` |
+| Stage 3 | `GET /compare` 소스 → wiki 반영 비교 (mapping.json 기반) | ⏳ Pending | `api/main.py` |
+
+### End-to-End 검증
+
+| Stage | 내용 | 상태 |
+|-------|------|------|
+| Stage 1 | 유사 페이지 2개 + 다른 페이지 1개로 전체 파이프라인 실행 성공 확인 | ⏳ Pending |
 
 ---
 
@@ -115,16 +141,16 @@ Wiki-centric 방식으로 동작한다. 소스를 청크로 배분하는 것이 
 
 ### Normalizer
 
-| Stage | 내용 |
-|-------|------|
-| Stage 2 | **원문 보존 병행** — `output/fetcher/`의 원문(HTML/XML)을 유지하며 Ingest가 손실 구간에서 원문 참조 가능하도록 연결. 재변환(re-normalize) 지원. |
-| Stage 3 | **이미지 로컬 다운로드** — Confluence 첨부 이미지 및 외부 URL 이미지를 로컬에 다운로드, markdown 이미지 경로를 로컬 경로로 교체. |
+| Stage | 내용 | 상태 |
+|-------|------|------|
+| Stage 2 | 원문 보존 병행 — `output/fetcher/`의 원문(HTML/XML)을 유지하며 Ingest가 손실 구간에서 원문 참조 가능하도록 연결. 재변환(re-normalize) 지원. | ⏳ Pending |
+| Stage 3 | 이미지 로컬 다운로드 — Confluence 첨부 이미지 및 외부 URL 이미지를 로컬에 다운로드, markdown 이미지 경로를 로컬 경로로 교체. | ⏳ Pending |
 
 ### Ingest
 
-| Stage | 내용 |
-|-------|------|
-| Stage 2 | 기존 wiki 페이지 갱신 — 새 소스로 보강, 모순·중복 감지 및 표시 |
+| Stage | 내용 | 상태 |
+|-------|------|------|
+| Stage 2 | 기존 wiki 페이지 갱신 — 새 소스로 보강, 모순·중복 감지 및 표시 | ⏳ Pending |
 
 ---
 
@@ -134,15 +160,15 @@ Wiki-centric 방식으로 동작한다. 소스를 청크로 배분하는 것이 
 
 ### Query
 
-| Stage | 내용 |
-|-------|------|
-| Stage 1 | `wiki/index.md` 탐색 → 관련 페이지 읽기 → 답변 합성 → 결과 wiki 저장 |
+| Stage | 내용 | 상태 |
+|-------|------|------|
+| Stage 1 | `wiki/index.md` 탐색 → 관련 페이지 읽기 → 답변 합성 → 결과 wiki 저장 | ⏳ Pending |
 
 ### Lint
 
-| Stage | 내용 |
-|-------|------|
-| Stage 1 | 모순 탐지, 고아 페이지, 누락 개념, 데이터 공백 점검 및 리포트 생성 |
+| Stage | 내용 | 상태 |
+|-------|------|------|
+| Stage 1 | 모순 탐지, 고아 페이지, 누락 개념, 데이터 공백 점검 및 리포트 생성 | ⏳ Pending |
 
 ---
 
