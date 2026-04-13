@@ -423,13 +423,94 @@ wiki index:
     return _extract_json(resp_2)
 
 
-# ── Step C — 페이지 정체성 검증 ────────────────────────────
+# ── Step C — 페이지 정체성 검증 + Semantic Dedup ─────────────
 
 
-def _step_c_validate_pages(affected: dict) -> dict:
+def _collect_wiki_page_titles() -> dict[str, str]:
+    """wiki 카테고리 디렉토리에서 페이지 경로 → 제목 매핑 수집."""
+    result: dict[str, str] = {}
+    for category in WIKI_CATEGORIES:
+        cat_dir = WIKI_DIR / category
+        if not cat_dir.exists():
+            continue
+        for md_file in cat_dir.glob("*.md"):
+            try:
+                content = md_file.read_text(encoding="utf-8")
+                title_match = re.search(r"^title:\s*(.+)$", content, re.MULTILINE)
+                title = title_match.group(1).strip() if title_match else md_file.stem
+                result[str(md_file)] = title
+            except OSError:
+                pass
+    return result
+
+
+def _step_c_semantic_dedup(
+    client: anthropic.Anthropic,
+    new_pages: list[dict],
+    existing_titles: dict[str, str],
+) -> dict[str, str]:
     """
-    new_pages의 path를 정규화하고, 이미 존재하는 유사 페이지가 있으면
-    신규 생성 대신 해당 페이지를 affected_pages로 이동.
+    new_pages 각각에 대해 의미 중복인 기존 wiki 페이지를 찾는다.
+    Haiku 1회 호출로 모든 new_pages를 배치 처리.
+    반환: {new_page_path: existing_page_path}  — 중복 없으면 해당 key 미포함
+    """
+    if not new_pages or not existing_titles:
+        return {}
+
+    new_pages_info = [
+        {"path": p["path"], "title": p.get("title", Path(p["path"]).stem)}
+        for p in new_pages
+    ]
+    existing_list = "\n".join(
+        f"- {path}: {title}" for path, title in existing_titles.items()
+    )
+
+    prompt = f"""신규 wiki 페이지 후보가 기존 페이지와 의미상 중복인지 확인하세요.
+
+판단 기준:
+- 같은 개념/주제를 다루면 → 중복 (기존 페이지 경로 반환)
+- 이름만 다르고 실질적으로 같은 내용이면 → 중복 (예: k8s ↔ kubernetes, ArgoCD ↔ argo-cd)
+- 관련 있지만 다른 측면을 다루면 → 중복 아님
+
+신규 후보:
+{json.dumps(new_pages_info, ensure_ascii=False, indent=2)}
+
+기존 wiki 페이지:
+{existing_list or "(없음)"}
+
+응답 형식:
+```json
+{{
+  "duplicates": {{
+    "wiki/domain/k8s.md": "wiki/domain/kubernetes.md",
+    "wiki/development/deploy-guide.md": null
+  }}
+}}
+```
+모든 신규 후보에 대해 반드시 응답하세요. 중복 아니면 null로 반환하세요.
+"""
+    try:
+        msg = client.messages.create(
+            model=REVIEW_MODEL,
+            max_tokens=1024,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        result = _extract_json(msg.content[0].text)  # type: ignore[union-attr]
+        duplicates = result.get("duplicates", {})
+        return {k: v for k, v in duplicates.items() if v is not None}
+    except Exception:
+        return {}  # 실패 시 중복 없음으로 처리
+
+
+def _step_c_validate_pages(
+    affected: dict,
+    client: anthropic.Anthropic,
+) -> dict:
+    """
+    1단계: new_pages의 path를 정규화하고, 같은 디렉토리에 동일 이름 페이지가 있으면
+           신규 생성 대신 affected_pages로 이동.
+    2단계: 남은 new_pages를 대상으로 Semantic Dedup 실행.
+           의미 중복 발견 시 기존 페이지를 affected_pages로 이동.
     page_sections도 경로 변경에 맞춰 갱신.
     """
     validated_affected = list(affected.get("affected_pages", []))
@@ -439,16 +520,16 @@ def _step_c_validate_pages(affected: dict) -> dict:
         k: v for k, v in page_sections.items() if k in validated_affected
     }
 
+    # 1단계 — 이름 정규화 + 동일 디렉토리 중복 제거
     for page_info in affected.get("new_pages", []):
         path = Path(page_info["path"])
         normalized_name = _normalize_page_name(path.stem)
         normalized_path = path.parent / f"{normalized_name}.md"
-
         original_path_str = page_info["path"]
+
         similar = _find_similar_page(path.stem, path.parent)
         if similar and str(similar) not in validated_affected:
             validated_affected.append(str(similar))
-            # 섹션 정보 이전
             if original_path_str in page_sections:
                 updated_sections[str(similar)] = page_sections[original_path_str]
         elif not normalized_path.exists():
@@ -461,6 +542,29 @@ def _step_c_validate_pages(affected: dict) -> dict:
                 validated_affected.append(str(normalized_path))
             if original_path_str in page_sections:
                 updated_sections[str(normalized_path)] = page_sections[original_path_str]
+
+    # 2단계 — Semantic Dedup (Haiku 1회, wiki 전체 대상)
+    if validated_new:
+        existing_titles = _collect_wiki_page_titles()
+        semantic_dups = _step_c_semantic_dedup(client, validated_new, existing_titles)
+
+        final_new: list[dict] = []
+        for page_info in validated_new:
+            dup_path = semantic_dups.get(page_info["path"])
+            if dup_path:
+                if dup_path not in validated_affected:
+                    validated_affected.append(dup_path)
+                # 섹션 정보를 기존 페이지로 이전
+                if page_info["path"] in updated_sections:
+                    existing = updated_sections.get(dup_path, [])
+                    merged = existing + [
+                        s for s in updated_sections.pop(page_info["path"])
+                        if s not in existing
+                    ]
+                    updated_sections[dup_path] = merged
+            else:
+                final_new.append(page_info)
+        validated_new = final_new
 
     return {
         "affected_pages": validated_affected,
@@ -846,8 +950,8 @@ def ingest_node(state: IngestState) -> IngestState:
         # Step B — 영향 페이지 파악 + 페이지별 담당 섹션 결정
         affected_raw = _step_b_find_affected(client, understanding, index_content)
 
-        # Step C — 페이지 정체성 검증 (섹션 정보 포함)
-        affected = _step_c_validate_pages(affected_raw)
+        # Step C — 페이지 정체성 검증 + Semantic Dedup
+        affected = _step_c_validate_pages(affected_raw, client)
 
         page_sections: dict[str, list[str]] = affected.get("page_sections", {})
 

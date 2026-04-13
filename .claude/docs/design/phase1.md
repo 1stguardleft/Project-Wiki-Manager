@@ -257,12 +257,41 @@ html 입력
 
 ---
 
+## Wiki 카테고리
+
+```
+wiki/
+├── sources/        ← 소스 요약 (소스 1개 = 파일 1개, 자동 생성)
+├── requirements/   ← 요구사항, 유저 스토리, 검증 기준
+├── design/         ← 아키텍처, 시스템 설계, API 스펙
+├── development/    ← 구현 가이드, 기술 결정, 트러블슈팅
+├── records/        ← 회의록, 스프린트 회고, 결정 이유
+├── domain/         ← 도메인 지식, 외부 기술 리서치, 업계 개념
+├── etc/            ← 카테고리 판단 불명확한 내용
+├── index.md
+└── log.md
+```
+
+LLM 카테고리 판단 기준:
+
+| 카테고리 | 핵심 질문 |
+|----------|-----------|
+| `requirements/` | 무엇을 만들어야 하는가? |
+| `design/` | 어떻게 생겼는가? |
+| `development/` | 어떻게 구현하는가? |
+| `records/` | 언제, 무엇을, 왜 결정했는가? |
+| `domain/` | 이 분야에서 알아야 할 지식은? |
+| `etc/` | 위 어디에도 명확히 속하지 않는가? |
+
+---
+
 ## Ingest (`backend/agents/ingest/ingest.py`)
 
 ```
 입력: output/normalizer/{type}/{source_id}.md
 처리: Wiki-centric 방식으로 wiki 페이지 생성/갱신
-출력: wiki/sources/, wiki/entities/, wiki/concepts/
+출력: wiki/sources/{source_id}.md (소스 요약)
+      wiki/{category}/{page_name}.md (카테고리별 페이지)
       output/meta/{source_id}_mapping.json
 ```
 
@@ -271,29 +300,32 @@ html 입력
 소스를 청크 단위로 배분하는 것이 아니라 **wiki 페이지를 최적 상태로 유지**하는 것을 목표로 한다.
 - Ingest는 source-grounded 정리기다. source에 없는 배경지식, 일반론, 정의를 새로 쓰지 않는다.
 - 병합 단위는 파일 전체가 아니라 의미 있는 섹션이다.
-- 같은 상위 주제를 설명하는 섹션은 가능한 한 하나의 페이지로 모으고, 독립적으로 정의되어야 하는 개념/엔티티만 별도 페이지로 분리한다.
+- 각 페이지는 위 6개 카테고리 중 가장 적합한 곳에 위치한다. 판단 불명확 시 `etc/`에 생성한다.
 
 ### 처리 흐름
 
 ```
-Step A   — 소스 이해             (LLM 1회, claude-opus-4-5)
-Step A-1 — 소스 요약 페이지 생성  (LLM 1회) → wiki/sources/{source_id}.md
-Step B   — 영향 페이지 파악       (LLM 1회) ← 2단계 탐색
-Step C   — 페이지 정체성 검증                ← 명명 정규화
-Step D   — 페이지별 변경 계획     (LLM, 영향 페이지 수만큼)
-Step E   — 실행 (페이지별 재합성) + 매핑 정보 생성
-Step E-1 — 검토 에이전트          (LLM 1회, claude-haiku-4-5) ← source-grounded 위반 탐지
-Step E-2 — 자동 수정              (LLM, 위반 페이지 수만큼)  ← 위반 없으면 생략
+Step A   — 소스 이해                    (LLM 1회, claude-opus-4-5)
+Step A-1 — 소스 요약 페이지 생성         (LLM 1회) → wiki/sources/{source_id}.md
+Step B   — 영향 페이지 파악 + 섹션 라우팅 (LLM 2회) ← 2단계 탐색, 페이지별 담당 섹션 결정
+Step C   — 페이지 정체성 검증 + Semantic Dedup (LLM 1회, claude-haiku-4-5)
+             ├─ 명명 정규화 (소문자+하이픈)
+             └─ 의미 중복 검사 — wiki 전체 대상, 배치 처리
+Step D   — 페이지별 변경 계획  (LLM, 영향 페이지 수만큼, 담당 섹션만 전달)
+Step E   — 실행 + before/after 스냅샷 + 매핑 정보 생성
+Step E-1 — 검토 에이전트       (LLM, 추가된 내용만, 담당 섹션 기준, claude-haiku-4-5)
+Step E-2 — 자동 수정           (LLM, 위반 페이지 수만큼) ← 위반 없으면 생략
 Step F   — IngestState에 wiki 페이지 목록 기록
 ```
+
+**LLM 호출 수 (소스 1개 기준)**: 4 + 2N (N = 영향 페이지 수, E-2 제외)
+- Step A(1) + A-1(1) + B(2) + C-dedup(1) + D(N) + E-1(추가된 페이지 수)
 
 ### Step A — 소스 이해 (LLM 1회, claude-opus-4-5)
 
 ```json
 {
   "summary": "1~3문장 요약",
-  "entities": ["OpenAI", "GPT-4"],
-  "concepts": ["Few-shot learning", "RLHF"],
   "key_claims": ["GPT-4는 멀티모달을 지원한다"],
   "sections": [
     {
@@ -304,6 +336,8 @@ Step F   — IngestState에 wiki 페이지 목록 기록
   ]
 }
 ```
+
+`entities`, `concepts` 필드는 제거됨. 카테고리 기반 구조로 전환되어 Step B에서 직접 category와 섹션을 결정한다.
 
 ### Step A-1 — 소스 요약 페이지 생성 (LLM 1회)
 
@@ -317,35 +351,61 @@ Step F   — IngestState에 wiki 페이지 목록 기록
 
 ---
 
-### Step B — 영향 페이지 파악 (LLM 1회)
+### Step B — 영향 페이지 파악 + 섹션 라우팅 (LLM 2회)
 
 ```
-1단계: index.md 읽기 → entities/concepts 비교 → 1차 후보 선별
-2단계: 후보 페이지 본문 읽기 → 최종 영향 페이지 확정
+1단계: index.md 읽기 → 카테고리 + 주제 비교 → 1차 후보 선별
+2단계: 후보 페이지 본문 읽기 → 최종 영향 페이지 확정 + 페이지별 담당 섹션 결정
 ```
 
 ```json
 {
-  "affected_pages": ["wiki/entities/openai.md"],
-  "new_pages": ["wiki/entities/gpt-4.md"],
-  "routing_notes": [
+  "affected_pages": ["wiki/design/auth-architecture.md"],
+  "new_pages": [
     {
-      "source_section": "배포 자동화",
-      "target_page": "wiki/entities/openai.md",
-      "reason": "기존 상위 주제 문서에 포함하는 것이 적절함"
+      "path": "wiki/development/deploy-guide.md",
+      "category": "development",
+      "title": "배포 가이드"
     },
     {
-      "source_section": "RLHF",
-      "target_page": "wiki/concepts/rlhf.md",
-      "reason": "독립 개념으로 분리 필요"
+      "path": "wiki/domain/oauth2.md",
+      "category": "domain",
+      "title": "OAuth2"
+    }
+  ],
+  "page_sections": {
+    "wiki/design/auth-architecture.md": ["인증 아키텍처", "토큰 처리"],
+    "wiki/development/deploy-guide.md": ["배포 절차", "롤백"],
+    "wiki/domain/oauth2.md": ["OAuth2 개요", "Authorization Code Flow"]
+  },
+  "routing_notes": [
+    {
+      "source_section": "배포 절차",
+      "target_page": "wiki/development/deploy-guide.md",
+      "reason": "구현/운영 절차이므로 development 카테고리"
     }
   ]
 }
 ```
 
-### Step C — 페이지 정체성 검증
+`page_sections`: 각 페이지가 담당하는 source 섹션 목록. Step D와 E-1에서 이 범위만 사용한다.
 
-**페이지명 정규화 규칙**
+카테고리 결정 규칙:
+
+| 카테고리 | 핵심 질문 | 예시 |
+|----------|-----------|------|
+| `requirements/` | 무엇을 만들어야 하는가? | 요구사항, 유저 스토리, 검증 기준 |
+| `design/` | 어떻게 생겼는가? | 아키텍처, 설계 결정, API/데이터 스펙 |
+| `development/` | 어떻게 구현하는가? | 구현 방법, 기술 선택, 트러블슈팅 |
+| `records/` | 언제, 무엇을, 왜? | 회의록, 회고, 결정 배경, 스프린트 기록 |
+| `domain/` | 이 분야 지식은? | 외부 기술/개념/업계 지식 |
+| `etc/` | 위 기준으로 판단 불가 | 분류 불명확한 내용 |
+
+### Step C — 페이지 정체성 검증 + Semantic Dedup
+
+두 단계로 처리한다.
+
+**1단계 — 페이지명 정규화 (코드, LLM 없음)**
 
 | 규칙 | 예시 |
 |------|------|
@@ -354,7 +414,30 @@ Step F   — IngestState에 wiki 페이지 목록 기록
 | 띄어쓰기 → 하이픈 | `few-shot-learning.md` |
 | 특수문자 제거 | `gpt4.md` |
 
-유사 페이지가 있으면 신규 생성 대신 해당 페이지에 병합한다. 다만 source 내부 일부가 독립 개념이면 그 섹션만 별도 페이지 또는 기존 페이지로 라우팅할 수 있다.
+정규화 후 동일한 이름의 페이지가 같은 디렉토리에 존재하면 신규 생성 대신 해당 페이지를 `affected_pages`로 이동한다.
+
+**2단계 — Semantic Dedup (LLM 1회, claude-haiku-4-5)**
+
+1단계 후에도 남은 `new_pages` 후보를 기존 wiki 전체와 의미 중복 검사한다.
+
+```
+입력: 신규 후보 목록 (path + title), wiki 전체 페이지 제목 목록
+처리: Haiku가 배치로 의미 중복 판정
+출력: {new_page_path: duplicate_existing_page_path | null}
+```
+
+```json
+{
+  "duplicates": {
+    "wiki/domain/k8s.md": "wiki/domain/kubernetes.md",
+    "wiki/development/deploy-guide.md": null
+  }
+}
+```
+
+- 중복 판정 시: `new_pages`에서 제거 → 기존 페이지를 `affected_pages`로 이동, `page_sections`도 이전
+- 중복 아님: `new_pages`에 유지
+- API 오류 시: 중복 없음으로 처리 (ingest 계속 진행)
 
 ### Step D — 페이지별 변경 계획 수립
 
@@ -422,10 +505,14 @@ Step F   — IngestState에 wiki 페이지 목록 기록
 ### Step E-1 — 검토 에이전트 (LLM, claude-haiku-4-5)
 
 ```
-입력: source 원문 + 생성/갱신된 wiki 페이지 목록
-처리: 페이지별 문장을 source 원문과 비교 → source에 없는 문장 탐지
+입력: page_snapshots (before/after), page_source_map (페이지별 담당 섹션 텍스트)
+처리: 이번 ingest에서 추가된 내용만 담당 섹션과 비교 → source에 없는 문장 탐지
 출력: output/meta/{source_id}_review.json
 ```
+
+**핵심 변경 (기존 대비)**
+- 기존: 페이지 전체를 source 전체와 비교 → 이전 ingest 내용도 재검토, false positive 발생
+- 현재: `_extract_new_content(before, after)`로 추가분만 추출 → `page_source_map`으로 담당 섹션만 비교
 
 **검토 결과 포맷**
 
@@ -474,7 +561,7 @@ state.updated_wiki_pages = ["wiki/entities/openai.md"]
 ```markdown
 ---
 title: {제목}
-type: {source|entity|concept}
+category: {source|requirements|design|development|records|domain|etc}
 sources: ["{source_id_1}", "{source_id_2}"]
 updated: {YYYY-MM-DD}
 ---

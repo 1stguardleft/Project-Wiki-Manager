@@ -47,23 +47,23 @@
 
 | Stage | 내용 | 상태 | 파일 |
 |-------|------|------|------|
-| Stage 1 | 명령 수신 → 에이전트 호출 흐름 골격 구현, source_id 생성, 소스 타입별 조건 분기 | ✅ Done | `agents/orchestrator/graph.py` |
+| Stage 1 | 명령 수신 → 에이전트 호출 흐름 골격 구현, source_id 생성, 소스 타입별 조건 분기 | ✅ Done | `backend/agents/orchestrator/graph.py` |
 
 ### Fetcher
 
 | Stage | 대상 | 내용 | 상태 | 파일 |
 |-------|------|------|------|------|
-| Stage 1 | Web | HTTP GET → `output/fetcher/web/{source_id}.html` 저장 | ✅ Done | `agents/fetcher/web/fetcher.py` |
-| Stage 2 | Confluence | REST API (`/rest/api/content/{id}?expand=body.storage`) → `output/fetcher/confluence/{source_id}.xml` 저장 | ✅ Done | `agents/fetcher/confluence/fetcher.py` |
-| Stage 3 | Local MD | 로컬 파일 복사 → `output/fetcher/local/{source_id}.md` | ✅ Done | `agents/fetcher/local/fetcher.py` |
+| Stage 1 | Web | HTTP GET → `output/fetcher/web/{source_id}.html` 저장 | ✅ Done | `backend/agents/fetcher/web/fetcher.py` |
+| Stage 2 | Confluence | REST API (`/rest/api/content/{id}?expand=body.storage`) → `output/fetcher/confluence/{source_id}.xml` 저장 | ✅ Done | `backend/agents/fetcher/confluence/fetcher.py` |
+| Stage 3 | Local MD | 로컬 파일 복사 → `output/fetcher/local/{source_id}.md` | ✅ Done | `backend/agents/fetcher/local/fetcher.py` |
 
 ### Normalizer
 
 | Stage | 대상 | 내용 | 상태 | 파일 |
 |-------|------|------|------|------|
-| Stage 1 | Web | trafilatura(primary) + Jina AI Reader(fallback) → `output/normalizer/web/{source_id}.md` | ✅ Done | `agents/normalizer/web/normalizer.py` |
-| Stage 1 | Confluence | beautifulsoup4 XML 파싱 → `output/normalizer/confluence/{source_id}.md` | ✅ Done | `agents/normalizer/confluence/normalizer.py` |
-| Stage 1 | Local MD | 복사만 수행 → `output/normalizer/local/{source_id}.md` | ✅ Done | `agents/normalizer/local/normalizer.py` |
+| Stage 1 | Web | trafilatura(primary) + Jina AI Reader(fallback) → `output/normalizer/web/{source_id}.md` | ✅ Done | `backend/agents/normalizer/web/normalizer.py` |
+| Stage 1 | Confluence | beautifulsoup4 XML 파싱 → `output/normalizer/confluence/{source_id}.md` | ✅ Done | `backend/agents/normalizer/confluence/normalizer.py` |
+| Stage 1 | Local MD | 복사만 수행 → `output/normalizer/local/{source_id}.md` | ✅ Done | `backend/agents/normalizer/local/normalizer.py` |
 
 best-effort 변환 기준:
 
@@ -77,11 +77,11 @@ best-effort 변환 기준:
 
 ### Ingest
 
-Wiki-centric 방식으로 동작한다. 소스를 청크로 배분하는 것이 아니라 wiki 페이지를 최적 상태로 유지하는 것을 목표로 한다.
+Wiki-centric 방식으로 동작한다. 소스를 청크로 배분하는 것이 아니라 wiki 페이지를 최적 상태로 유지하는 것을 목표로 한다. 단, source에 없는 내용을 확장 생성하지 않고 섹션 단위로 최소한의 페이지 분할/병합을 수행한다.
 
 | Stage | 내용 | 상태 | 파일 |
 |-------|------|------|------|
-| Stage 1 | Wiki-centric Ingest — Step A(소스 이해) → B(2단계 영향 페이지 탐색) → C(페이지명 정규화) → D(변경 계획) → E(실행 + mapping.json 생성) → F(IngestState 갱신) | ✅ Done | `agents/ingest/ingest.py` |
+| Stage 1 | Wiki-centric Ingest — Step A(소스 이해) → B(2단계 영향 페이지 탐색 + 섹션 라우팅) → C(페이지명 정규화 + Semantic Dedup) → D(변경 계획, 담당 섹션만) → E(실행 + 스냅샷 + mapping.json) → E-1(추가분만 검토) → E-2(자동 수정) → F(IngestState 갱신) | ✅ Done | `backend/agents/ingest/ingest.py` |
 
 **Phase 1 적용 고도화 포인트**
 
@@ -90,6 +90,9 @@ Wiki-centric 방식으로 동작한다. 소스를 청크로 배분하는 것이 
 | 4 | 소스 역추적 (Traceability) | wiki 페이지 frontmatter에 `sources: [source_id]` 유지. 합성 시 갱신 | ✅ Done |
 | 5 | 영향 페이지 탐색 정확도 | index.md 1차 후보 선별 → 후보 페이지 본문 읽기 → 최종 확정 (2단계 탐색) | ✅ Done |
 | 6 | 페이지 정체성 일관성 | 신규 페이지 생성 전 유사 이름 페이지 존재 여부 확인. 페이지명 정규화 규칙 적용 | ✅ Done |
+| 7 | 섹션 단위 라우팅 | Step B에서 페이지별 담당 섹션 결정. Step D와 E-1은 담당 섹션만 사용 | ✅ Done |
+| 8 | Source-grounded 강화 | E-1이 기존 내용 제외, 이번 ingest 추가분만 검토 (before/after diff 기반) | ✅ Done |
+| 9 | Semantic Dedup | Step C에서 의미 중복 페이지 감지. wiki 전체 대상 Haiku 배치 검사 | ✅ Done |
 
 **이후 Phase로 이월된 포인트**
 
@@ -104,21 +107,30 @@ Wiki-centric 방식으로 동작한다. 소스를 청크로 배분하는 것이 
 
 | Stage | 내용 | 상태 | 파일 |
 |-------|------|------|------|
-| Stage 1 | `wiki/index.md` 카탈로그 갱신 (신규/추가 시에만), `wiki/log.md` 항목 추가 | ✅ Done | `agents/index_log/index_log.py` |
+| Stage 1 | `wiki/index.md` 카탈로그 갱신 (신규/추가 시에만), `wiki/log.md` 항목 추가 | ✅ Done | `backend/agents/index_log/index_log.py` |
 
 ### FastAPI / 배치 실행
 
 | Stage | 내용 | 상태 | 파일 |
 |-------|------|------|------|
-| Stage 1 | FastAPI 엔드포인트 골격 (`/health`, `/status`, `/files`, `/files/content`) | ✅ Done | `api/main.py` |
-| Stage 2 | `POST /ingest/batch` 배치 실행 + `GET /ingest/batch/{id}/stream` SSE 스트리밍 | ⏳ Pending | `api/main.py` |
-| Stage 3 | `GET /compare` 소스 → wiki 반영 비교 (mapping.json 기반) | ⏳ Pending | `api/main.py` |
+| Stage 1 | FastAPI 엔드포인트 골격 (`/health`, `/status`, `/files`, `/files/content`) | ✅ Done | `backend/api/main.py` |
+| Stage 2 | `POST /ingest/batch` 배치 실행 + `GET /ingest/batch/{id}/stream` SSE 스트리밍 | ✅ Done | `backend/api/main.py` |
+| Stage 3 | `GET /compare` 소스 → wiki 반영 비교용 payload 반환 (mapping.json 기반, diff 렌더링은 FE 담당) | ✅ Done | `backend/api/main.py` |
+
+### Frontend / Ingest UI
+
+| Stage | 내용 | 상태 | 파일 |
+|-------|------|------|------|
+| Stage 1 | Vite + React + TypeScript 프론트엔드 구조 구성 | ✅ Done | `frontend/package.json`, `frontend/src/main.tsx` |
+| Stage 2 | 소스 입력 UI (`web`, `confluence`, `local_md`) 및 배치 시작 연동 | ✅ Done | `frontend/src/components/SourceInput/*`, `frontend/src/pages/IngestPage.tsx` |
+| Stage 3 | SSE 기반 워크플로우 모달, 단계별 상태 표시, 산출물 미리보기 (`done` 단계에서만 파일 조회), 재오픈 진입점 제공 | ✅ Done | `frontend/src/components/WorkflowModal/*`, `frontend/src/pages/IngestPage.tsx` |
+| Stage 4 | 결과 비교 뷰, source 탭 전환, mapping 기반 source-to-wiki 비교 | ✅ Done | `frontend/src/components/ResultView/*`, `frontend/src/lib/diff.ts` |
 
 ### End-to-End 검증
 
-| Stage | 내용 | 상태 |
-|-------|------|------|
-| Stage 1 | 유사 페이지 2개 + 다른 페이지 1개로 전체 파이프라인 실행 성공 확인 | ⏳ Pending |
+| Stage | 내용 | 상태 | 비고 |
+|-------|------|------|------|
+| Stage 1 | 유사 페이지 2개 + 다른 페이지 1개로 전체 파이프라인 실행 성공 확인 | 🚧 In Progress | API/SSE 동작 검증 완료. 성공형 end-to-end는 `ANTHROPIC_API_KEY` 설정 후 재검증 필요 |
 
 ---
 
