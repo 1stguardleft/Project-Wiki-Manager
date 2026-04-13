@@ -16,6 +16,7 @@ Phase 1 (Ingest Feasibility 검증)에 해당하는 요구사항.
 - 소스 타입에 따라 적절한 파이프라인 경로로 분기한다.
 - 각 Stage 완료 시 `output/meta/{source-id}.json`의 상태를 갱신한다.
 - 멀티 소스는 순차 처리한다 (wiki 파일 쓰기 충돌 방지).
+- 배치 실행은 `batch_id` 단위로 관리하며, 서버는 배치 진행 이벤트를 SSE로 제공한다.
 
 ## Fetcher
 
@@ -40,13 +41,46 @@ Stage 1: Markdown best-effort 변환
 - Confluence 첨부 이미지 → 링크만 기록
 - Confluence 매크로 → 지원 가능한 것만 변환
 
+## Wiki 카테고리 구조
+
+wiki 페이지는 아래 6개 카테고리 + sources 로 구성된다.
+
+| 카테고리 | 경로 | 핵심 질문 | 담는 내용 |
+|----------|------|-----------|-----------|
+| 요구사항 | `wiki/requirements/` | 무엇을 만들어야 하는가? | 요구사항, 유저 스토리, 검증 기준 |
+| 설계 | `wiki/design/` | 어떻게 생겼는가? | 아키텍처, 시스템 설계, API 스펙 |
+| 개발 | `wiki/development/` | 어떻게 구현하는가? | 구현 가이드, 기술 결정, 트러블슈팅 |
+| 기록 | `wiki/records/` | 언제, 무엇을, 왜 결정했는가? | 회의록, 회고, 결정 이유 |
+| 도메인 | `wiki/domain/` | 이 분야에서 알아야 할 지식은? | 도메인 지식, 외부 기술 리서치 |
+| 기타 | `wiki/etc/` | 위 카테고리에 속하지 않는 것 | 분류 불명확한 내용 |
+| 소스 요약 | `wiki/sources/` | 이 소스는 무엇을 담고 있는가? | 소스 원문 정리 (자동 생성) |
+
 ## Ingest
 
 - `output/normalizer/{type}/{source-id}.md` 읽기
-- Wiki-centric 방식: 소스 전체 이해 → 영향 페이지 파악(2단계 탐색) → 페이지 정체성 검증 → 페이지별 재합성
-- 신규 주제: `wiki/sources/`, `wiki/entities/`, `wiki/concepts/` 에 페이지 생성
-- 유사 주제: 기존 페이지 재합성 + 상호 참조 삽입
+- Wiki-centric 방식: 소스 전체 이해 → 소스 요약 페이지 생성 → 카테고리 판단 → 영향 페이지 파악(2단계 탐색, 섹션 라우팅) → 페이지 정체성 검증 + Semantic Dedup → 페이지별 재합성(담당 섹션만) → 검토(추가분만) → 자동 수정
+- Ingest의 목적은 LLM이 새 지식을 추가하는 것이 아니라, 사용자가 준 source/raw를 정리하고 구조화하는 것이다.
+- source에 없는 배경지식, 정의, 예시, 일반론은 추가하지 않는다 (SOURCE-GROUNDED 원칙).
+- 소스 1개 ingest 시 반드시 `wiki/sources/{source-id}.md` 소스 요약 페이지를 생성한다.
+- 신규 페이지는 위 카테고리 중 가장 적합한 경로에 생성한다. 판단 불명확 시 `wiki/etc/`에 생성한다.
+- 유사 주제: 무조건 하나로 합치지 않고, source의 섹션 의미에 따라 기존 페이지에 병합하거나 별도 페이지로 분리한다.
 - 처리 완료 후 소스↔wiki 매핑 정보를 `output/meta/{source-id}_mapping.json`에 저장
+
+### Semantic Dedup (Step C 확장)
+
+- 신규 페이지 생성 전, 기존 wiki 전체 카테고리를 대상으로 의미 중복 검사를 수행한다.
+- 이름이 달라도 같은 개념을 다루면 중복으로 판정해 기존 페이지를 `affected_pages`로 라우팅한다.
+  - 예: `k8s.md` 신규 생성 시도 → `kubernetes.md` 존재 감지 → 기존 페이지 갱신으로 전환
+- 검사 범위: `wiki/requirements/`, `wiki/design/`, `wiki/development/`, `wiki/records/`, `wiki/domain/`, `wiki/etc/` 전체
+- 구현: Haiku 1회 호출, 모든 신규 후보를 배치로 처리
+- 중복 판정 실패(API 오류 등) 시 신규 생성으로 진행하며 ingest를 중단하지 않는다.
+
+### SOURCE-GROUNDED 검토 및 자동 수정
+
+- 페이지 생성/갱신 후 검토 에이전트(Haiku)가 source 원문과 wiki 페이지를 문장 단위로 비교한다.
+- source에 없는 문장이 탐지되면 자동 수정 에이전트(Haiku)가 해당 문장을 삭제한다.
+- 검토 결과는 `output/meta/{source-id}_review.json`에 저장한다 (감사 로그).
+- 사람의 개입 없이 자동으로 처리된다. 수정 실패 시 원본 유지, ingest는 완료 처리된다.
 
 ## Index / Log
 
@@ -84,6 +118,13 @@ Stage 1: Markdown best-effort 변환
 - 오류 발생 시 해당 노드에 오류 메시지 표시 (오류 재시도는 추후 고려)
 - 전체 완료 시 "결과 보기" 버튼으로 결과 뷰로 전환
 
+백엔드 SSE 이벤트 계약:
+- `batch_start`: 배치 시작, 전체 소스 수 전달
+- `source_start`: 현재 처리할 소스 시작
+- `stage_update`: 단계별 상태 변경 (`fetcher`, `normalizer`, `ingest`, `index_log`) 및 소요 시간 전달
+- `source_done`: 단일 소스 처리 완료
+- `batch_done`: 배치 전체 완료
+
 ### 3. 결과 비교 뷰
 
 처리 완료 후 원본 소스 기준으로 어떤 부분이 어떻게 처리되었는지 git diff 스타일로 확인할 수 있어야 한다.
@@ -95,10 +136,22 @@ Stage 1: Markdown best-effort 변환
 - 원본 단락 클릭 시 대응하는 우측 wiki 부분으로 스크롤 + 하이라이트
 - 원본 기준 처리 결과 레이블: 반영됨 / 요약됨 / 병합됨 / 제외됨
 
+현재 Phase 1 API 기준:
+- `/compare`는 서버에서 완성된 diff를 계산하지 않고, `wiki_page + normalized source + mapping` 데이터를 반환한다.
+- git diff 스타일 렌더링은 프런트엔드에서 구성한다.
+
+Ingest 판단 기준:
+- 같은 주제의 소스 2개가 들어오면 결과가 1개 MD 파일이 될 수 있다.
+- 다만 source 내부 일부가 독립 개념/엔티티라면 해당 부분만 별도 문서로 정의되거나 기존 문서에 병합될 수 있다.
+- 즉, 병합 단위는 "파일 전체"가 아니라 "의미 있는 섹션"이다.
+
 ## 검증 기준
 
 - 유사 페이지 2개 + 다른 페이지 1개로 전체 파이프라인 실행 성공
 - `output/meta/{source-id}.json` 모든 stage 상태가 `"done"`
 - `output/meta/{source-id}_mapping.json` 생성 확인
+- `output/meta/{source-id}_review.json` 생성 확인
+- `wiki/sources/{source-id}.md` 소스 요약 페이지 생성 확인
 - `wiki/index.md`, `wiki/log.md` 올바르게 갱신됨
-- 유사 페이지 2개가 상호 참조로 연결되거나 하나의 페이지로 통합됨
+- 유사 페이지 2개가 필요 시 하나의 페이지로 통합되며, 독립 섹션은 별도 페이지 또는 기존 페이지로 라우팅됨
+- 최종 wiki 문장에 source에 없는 일반 지식이 임의로 추가되지 않음
