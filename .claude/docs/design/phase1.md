@@ -8,23 +8,27 @@ Phase 1 (Ingest Feasibility 검증) 상세 설계.
 
 ```
 project-wiki-manager/
-├── agents/
-│   ├── orchestrator/
-│   │   └── graph.py
-│   ├── fetcher/
-│   │   ├── web/fetcher.py
-│   │   ├── confluence/fetcher.py
-│   │   └── local/fetcher.py          # 로컬 MD 복사
-│   ├── normalizer/
-│   │   ├── web/normalizer.py
-│   │   ├── confluence/normalizer.py
-│   │   └── local/normalizer.py       # 복사만 수행
-│   ├── ingest/ingest.py
-│   └── index_log/index_log.py
-├── models/
-│   └── state.py
-├── api/
-│   └── main.py
+├── frontend/
+└── backend/
+    ├── agents/
+    │   ├── orchestrator/
+    │   │   └── graph.py
+    │   ├── fetcher/
+    │   │   ├── web/fetcher.py
+    │   │   ├── confluence/fetcher.py
+    │   │   └── local/fetcher.py          # 로컬 MD 복사
+    │   ├── normalizer/
+    │   │   ├── web/normalizer.py
+    │   │   ├── confluence/normalizer.py
+    │   │   └── local/normalizer.py       # 복사만 수행
+    │   ├── ingest/ingest.py
+    │   └── index_log/index_log.py
+    ├── models/
+    │   └── state.py
+    ├── api/
+    │   └── main.py
+    ├── requirements.txt
+    └── .env.example
 └── output/
     ├── fetcher/web/
     ├── fetcher/confluence/
@@ -37,7 +41,7 @@ project-wiki-manager/
 
 ---
 
-## State 스키마 (`models/state.py`)
+## State 스키마 (`backend/models/state.py`)
 
 ```python
 from pydantic import BaseModel
@@ -54,9 +58,13 @@ class StageStatuses(BaseModel):
 
 class StageTimings(BaseModel):
     fetcher_started_at: float = 0.0
+    fetcher_ended_at: float = 0.0
     normalizer_started_at: float = 0.0
+    normalizer_ended_at: float = 0.0
     ingest_started_at: float = 0.0
+    ingest_ended_at: float = 0.0
     index_log_started_at: float = 0.0
+    index_log_ended_at: float = 0.0
 
 class IngestState(BaseModel):
     source_id: str
@@ -72,7 +80,7 @@ class IngestState(BaseModel):
 
 ---
 
-## Orchestrator (`agents/orchestrator/graph.py`)
+## Orchestrator (`backend/agents/orchestrator/graph.py`)
 
 ### 역할
 - 소스 타입 판별 (web / confluence / local_md)
@@ -80,6 +88,7 @@ class IngestState(BaseModel):
 - `output/meta/{source_id}.json` 생성
 - 소스 타입별 조건 분기
 - 각 Stage 완료 시 메타데이터 상태 및 타이밍 갱신
+- API 배치 실행 시 소스를 순차 처리하며, 진행 이벤트를 SSE로 발행
 
 ### LangGraph 그래프 구조
 
@@ -118,6 +127,7 @@ graph.add_edge("normalizer_web", "ingest")
 graph.add_edge("normalizer_confluence", "ingest")
 graph.add_edge("normalizer_local", "ingest")
 
+# 현재 구현은 ingest 성공 여부와 관계없이 index_log 노드까지 진행한다.
 graph.add_edge("ingest", "index_log")
 graph.add_edge("index_log", END)
 ```
@@ -135,7 +145,7 @@ local_md   → Fetcher/Local      → Normalizer/Local      ↗
 
 ## Fetcher
 
-### Fetcher/Web (`agents/fetcher/web/fetcher.py`)
+### Fetcher/Web (`backend/agents/fetcher/web/fetcher.py`)
 
 ```
 입력: IngestState (url)
@@ -146,7 +156,7 @@ local_md   → Fetcher/Local      → Normalizer/Local      ↗
 - `httpx` 사용, User-Agent 헤더 설정
 - HTTP 오류(4xx, 5xx) 시 `stages.fetcher = "error"` 기록 후 중단
 
-### Fetcher/Confluence (`agents/fetcher/confluence/fetcher.py`)
+### Fetcher/Confluence (`backend/agents/fetcher/confluence/fetcher.py`)
 
 ```
 입력: IngestState (confluence_page_id)
@@ -158,7 +168,7 @@ local_md   → Fetcher/Local      → Normalizer/Local      ↗
 - 헤더: `Authorization: Bearer {CONFLUENCE_ACCESS_TOKEN}`
 - 응답에서 `body.storage.value` 추출하여 저장
 
-### Fetcher/Local (`agents/fetcher/local/fetcher.py`)
+### Fetcher/Local (`backend/agents/fetcher/local/fetcher.py`)
 
 ```
 입력: IngestState (url = 로컬 파일 경로)
@@ -173,7 +183,7 @@ local_md   → Fetcher/Local      → Normalizer/Local      ↗
 
 ## Normalizer
 
-### Normalizer/Web (`agents/normalizer/web/normalizer.py`)
+### Normalizer/Web (`backend/agents/normalizer/web/normalizer.py`)
 
 ```
 입력: output/fetcher/web/{source_id}.html
@@ -215,7 +225,7 @@ html 입력
 | 외부 이미지 | `![alt](url)` |
 | nav, footer, 광고 | trafilatura 자동 제거 |
 
-### Normalizer/Confluence (`agents/normalizer/confluence/normalizer.py`)
+### Normalizer/Confluence (`backend/agents/normalizer/confluence/normalizer.py`)
 
 ```
 입력: output/fetcher/confluence/{source_id}.xml
@@ -237,7 +247,7 @@ html 입력
 | `<ac:structured-macro name="code">` | 펜스드 코드 블록 |
 | 그 외 매크로 | `<!-- macro: {name} omitted -->` |
 
-### Normalizer/Local (`agents/normalizer/local/normalizer.py`)
+### Normalizer/Local (`backend/agents/normalizer/local/normalizer.py`)
 
 ```
 입력: output/fetcher/local/{source_id}.md
@@ -247,7 +257,7 @@ html 입력
 
 ---
 
-## Ingest (`agents/ingest/ingest.py`)
+## Ingest (`backend/agents/ingest/ingest.py`)
 
 ```
 입력: output/normalizer/{type}/{source_id}.md
@@ -259,28 +269,53 @@ html 입력
 ### 설계 원칙
 
 소스를 청크 단위로 배분하는 것이 아니라 **wiki 페이지를 최적 상태로 유지**하는 것을 목표로 한다.
+- Ingest는 source-grounded 정리기다. source에 없는 배경지식, 일반론, 정의를 새로 쓰지 않는다.
+- 병합 단위는 파일 전체가 아니라 의미 있는 섹션이다.
+- 같은 상위 주제를 설명하는 섹션은 가능한 한 하나의 페이지로 모으고, 독립적으로 정의되어야 하는 개념/엔티티만 별도 페이지로 분리한다.
 
 ### 처리 흐름
 
 ```
-Step A — 소스 이해        (LLM 1회)
-Step B — 영향 페이지 파악  (LLM 1회) ← 2단계 탐색
-Step C — 페이지 정체성 검증           ← 명명 정규화
-Step D — 페이지별 변경 계획 (LLM, 영향 페이지 수만큼)
-Step E — 실행 (페이지별 재합성) + 매핑 정보 생성
-Step F — IngestState에 wiki 페이지 목록 기록
+Step A   — 소스 이해             (LLM 1회, claude-opus-4-5)
+Step A-1 — 소스 요약 페이지 생성  (LLM 1회) → wiki/sources/{source_id}.md
+Step B   — 영향 페이지 파악       (LLM 1회) ← 2단계 탐색
+Step C   — 페이지 정체성 검증                ← 명명 정규화
+Step D   — 페이지별 변경 계획     (LLM, 영향 페이지 수만큼)
+Step E   — 실행 (페이지별 재합성) + 매핑 정보 생성
+Step E-1 — 검토 에이전트          (LLM 1회, claude-haiku-4-5) ← source-grounded 위반 탐지
+Step E-2 — 자동 수정              (LLM, 위반 페이지 수만큼)  ← 위반 없으면 생략
+Step F   — IngestState에 wiki 페이지 목록 기록
 ```
 
-### Step A — 소스 이해 (LLM 1회)
+### Step A — 소스 이해 (LLM 1회, claude-opus-4-5)
 
 ```json
 {
   "summary": "1~3문장 요약",
   "entities": ["OpenAI", "GPT-4"],
   "concepts": ["Few-shot learning", "RLHF"],
-  "key_claims": ["GPT-4는 멀티모달을 지원한다"]
+  "key_claims": ["GPT-4는 멀티모달을 지원한다"],
+  "sections": [
+    {
+      "heading": "배포 자동화",
+      "summary": "문서의 이 섹션이 다루는 범위",
+      "independent_topic": false
+    }
+  ]
 }
 ```
+
+### Step A-1 — 소스 요약 페이지 생성 (LLM 1회)
+
+```
+출력: wiki/sources/{source_id}.md
+```
+
+- source 원문을 구조화·정리한 페이지. 외부 지식 추가 없이 source 그대로를 정리한다.
+- 사용자가 "이 소스가 무엇을 담고 있는가"를 확인하는 용도.
+- frontmatter `type: source`, `sources: ["{source_id}"]` 로 기록.
+
+---
 
 ### Step B — 영향 페이지 파악 (LLM 1회)
 
@@ -292,7 +327,19 @@ Step F — IngestState에 wiki 페이지 목록 기록
 ```json
 {
   "affected_pages": ["wiki/entities/openai.md"],
-  "new_pages": ["wiki/entities/gpt-4.md"]
+  "new_pages": ["wiki/entities/gpt-4.md"],
+  "routing_notes": [
+    {
+      "source_section": "배포 자동화",
+      "target_page": "wiki/entities/openai.md",
+      "reason": "기존 상위 주제 문서에 포함하는 것이 적절함"
+    },
+    {
+      "source_section": "RLHF",
+      "target_page": "wiki/concepts/rlhf.md",
+      "reason": "독립 개념으로 분리 필요"
+    }
+  ]
 }
 ```
 
@@ -307,7 +354,7 @@ Step F — IngestState에 wiki 페이지 목록 기록
 | 띄어쓰기 → 하이픈 | `few-shot-learning.md` |
 | 특수문자 제거 | `gpt4.md` |
 
-유사 페이지가 있으면 신규 생성 대신 해당 페이지에 병합.
+유사 페이지가 있으면 신규 생성 대신 해당 페이지에 병합한다. 다만 source 내부 일부가 독립 개념이면 그 섹션만 별도 페이지 또는 기존 페이지로 라우팅할 수 있다.
 
 ### Step D — 페이지별 변경 계획 수립
 
@@ -315,11 +362,17 @@ Step F — IngestState에 wiki 페이지 목록 기록
 {
   "page": "wiki/entities/openai.md",
   "actions": [
-    { "type": "add", "section": "제품", "content": "GPT-4 출시 관련 내용" },
-    { "type": "update", "section": "개요", "content": "최신 정보로 보강" }
+    { "type": "add", "section": "제품", "content": "source에 있는 내용을 정리해 추가" },
+    { "type": "update", "section": "개요", "content": "source에 있는 범위 안에서 재배열" }
   ]
 }
 ```
+
+계획 수립 규칙:
+- page 수는 가능한 최소로 유지한다.
+- 동일 상위 주제를 설명하는 섹션은 한 페이지에 정리한다.
+- source에 없는 설명을 추가하지 않는다.
+- 기존 문장을 부드럽게 다듬는 것은 허용되지만 사실 확장은 금지한다.
 
 ### Step E — 실행 + 매핑 정보 생성
 
@@ -363,15 +416,58 @@ Step F — IngestState에 wiki 페이지 목록 기록
 |--------|------|
 | `반영됨` | 원본 내용이 그대로 또는 거의 그대로 wiki에 포함 |
 | `요약됨` | 원본 내용이 압축되어 wiki에 반영 |
-| `병합됨` | 다른 소스 또는 기존 wiki 내용과 합쳐짐 |
+| `병합됨` | 동일 상위 주제 페이지 안에서 다른 source/기존 wiki와 함께 정리됨 |
 | `제외됨` | wiki에 반영되지 않음 |
+
+### Step E-1 — 검토 에이전트 (LLM, claude-haiku-4-5)
+
+```
+입력: source 원문 + 생성/갱신된 wiki 페이지 목록
+처리: 페이지별 문장을 source 원문과 비교 → source에 없는 문장 탐지
+출력: output/meta/{source_id}_review.json
+```
+
+**검토 결과 포맷**
+
+```json
+{
+  "source_id": "20260413-153000-openai-blog",
+  "pages_reviewed": ["wiki/sources/...", "wiki/entities/openai.md"],
+  "violations": [
+    {
+      "page": "wiki/entities/openai.md",
+      "sentence": "Google이 2014년 오픈소스로 공개했다.",
+      "reason": "source에 연도 언급 없음"
+    }
+  ],
+  "passed": false
+}
+```
+
+- 위반이 없으면 `passed: true`, `violations: []`
+- 검토 실패(API 오류 등)는 ingest 전체를 중단시키지 않는다.
+
+### Step E-2 — 자동 수정 (LLM, claude-haiku-4-5)
+
+```
+입력: output/meta/{source_id}_review.json + 위반 wiki 페이지
+처리: 위반 문장만 삭제, 나머지 내용 유지 → 페이지 덮어쓰기
+조건: review.passed == false 일 때만 실행
+```
+
+- 위반 문장을 다른 말로 바꾸거나 보완하지 않는다. 삭제만 한다.
+- 문장 제거 후 문단이 어색해지면 최소한만 자연스럽게 이어준다.
+- 수정 실패 시 원본 유지, ingest는 계속 진행한다.
+- `_review.json`은 감사 목적으로 항상 보존한다.
 
 ### Step F — IngestState 갱신
 
 ```python
-state.created_wiki_pages = ["wiki/entities/gpt-4.md", "wiki/sources/source-id.md"]
+state.created_wiki_pages = ["wiki/sources/source-id.md", "wiki/entities/gpt-4.md"]
 state.updated_wiki_pages = ["wiki/entities/openai.md"]
 ```
+
+- `created_wiki_pages` 첫 번째 항목은 항상 `wiki/sources/{source_id}.md`.
 
 ### wiki 페이지 포맷
 
@@ -401,7 +497,7 @@ updated: {YYYY-MM-DD}
 
 ---
 
-## Index/Log (`agents/index_log/index_log.py`)
+## Index/Log (`backend/agents/index_log/index_log.py`)
 
 ```
 입력: IngestState (created_wiki_pages, updated_wiki_pages)
@@ -427,7 +523,7 @@ updated: {YYYY-MM-DD}
 
 ---
 
-## FastAPI 엔드포인트 (`api/main.py`)
+## FastAPI 엔드포인트 (`backend/api/main.py`)
 
 | Method | Path | 설명 |
 |--------|------|------|
@@ -459,6 +555,11 @@ updated: {YYYY-MM-DD}
 }
 ```
 
+구현 메모:
+- Phase 1 현재 구현은 서버 프로세스 메모리에서 배치 상태를 관리한다.
+- 배치 이벤트는 메모리에 누적되어, SSE 클라이언트가 늦게 연결되어도 기존 이벤트를 재생할 수 있다.
+- 서버 재시작 시 배치 런타임 상태와 SSE 히스토리는 유지되지 않는다.
+
 ### `GET /ingest/batch/{batch_id}/stream` — SSE (단일 스트림)
 
 소스를 순차 처리하며 하나의 SSE 스트림으로 모든 이벤트를 전송한다.
@@ -487,6 +588,13 @@ data: { "source_id": "id2", "index": 2, "total": 3 }
 event: batch_done
 data: { "batch_id": "...", "total_elapsed_ms": 35000 }
 ```
+
+실제 `stage_update` payload:
+- `source_id`
+- `stage`
+- `status`
+- `elapsed_ms`
+- `error`
 
 ### `GET /compare`
 
@@ -519,6 +627,11 @@ Query: source_ids=id1,id2&wiki_path=wiki/entities/openai.md
 }
 ```
 
+구현 메모:
+- 현재 Phase 1의 `/compare`는 서버에서 diff를 계산하지 않는다.
+- 서버는 `wiki_page`, normalized source 본문, `mapping.json` 기반 매핑만 반환한다.
+- git diff 스타일 비교 렌더링은 FE에서 수행한다.
+
 ---
 
 ## Confluence page_id 추출
@@ -542,7 +655,7 @@ def extract_confluence_page_id(url: str) -> str:
 ### 디렉토리 구조
 
 ```
-fe/src/
+frontend/src/
 ├── components/
 │   ├── SourceInput/
 │   │   ├── SourceInputList.tsx     # 소스 목록 + 추가/삭제
