@@ -302,6 +302,54 @@ LLM 카테고리 판단 기준:
 - 병합 단위는 파일 전체가 아니라 의미 있는 섹션이다.
 - 각 페이지는 위 6개 카테고리 중 가장 적합한 곳에 위치한다. 판단 불명확 시 `etc/`에 생성한다.
 
+---
+
+### LLM 호출 목록
+
+파이프라인 전체에서 LLM을 호출하는 곳은 **Ingest Agent 내부로만 한정**된다.  
+Fetcher / Normalizer / Orchestrator / Index·Log 는 LLM을 사용하지 않는다.
+
+> **예외**: Normalizer/Web의 Jina AI Reader fallback은 외부 API이며, 내부적으로 LLM을 사용하지만 직접 호출하는 것은 아니다.
+
+#### Ingest 내 LLM 호출 전체 목록
+
+| 단계 | 함수 | 모델 | 호출 횟수 | 역할 | 입력 | 출력 |
+|------|------|------|-----------|------|------|------|
+| Step A | `_step_a_understand()` | Opus | 1회 | 소스 전체 구조 파악 | source_md (최대 8000자) | summary, key_claims, sections |
+| Step A-1 | `_step_a1_write_source_page()` | Opus | 1회 | 소스 요약 페이지 초안 작성 | source_md + Step A 결과 | wiki/sources/{id}.md 본문 |
+| Step B-1 | `_step_b_find_affected()` 1단계 | Opus | 1회 | index.md 기반 1차 후보 페이지 선별 | summary, sections, index.md | candidates 목록 |
+| Step B-2 | `_step_b_find_affected()` 2단계 | Opus | 1회 | 후보 본문 확인 → 최종 영향 페이지 확정 + 섹션 할당 | candidates 본문, sections | affected_pages, new_pages, page_sections |
+| Step C | `_step_c_semantic_dedup()` | Haiku | 1회 (new_pages 있을 때) | 의미 중복 페이지 탐지 | 신규 후보 목록, wiki 전체 제목 | duplicates 매핑 |
+| Step D | `_step_d_plan_page()` | Opus | N회 (영향 페이지 수) | 페이지별 변경 계획 수립 + 본문 생성 | 담당 섹션 텍스트, 기존 페이지 내용 | 완성된 페이지 본문, paragraph_actions |
+| Step E-1 | `_step_e1_review()` | Haiku | M회 (변경된 페이지 수) | 추가된 내용의 source-grounded 위반 탐지 | 추가된 내용(diff), 담당 섹션 텍스트 | violations 목록 |
+| Step E-2 | `_step_e2_fix()` | Haiku | P회 (위반 페이지 수) | 위반 문장 삭제 | 위반 목록, 페이지 본문 | 수정된 페이지 본문 |
+
+**총 호출 수 (소스 1개)**: `5 + N + M + P`
+- 고정: A(1) + A-1(1) + B-1(1) + B-2(1) + C(1) = 5회
+- 가변: D(영향 페이지 수) + E-1(변경 페이지 수) + E-2(위반 페이지 수, 0이면 생략)
+
+#### 모델별 역할 분리 이유
+
+| 모델 | 사용 단계 | 이유 |
+|------|-----------|------|
+| **claude-opus-4-5** | Step A, A-1, B, D | 소스 이해, 섹션 판단, 페이지 생성 등 복잡한 추론 필요 |
+| **claude-haiku-4-5** | Step C, E-1, E-2 | 단순 비교·판정·삭제 작업. 비용 절감 목적 |
+
+#### LLM을 쓰지 않는 단계
+
+| 단계 | 처리 방식 |
+|------|-----------|
+| Step C 명명 정규화 | 정규식 기반 소문자+하이픈 변환 |
+| Step E 실행 | 파일 읽기/쓰기, difflib diff |
+| Step F | IngestState 필드 갱신 |
+| Fetcher (전체) | HTTP GET / Confluence REST API / 파일 복사 |
+| Normalizer/Web | trafilatura 라이브러리 (+ Jina fallback) |
+| Normalizer/Confluence | BeautifulSoup XML 파싱 |
+| Normalizer/Local | 파일 복사 |
+| Index/Log | 파일 append/update |
+
+---
+
 ### 처리 흐름
 
 ```
