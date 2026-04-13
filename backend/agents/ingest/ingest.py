@@ -635,6 +635,68 @@ SOURCE 원문:
     return review
 
 
+# ── Step E-2 — 자동 수정 ──────────────────────────────────
+
+
+def _step_e2_fix(
+    client: anthropic.Anthropic,
+    review: dict,
+) -> None:
+    """
+    검토 에이전트가 발견한 위반 문장을 wiki 페이지에서 자동 제거한다.
+    페이지별로 위반 목록을 모아 LLM에게 수정 요청.
+    """
+    # 페이지별 위반 그룹핑
+    page_violations: dict[str, list[dict]] = {}
+    for v in review.get("violations", []):
+        page = v["page"]
+        page_violations.setdefault(page, []).append(v)
+
+    for page_path_str, violations in page_violations.items():
+        page_path = Path(page_path_str)
+        if not page_path.exists():
+            continue
+
+        wiki_content = page_path.read_text(encoding="utf-8")
+        # frontmatter 분리
+        fm_match = re.match(r"^(---[\s\S]+?---\n+)", wiki_content)
+        frontmatter = fm_match.group(1) if fm_match else ""
+        wiki_body = wiki_content[len(frontmatter):]
+
+        violation_list = "\n".join(
+            f'- "{v["sentence"]}" → {v["reason"]}' for v in violations
+        )
+
+        prompt = f"""아래 wiki 페이지에서 source-grounded 위반 문장을 제거하세요.
+
+## 규칙
+- 위반 문장만 제거하세요. 나머지 내용은 그대로 유지하세요.
+- 위반 문장을 다른 말로 바꾸거나 보완하지 마세요. 그냥 삭제하세요.
+- 문장 제거 후 문단이 어색해지면 자연스럽게 이어지도록 최소한만 수정하세요.
+- 새로운 내용을 추가하지 마세요.
+
+## 제거할 위반 문장
+{violation_list}
+
+## 현재 wiki 페이지 본문
+{wiki_body}
+
+## 응답 형식
+수정된 본문만 반환하세요. frontmatter, 코드 블록, 설명 없이 본문 텍스트만.
+"""
+        try:
+            msg = client.messages.create(
+                model=REVIEW_MODEL,
+                max_tokens=4096,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            fixed_body = msg.content[0].text.strip()  # type: ignore[union-attr]
+            page_path.write_text(frontmatter + fixed_body + "\n", encoding="utf-8")
+        except Exception:
+            # 수정 실패 시 원본 유지 (로그만)
+            pass
+
+
 def _write_mapping(source_id: str, source_type: str, mappings: list[dict]) -> None:
     normalizer_dir = NORMALIZER_DIRS.get(source_type, Path("output/normalizer/web"))
     source_path = str(normalizer_dir / f"{source_id}.md")
@@ -716,12 +778,10 @@ def ingest_node(state: IngestState) -> IngestState:
         # Step E-1 — 검토 에이전트 (source-grounded 위반 탐지)
         all_wiki_pages = [source_page] + created + updated
         review = _step_e1_review(client, source_md, all_wiki_pages, state.source_id)
+
+        # Step E-2 — 위반 자동 수정
         if not review["passed"]:
-            # 위반 있어도 ingest는 완료 처리 — 경고로 기록
-            state.error = (
-                f"[검토 경고] source-grounded 위반 {len(review['violations'])}건 "
-                f"— output/meta/{state.source_id}_review.json 확인"
-            )
+            _step_e2_fix(client, review)
 
         # Step F — IngestState 갱신 (소스 요약 페이지 포함)
         state.created_wiki_pages = [source_page] + created
