@@ -2,22 +2,27 @@
 Ingest Agent — Wiki-centric 방식으로 Markdown → Wiki 페이지 생성/갱신.
 
 처리 흐름:
-  Step A — 소스 이해        (LLM 1회)
-  Step B — 영향 페이지 파악  (LLM 1회, 2단계 탐색)
-  Step C — 페이지 정체성 검증 (명명 정규화 + 유사 페이지 확인)
-  Step D — 페이지별 변경 계획 (LLM, 영향 페이지 수만큼)
-  Step E — 실행 + 매핑 정보 생성
-  Step F — IngestState 갱신
+  Step A   — 소스 이해         (LLM 1회)
+  Step A-1 — 소스 요약 페이지  (LLM 1회)
+  Step B   — 영향 페이지 파악  (LLM 2회, 2단계 탐색)
+  Step C   — 페이지 정체성 검증 (명명 정규화 + 유사 페이지 확인)
+  Step D   — 페이지별 변경 계획 (LLM, 영향 페이지 수만큼, 담당 섹션만 전달)
+  Step E   — 실행 + 매핑 정보 생성 (before/after 스냅샷 보존)
+  Step E-1 — SOURCE-GROUNDED 검토 (이번 ingest에서 추가된 내용만, 담당 섹션 기준)
+  Step E-2 — 위반 자동 수정
+  Step F   — IngestState 갱신
 
-출력: wiki/sources/, wiki/entities/, wiki/concepts/
+출력: wiki/sources/, wiki/{category}/
       output/meta/{source_id}_mapping.json
+      output/meta/{source_id}_review.json
 
 핵심 원칙:
   - source에 없는 배경지식/정의/예시를 추가하지 않는다.
-  - 같은 상위 주제는 가능한 한 하나의 페이지로 정리한다.
-  - 다만 source 내부의 독립 개념/엔티티는 별도 페이지 또는 기존 페이지로 라우팅할 수 있다.
+  - 기존 wiki 페이지의 기존 내용은 E-1 검토 대상에서 제외한다.
+  - 페이지별로 담당 source 섹션만 전달해 LLM 컨텍스트를 좁힌다.
 """
 
+import difflib
 import json
 import os
 import re
@@ -42,6 +47,42 @@ NORMALIZER_DIRS = {
 
 MODEL = "claude-opus-4-5"
 MAX_TOKENS = 4096
+
+WIKI_CATEGORIES = {
+    "requirements": "무엇을 만들어야 하는가 (요구사항, 유저스토리, 검증기준)",
+    "design": "어떻게 생겼는가 (아키텍처, 시스템설계, API스펙)",
+    "development": "어떻게 구현하는가 (구현가이드, 기술결정, 트러블슈팅)",
+    "records": "언제 무엇을 왜 결정했는가 (회의록, 회고, 결정이유)",
+    "domain": "이 분야에서 알아야 할 지식 (도메인지식, 외부기술리서치)",
+    "etc": "위 카테고리에 속하지 않는 내용",
+}
+
+WIKI_CATEGORIES_DESC = "\n".join(
+    f"- {k}: {v}" for k, v in WIKI_CATEGORIES.items()
+)
+
+SOURCE_GROUNDED_RULES = """
+## 절대 규칙 — SOURCE-GROUNDED (반드시 준수)
+
+당신은 source를 wiki 페이지로 옮기는 서기(scribe)입니다. 지식을 생성하는 것이 아닙니다.
+
+[허용]
+- source 텍스트를 그대로 옮기거나 문장을 다듬는 것
+- source 내 중복 제거
+- source 내 여러 섹션을 하나로 묶어 정리하는 것
+- source에 명시된 사실을 간결하게 요약하는 것
+
+[절대 금지]
+- source에 없는 정의, 설명, 예시, 배경지식 추가
+- "일반적으로", "보통", "~라고 알려져 있다" 같은 일반론 문장 작성
+- source에 언급되지 않은 관련 개념, 도구, 기술 언급
+- source에 없는 섹션 제목 생성
+- LLM이 알고 있는 사전 지식으로 내용을 보충하는 것
+
+[자가 검증]
+작성 후 각 문장에 대해 "이 내용이 source에 있는가?"를 확인하세요.
+없으면 삭제하세요.
+"""
 
 
 def _update_meta(state: IngestState) -> None:
@@ -76,7 +117,6 @@ def _extract_json(text: str) -> Any:
     match = re.search(r"```json\s*([\s\S]+?)\s*```", text)
     if match:
         return json.loads(match.group(1))
-    # 코드 블록 없이 바로 JSON인 경우
     return json.loads(text.strip())
 
 
@@ -84,26 +124,16 @@ def _extract_json(text: str) -> Any:
 
 
 def _normalize_page_name(name: str) -> str:
-    """
-    페이지명 정규화 규칙:
-    - 소문자 + 하이픈
-    - 축약어(2자 이하 또는 전체 대문자)는 대소문자 유지
-    - 띄어쓰기 → 하이픈
-    - 특수문자 제거
-    """
     name = name.strip()
-    # 특수문자(하이픈, 공백 제외) 제거
     name = re.sub(r"[^\w\s\-]", "", name)
-    # 공백 → 하이픈
     name = re.sub(r"\s+", "-", name)
-    # 연속 하이픈 → 단일 하이픈
     name = re.sub(r"-+", "-", name)
     name = name.lower().strip("-")
     return name
 
 
 def _find_similar_page(page_name: str, directory: Path) -> Path | None:
-    """편집 거리 기반 유사 페이지 탐색 (간단 구현: 정규화 이름 비교)."""
+    """편집 거리 기반 유사 페이지 탐색 (정규화 이름 비교)."""
     if not directory.exists():
         return None
     normalized = _normalize_page_name(page_name)
@@ -111,6 +141,84 @@ def _find_similar_page(page_name: str, directory: Path) -> Path | None:
         if _normalize_page_name(existing.stem) == normalized:
             return existing
     return None
+
+
+# ── 섹션 텍스트 추출 ───────────────────────────────────────
+
+
+def _extract_section_text(source_md: str, section_names: list[str]) -> str:
+    """
+    source_md에서 특정 섹션들의 텍스트를 추출한다.
+    section_names: Step B에서 이 페이지에 할당된 섹션 heading 목록.
+    매칭 실패 시 source_md 앞부분을 반환.
+    """
+    if not section_names:
+        return source_md[:6000]
+
+    lines = source_md.splitlines()
+    heading_pattern = re.compile(r"^#{1,6}\s+(.+)$")
+
+    # 모든 heading 위치
+    headings: list[tuple[int, str]] = []
+    for i, line in enumerate(lines):
+        m = heading_pattern.match(line)
+        if m:
+            headings.append((i, m.group(1).lower()))
+
+    extracted: list[str] = []
+    targets = [s.lower().strip() for s in section_names]
+
+    for target in targets:
+        matched = False
+        for j, (start_idx, heading_text) in enumerate(headings):
+            if target in heading_text or heading_text in target:
+                end_idx = headings[j + 1][0] if j + 1 < len(headings) else len(lines)
+                extracted.append("\n".join(lines[start_idx:end_idx]))
+                matched = True
+                break
+        if not matched:
+            # heading으로 못 찾으면 키워드 검색으로 전후 컨텍스트 추출
+            for i, line in enumerate(lines):
+                if target[:20] in line.lower():
+                    start = max(0, i - 2)
+                    end = min(len(lines), i + 50)
+                    extracted.append("\n".join(lines[start:end]))
+                    break
+
+    if not extracted:
+        return source_md[:6000]
+
+    result = "\n\n---\n\n".join(extracted)
+    return result[:6000]
+
+
+# ── 추가된 내용 추출 (Fix 1) ───────────────────────────────
+
+
+def _extract_new_content(before: str, after: str) -> str:
+    """
+    before → after 변경에서 새로 추가된 라인만 추출한다.
+    frontmatter는 비교에서 제외.
+    신규 페이지(before 비어 있음)는 after 전체를 반환.
+    """
+    fm_pattern = re.compile(r"^---[\s\S]+?---\n+")
+    before_body = fm_pattern.sub("", before).strip()
+    after_body = fm_pattern.sub("", after).strip()
+
+    if not before_body:
+        return after_body  # 신규 페이지 — 전체가 새 내용
+
+    diff = difflib.unified_diff(
+        before_body.splitlines(),
+        after_body.splitlines(),
+        lineterm="",
+    )
+    added = [
+        line[1:]
+        for line in diff
+        if line.startswith("+") and not line.startswith("+++")
+    ]
+    return "\n".join(added)
 
 
 # ── Wiki 페이지 포맷 ───────────────────────────────────────
@@ -125,7 +233,7 @@ def _read_wiki_page(path: Path) -> str:
 def _write_wiki_page(
     path: Path,
     title: str,
-    page_type: str,
+    category: str,
     source_ids: list[str],
     content: str,
 ) -> None:
@@ -135,7 +243,7 @@ def _write_wiki_page(
     frontmatter = (
         f"---\n"
         f"title: {title}\n"
-        f"type: {page_type}\n"
+        f"category: {category}\n"
         f"sources: {sources_yaml}\n"
         f"updated: {today}\n"
         f"---\n\n"
@@ -173,8 +281,6 @@ def _step_a_understand(client: anthropic.Anthropic, source_md: str) -> dict:
 ```json
 {{
   "summary": "1~3문장 요약",
-  "entities": ["엔티티1", "엔티티2"],
-  "concepts": ["개념1", "개념2"],
   "key_claims": ["주요 주장1", "주요 주장2"],
   "sections": [
     {{
@@ -199,24 +305,16 @@ def _step_a1_write_source_page(
     source_md: str,
     understanding: dict,
 ) -> str:
-    """
-    wiki/sources/{source_id}.md 를 생성한다.
-    소스 원문을 구조화·정리한 페이지. 외부 지식 추가 없이 source 그대로를 정리한다.
-    반환: 생성된 파일 경로 문자열
-    """
     prompt = f"""다음 문서를 wiki 소스 요약 페이지로 정리하세요.
 
 ## 절대 규칙 — SOURCE-GROUNDED
 - source 텍스트만 사용하세요. 한 글자도 외부 지식을 추가하지 마세요.
 - 문서의 구조(섹션, 순서)를 최대한 유지하세요.
 - 중복 제거, 문장 다듬기는 허용합니다.
-- source에 없는 내용이 포함되었다면 삭제하세요.
 - 결과는 "이 소스가 무엇을 담고 있는가"를 한눈에 볼 수 있는 페이지여야 합니다.
 
 소스 분석:
 - 요약: {understanding.get("summary", "")}
-- 주요 엔티티: {understanding.get("entities", [])}
-- 주요 개념: {understanding.get("concepts", [])}
 - 핵심 주장: {understanding.get("key_claims", [])}
 
 소스 원문:
@@ -249,8 +347,6 @@ def _step_b_find_affected(
     understanding: dict,
     index_content: str,
 ) -> dict:
-    entities = understanding.get("entities", [])
-    concepts = understanding.get("concepts", [])
     summary = understanding.get("summary", "")
     sections = understanding.get("sections", [])
 
@@ -261,11 +357,8 @@ def _step_b_find_affected(
 중요 규칙:
 - source에 없는 주제를 새로 꺼내지 마세요.
 - 동일 상위 주제를 다루는 섹션들은 가능한 한 하나의 페이지 후보로 모으세요.
-- 독립적으로 정의해야 하는 개념/엔티티만 별도 후보로 분리하세요.
 
 소스 요약: {summary}
-주요 엔티티: {entities}
-주요 개념: {concepts}
 섹션 정보: {json.dumps(sections, ensure_ascii=False)}
 
 wiki index:
@@ -274,7 +367,7 @@ wiki index:
 응답 형식:
 ```json
 {{
-  "candidates": ["wiki/entities/openai.md", "wiki/concepts/rlhf.md"]
+  "candidates": ["wiki/domain/kubernetes.md", "wiki/development/ci-cd.md"]
 }}
 ```
 후보가 없으면 candidates를 빈 배열로 반환하세요.
@@ -283,7 +376,7 @@ wiki index:
     candidates_data = _extract_json(resp_1)
     candidates: list[str] = candidates_data.get("candidates", [])
 
-    # 2단계: 후보 페이지 본문 읽기 → 최종 확정
+    # 2단계: 후보 페이지 본문 읽기 → 최종 확정 + 페이지별 담당 섹션 결정
     candidate_contents = {}
     for candidate in candidates:
         path = Path(candidate)
@@ -291,18 +384,19 @@ wiki index:
             candidate_contents[candidate] = path.read_text(encoding="utf-8")[:3000]
 
     prompt_2 = f"""소스 분석 결과와 후보 페이지 내용을 보고,
-실제로 수정/보강이 필요한 페이지와 새로 만들어야 할 페이지를 확정해주세요.
+실제로 수정/보강이 필요한 페이지와 새로 만들어야 할 페이지를 확정하고,
+각 페이지가 담당할 source 섹션을 지정해주세요.
 
 중요 규칙:
-- source-grounded 원칙을 지키세요. source에 없는 배경지식을 추가하지 마세요.
+- source-grounded 원칙. source에 없는 배경지식을 추가하지 마세요.
 - 결과 page 수는 가능한 최소로 유지하세요.
-- 같은 상위 주제를 설명하는 섹션은 하나의 페이지로 정리하세요.
-- 다만 독립적으로 정의되어야 하는 개념/엔티티는 별도 페이지 또는 기존 페이지로 라우팅할 수 있습니다.
-- "파일 하나당 페이지 하나"로 기계적으로 나누지 마세요.
+- 같은 상위 주제의 섹션은 하나의 페이지로 묶으세요.
+- 신규 페이지 경로는 아래 카테고리 중 가장 적합한 곳에 생성하세요.
+
+## wiki 카테고리
+{WIKI_CATEGORIES_DESC}
 
 소스 요약: {summary}
-주요 엔티티: {entities}
-주요 개념: {concepts}
 섹션 정보: {json.dumps(sections, ensure_ascii=False)}
 
 후보 페이지 내용:
@@ -311,13 +405,16 @@ wiki index:
 응답 형식:
 ```json
 {{
-  "affected_pages": ["wiki/entities/openai.md"],
+  "affected_pages": ["wiki/domain/kubernetes.md"],
   "new_pages": [
-    {{"path": "wiki/entities/gpt-4.md", "type": "entity", "title": "GPT-4"}},
-    {{"path": "wiki/concepts/rlhf.md", "type": "concept", "title": "RLHF"}}
+    {{"path": "wiki/domain/gitops.md", "category": "domain", "title": "GitOps"}}
   ],
+  "page_sections": {{
+    "wiki/domain/kubernetes.md": ["Kubernetes 개요", "컨테이너 오케스트레이션"],
+    "wiki/domain/gitops.md": ["GitOps 원칙", "ArgoCD 설정"]
+  }},
   "routing_notes": [
-    {{"source_section": "섹션명", "target_page": "wiki/entities/openai.md", "reason": "같은 상위 주제로 묶음"}}
+    {{"source_section": "섹션명", "target_page": "wiki/domain/kubernetes.md", "reason": "같은 상위 주제로 묶음"}}
   ]
 }}
 ```
@@ -333,27 +430,43 @@ def _step_c_validate_pages(affected: dict) -> dict:
     """
     new_pages의 path를 정규화하고, 이미 존재하는 유사 페이지가 있으면
     신규 생성 대신 해당 페이지를 affected_pages로 이동.
+    page_sections도 경로 변경에 맞춰 갱신.
     """
     validated_affected = list(affected.get("affected_pages", []))
     validated_new: list[dict] = []
+    page_sections: dict[str, list[str]] = dict(affected.get("page_sections", {}))
+    updated_sections: dict[str, list[str]] = {
+        k: v for k, v in page_sections.items() if k in validated_affected
+    }
 
     for page_info in affected.get("new_pages", []):
         path = Path(page_info["path"])
         normalized_name = _normalize_page_name(path.stem)
         normalized_path = path.parent / f"{normalized_name}.md"
 
-        # 유사 페이지 탐색
+        original_path_str = page_info["path"]
         similar = _find_similar_page(path.stem, path.parent)
         if similar and str(similar) not in validated_affected:
             validated_affected.append(str(similar))
+            # 섹션 정보 이전
+            if original_path_str in page_sections:
+                updated_sections[str(similar)] = page_sections[original_path_str]
         elif not normalized_path.exists():
             page_info["path"] = str(normalized_path)
             validated_new.append(page_info)
+            if original_path_str in page_sections:
+                updated_sections[str(normalized_path)] = page_sections[original_path_str]
         else:
             if str(normalized_path) not in validated_affected:
                 validated_affected.append(str(normalized_path))
+            if original_path_str in page_sections:
+                updated_sections[str(normalized_path)] = page_sections[original_path_str]
 
-    return {"affected_pages": validated_affected, "new_pages": validated_new}
+    return {
+        "affected_pages": validated_affected,
+        "new_pages": validated_new,
+        "page_sections": updated_sections,
+    }
 
 
 # ── Step D — 페이지별 변경 계획 ────────────────────────────
@@ -362,39 +475,20 @@ def _step_c_validate_pages(affected: dict) -> dict:
 def _step_d_plan_page(
     client: anthropic.Anthropic,
     page_path: str,
-    source_md: str,
+    relevant_source_md: str,
     understanding: dict,
     is_new: bool,
     page_info: dict | None = None,
 ) -> dict:
+    """
+    relevant_source_md: 이 페이지가 담당하는 source 섹션 텍스트.
+    전체 source가 아닌 담당 섹션만 전달해 LLM 컨텍스트를 좁힌다.
+    """
     existing_content = _read_wiki_page(Path(page_path))
 
-    SOURCE_GROUNDED_RULES = """
-## 절대 규칙 — SOURCE-GROUNDED (반드시 준수)
-
-당신은 source를 wiki 페이지로 옮기는 서기(scribe)입니다. 지식을 생성하는 것이 아닙니다.
-
-[허용]
-- source 텍스트를 그대로 옮기거나 문장을 다듬는 것
-- source 내 중복 제거
-- source 내 여러 섹션을 하나로 묶어 정리하는 것
-- source에 명시된 사실을 간결하게 요약하는 것
-
-[절대 금지]
-- source에 없는 정의, 설명, 예시, 배경지식 추가
-- "일반적으로", "보통", "~라고 알려져 있다" 같은 일반론 문장 작성
-- source에 언급되지 않은 관련 개념, 도구, 기술 언급
-- source에 없는 섹션 제목 생성
-- LLM이 알고 있는 사전 지식으로 내용을 보충하는 것
-
-[자가 검증]
-작성 후 각 문장에 대해 "이 내용이 source에 있는가?"를 확인하세요.
-없으면 삭제하세요.
-"""
-
     if is_new:
-        title = page_info.get("title", Path(page_path).stem)
-        page_type = page_info.get("type", "entity")
+        title = page_info.get("title", Path(page_path).stem) if page_info else Path(page_path).stem
+        category = page_info.get("category", "etc") if page_info else "etc"
         prompt = f"""{SOURCE_GROUNDED_RULES}
 
 ---
@@ -403,20 +497,20 @@ def _step_d_plan_page(
 
 페이지 경로: {page_path}
 페이지 제목: {title}
-페이지 유형: {page_type}
+카테고리: {category}
 
-소스 내용 (이 범위에서만 작성):
-{source_md[:6000]}
+이 페이지가 담당하는 source 섹션 (이 범위에서만 작성):
+{relevant_source_md}
 
-소스 분석:
-{json.dumps(understanding, ensure_ascii=False)}
+소스 전체 요약 (컨텍스트 참고용):
+{json.dumps({"summary": understanding.get("summary"), "key_claims": understanding.get("key_claims")}, ensure_ascii=False)}
 
 응답 형식:
 ```json
 {{
   "page": "{page_path}",
   "title": "{title}",
-  "type": "{page_type}",
+  "category": "{category}",
   "content": "# {title}\\n\\n페이지 본문 (markdown)",
   "paragraph_actions": [
     {{"source_paragraph_index": 0, "action": "반영됨", "wiki_section": "개요"}}
@@ -441,18 +535,18 @@ def _step_d_plan_page(
 기존 페이지 내용:
 {existing_content[:4000]}
 
-소스 내용 (이 범위에서만 갱신):
-{source_md[:4000]}
+이 페이지가 담당하는 source 섹션 (이 범위에서만 갱신):
+{relevant_source_md}
 
-소스 분석:
-{json.dumps(understanding, ensure_ascii=False)}
+소스 전체 요약 (컨텍스트 참고용):
+{json.dumps({"summary": understanding.get("summary"), "key_claims": understanding.get("key_claims")}, ensure_ascii=False)}
 
 응답 형식:
 ```json
 {{
   "page": "{page_path}",
   "title": "기존 제목 유지",
-  "type": "기존 type 유지",
+  "category": "기존 category 유지",
   "content": "갱신된 전체 페이지 본문 (frontmatter 제외, markdown)",
   "paragraph_actions": [
     {{"source_paragraph_index": 0, "action": "반영됨", "wiki_section": "개요"}},
@@ -474,42 +568,48 @@ def _step_e_execute(
     source_id: str,
     source_md: str,
     source_type: str,
-) -> tuple[list[str], list[str], list[dict]]:
+) -> tuple[list[str], list[str], list[dict], dict[str, dict]]:
     """
-    계획대로 wiki 페이지를 쓰고, 매핑 정보를 수집한다.
-    반환: (created_pages, updated_pages, mappings)
+    계획대로 wiki 페이지를 쓰고, 매핑 정보와 before/after 스냅샷을 수집한다.
+    반환: (created_pages, updated_pages, mappings, page_snapshots)
+    page_snapshots: {page_path: {"before": str, "after": str}}
     """
     created: list[str] = []
     updated: list[str] = []
     all_mappings: list[dict] = []
+    page_snapshots: dict[str, dict] = {}
 
     paragraphs = [p.strip() for p in source_md.split("\n\n") if p.strip()]
 
     for plan in plans:
         page_path = Path(plan["page"])
         title = plan.get("title", page_path.stem)
-        page_type = plan.get("type", "entity")
+        category = plan.get("category", "etc")
         content = plan.get("content", "")
 
         is_new = not page_path.exists()
 
+        # before 스냅샷 캡처
+        before_content = page_path.read_text(encoding="utf-8") if not is_new else ""
+
         # sources 목록 갱신
         existing_sources: list[str] = []
         if not is_new:
-            existing_content = page_path.read_text(encoding="utf-8")
-            existing_sources = _extract_frontmatter_sources(existing_content)
-
+            existing_sources = _extract_frontmatter_sources(before_content)
         if source_id not in existing_sources:
             existing_sources.append(source_id)
 
-        _write_wiki_page(page_path, title, page_type, existing_sources, content)
+        _write_wiki_page(page_path, title, category, existing_sources, content)
+
+        # after 스냅샷 캡처
+        after_content = page_path.read_text(encoding="utf-8")
+        page_snapshots[str(page_path)] = {"before": before_content, "after": after_content}
 
         if is_new:
             created.append(str(page_path))
         else:
             updated.append(str(page_path))
 
-        # 매핑 정보 수집
         for action_info in plan.get("paragraph_actions", []):
             idx = action_info.get("source_paragraph_index", 0)
             preview = paragraphs[idx][:100] if idx < len(paragraphs) else ""
@@ -538,7 +638,7 @@ def _step_e_execute(
             )
 
     all_mappings.sort(key=lambda x: x["source_paragraph_index"])
-    return created, updated, all_mappings
+    return created, updated, all_mappings, page_snapshots
 
 
 # ── Step E-1 — 검토 에이전트 ──────────────────────────────
@@ -549,45 +649,51 @@ REVIEW_MODEL = "claude-haiku-4-5-20251001"
 
 def _step_e1_review(
     client: anthropic.Anthropic,
+    page_snapshots: dict[str, dict],
+    page_source_map: dict[str, str],
     source_md: str,
-    wiki_pages: list[str],
     source_id: str,
 ) -> dict:
     """
-    생성/갱신된 wiki 페이지 문장을 source 원문과 비교해
-    source에 없는 내용이 포함됐는지 검토한다.
+    이번 ingest에서 새로 추가된 내용만 source-grounded 검토한다.
+    기존 페이지의 기존 내용은 검토 대상에서 제외한다.
 
-    반환: review 결과 dict (output/meta/{source_id}_review.json 에 저장)
+    page_snapshots: {page_path: {"before": str, "after": str}}
+    page_source_map: {page_path: 담당 source 섹션 텍스트}
     """
     violations: list[dict] = []
+    pages_reviewed: list[str] = []
 
-    for page_path_str in wiki_pages:
-        page_path = Path(page_path_str)
-        if not page_path.exists():
-            continue
+    for page_path_str, snapshot in page_snapshots.items():
+        new_content = _extract_new_content(snapshot["before"], snapshot["after"])
+        if not new_content.strip():
+            continue  # 변경 없음 — 검토 생략
 
-        wiki_content = page_path.read_text(encoding="utf-8")
-        # frontmatter 제거
-        wiki_body = re.sub(r"^---[\s\S]+?---\n+", "", wiki_content).strip()
+        pages_reviewed.append(page_path_str)
+
+        # 이 페이지 담당 source 섹션 (없으면 전체 앞부분)
+        relevant_source = page_source_map.get(page_path_str, source_md[:6000])
 
         prompt = f"""당신은 source-grounded 검토자입니다.
-wiki 페이지의 각 문장이 아래 source 원문에 근거가 있는지 확인하세요.
+이번 ingest에서 wiki 페이지에 새로 추가된 문장이 아래 source 섹션에 근거가 있는지 확인하세요.
 
 판단 기준:
-- source 원문에 해당 내용이 직접 언급되어 있으면 → 통과
-- source 원문에서 논리적으로 직접 도출 가능하면 → 통과
-- source에 없는 외부 지식, 일반론, 배경 설명이면 → 위반
+- source 섹션에 해당 내용이 직접 언급되어 있으면 → 통과
+- source 섹션에서 논리적으로 직접 도출 가능하면 → 통과
+- source 섹션에 없는 외부 지식, 일반론, 배경 설명이면 → 위반
 
-주의: 당신 자신의 외부 지식으로 판단하지 마세요.
-오직 아래 source 텍스트에 있는지 없는지만 판단하세요.
-
----
-SOURCE 원문:
-{source_md[:6000]}
+주의:
+- 당신 자신의 외부 지식으로 판단하지 마세요.
+- 오직 아래 SOURCE 섹션 텍스트에 있는지 없는지만 판단하세요.
+- 마크다운 헤딩(# 제목), 목록 기호(-), 포맷 관련 텍스트는 위반으로 보지 마세요.
 
 ---
-검토할 wiki 페이지 ({page_path_str}):
-{wiki_body[:3000]}
+SOURCE 섹션 (이 페이지가 담당하는 범위):
+{relevant_source}
+
+---
+이번 ingest에서 새로 추가된 내용 ({page_path_str}):
+{new_content[:3000]}
 
 ---
 응답 형식:
@@ -597,7 +703,7 @@ SOURCE 원문:
   "violations": [
     {{
       "sentence": "위반 문장 그대로",
-      "reason": "source에 없는 이유 한 줄"
+      "reason": "source 섹션에 없는 이유 한 줄"
     }}
   ],
   "passed": true
@@ -618,12 +724,11 @@ SOURCE 원문:
                     {"page": page_path_str, **v} for v in page_violations
                 )
         except Exception:
-            # 검토 실패는 ingest 전체를 막지 않음
             pass
 
     review = {
         "source_id": source_id,
-        "pages_reviewed": wiki_pages,
+        "pages_reviewed": pages_reviewed,
         "violations": violations,
         "passed": len(violations) == 0,
     }
@@ -644,9 +749,7 @@ def _step_e2_fix(
 ) -> None:
     """
     검토 에이전트가 발견한 위반 문장을 wiki 페이지에서 자동 제거한다.
-    페이지별로 위반 목록을 모아 LLM에게 수정 요청.
     """
-    # 페이지별 위반 그룹핑
     page_violations: dict[str, list[dict]] = {}
     for v in review.get("violations", []):
         page = v["page"]
@@ -658,7 +761,6 @@ def _step_e2_fix(
             continue
 
         wiki_content = page_path.read_text(encoding="utf-8")
-        # frontmatter 분리
         fm_match = re.match(r"^(---[\s\S]+?---\n+)", wiki_content)
         frontmatter = fm_match.group(1) if fm_match else ""
         wiki_body = wiki_content[len(frontmatter):]
@@ -693,7 +795,6 @@ def _step_e2_fix(
             fixed_body = msg.content[0].text.strip()  # type: ignore[union-attr]
             page_path.write_text(frontmatter + fixed_body + "\n", encoding="utf-8")
         except Exception:
-            # 수정 실패 시 원본 유지 (로그만)
             pass
 
 
@@ -720,7 +821,6 @@ def ingest_node(state: IngestState) -> IngestState:
     state.timings.ingest_started_at = time.time()
     _update_meta(state)
 
-    # Normalizer 출력 파일 경로 결정
     normalizer_dir = NORMALIZER_DIRS.get(state.source_type, Path("output/normalizer/web"))
     source_md_path = normalizer_dir / f"{state.source_id}.md"
 
@@ -738,52 +838,72 @@ def ingest_node(state: IngestState) -> IngestState:
         # Step A — 소스 이해
         understanding = _step_a_understand(client, source_md)
 
-        # Step A-1 — 소스 요약 페이지 생성 (wiki/sources/{source_id}.md)
+        # Step A-1 — 소스 요약 페이지 생성
         source_page = _step_a1_write_source_page(
             client, state.source_id, source_md, understanding
         )
 
-        # Step B
+        # Step B — 영향 페이지 파악 + 페이지별 담당 섹션 결정
         affected_raw = _step_b_find_affected(client, understanding, index_content)
 
-        # Step C
+        # Step C — 페이지 정체성 검증 (섹션 정보 포함)
         affected = _step_c_validate_pages(affected_raw)
 
-        # Step D — 영향 페이지별 계획
+        page_sections: dict[str, list[str]] = affected.get("page_sections", {})
+
+        # 페이지별 담당 source 텍스트 추출 (Fix 2+3)
+        page_source_map: dict[str, str] = {}
+        for page_path in affected.get("affected_pages", []) + [
+            p["path"] for p in affected.get("new_pages", [])
+        ]:
+            sections = page_sections.get(page_path, [])
+            page_source_map[page_path] = _extract_section_text(source_md, sections)
+
+        # Step D — 영향 페이지별 계획 (담당 섹션만 전달)
         plans: list[dict] = []
 
         for page_path in affected.get("affected_pages", []):
+            relevant_source = page_source_map.get(page_path, source_md[:6000])
             plan = _step_d_plan_page(
-                client, page_path, source_md, understanding, is_new=False
+                client, page_path, relevant_source, understanding, is_new=False
             )
             plans.append(plan)
 
         for page_info in affected.get("new_pages", []):
+            relevant_source = page_source_map.get(page_info["path"], source_md[:6000])
             plan = _step_d_plan_page(
                 client,
                 page_info["path"],
-                source_md,
+                relevant_source,
                 understanding,
                 is_new=True,
                 page_info=page_info,
             )
             plans.append(plan)
 
-        # Step E — 실행 + 매핑 생성
-        created, updated, mappings = _step_e_execute(
+        # Step E — 실행 + 매핑 + 스냅샷 생성
+        created, updated, mappings, page_snapshots = _step_e_execute(
             plans, state.source_id, source_md, state.source_type
         )
         _write_mapping(state.source_id, state.source_type, mappings)
 
-        # Step E-1 — 검토 에이전트 (source-grounded 위반 탐지)
-        all_wiki_pages = [source_page] + created + updated
-        review = _step_e1_review(client, source_md, all_wiki_pages, state.source_id)
+        # 소스 요약 페이지 스냅샷 추가 (E-1 검토 대상)
+        source_page_path = Path(source_page)
+        if source_page_path.exists():
+            source_page_content = source_page_path.read_text(encoding="utf-8")
+            page_snapshots[source_page] = {"before": "", "after": source_page_content}
+            page_source_map[source_page] = source_md[:6000]
+
+        # Step E-1 — 검토 에이전트 (추가된 내용만, 담당 섹션 기준)
+        review = _step_e1_review(
+            client, page_snapshots, page_source_map, source_md, state.source_id
+        )
 
         # Step E-2 — 위반 자동 수정
         if not review["passed"]:
             _step_e2_fix(client, review)
 
-        # Step F — IngestState 갱신 (소스 요약 페이지 포함)
+        # Step F — IngestState 갱신
         state.created_wiki_pages = [source_page] + created
         state.updated_wiki_pages = updated
         state.stages.ingest = "done"
