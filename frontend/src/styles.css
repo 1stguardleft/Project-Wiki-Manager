@@ -371,6 +371,13 @@ code {
   gap: 12px;
 }
 
+.hero__meta-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .add-row,
 .source-tabs,
 .mapping-legend,

@@ -121,9 +121,13 @@ project-wiki-manager/
 ├── wiki/
 │   ├── index.md
 │   ├── log.md
-│   ├── sources/                      ← 소스 요약 페이지 (소스 1개 = 1파일)
-│   ├── entities/
-│   └── concepts/
+│   ├── sources/                      ← 소스 요약 페이지 (소스 1개 = 1파일, 자동 생성)
+│   ├── requirements/                 ← 무엇을 만들어야 하는가
+│   ├── design/                       ← 어떻게 생겼는가
+│   ├── development/                  ← 어떻게 구현하는가
+│   ├── records/                      ← 언제, 무엇을, 왜 결정했는가
+│   ├── domain/                       ← 이 분야에서 알아야 할 지식
+│   └── etc/                          ← 분류 불명확한 내용
 └── raw/                              ← 원본 소스 파일 (불변)
 ```
 
