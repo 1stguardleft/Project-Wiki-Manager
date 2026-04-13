@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mv /Users/lstguardleft/workspace/project-wiki-manager/.claude/docs/requirement.md /Users/lstguardleft/workspace/project-wiki-manager/.claude/docs/requirements/common.md)",
+      "Bash(rm /Users/lstguardleft/workspace/project-wiki-manager/.claude/docs/design.md)",
+      "Bash(cat)",
+      "Bash(git init:*)",
+      "Bash(git remote:*)",
+      "Bash(git branch:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
