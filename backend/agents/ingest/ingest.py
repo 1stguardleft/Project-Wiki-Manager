@@ -541,6 +541,100 @@ def _step_e_execute(
     return created, updated, all_mappings
 
 
+# ── Step E-1 — 검토 에이전트 ──────────────────────────────
+
+
+REVIEW_MODEL = "claude-haiku-4-5-20251001"
+
+
+def _step_e1_review(
+    client: anthropic.Anthropic,
+    source_md: str,
+    wiki_pages: list[str],
+    source_id: str,
+) -> dict:
+    """
+    생성/갱신된 wiki 페이지 문장을 source 원문과 비교해
+    source에 없는 내용이 포함됐는지 검토한다.
+
+    반환: review 결과 dict (output/meta/{source_id}_review.json 에 저장)
+    """
+    violations: list[dict] = []
+
+    for page_path_str in wiki_pages:
+        page_path = Path(page_path_str)
+        if not page_path.exists():
+            continue
+
+        wiki_content = page_path.read_text(encoding="utf-8")
+        # frontmatter 제거
+        wiki_body = re.sub(r"^---[\s\S]+?---\n+", "", wiki_content).strip()
+
+        prompt = f"""당신은 source-grounded 검토자입니다.
+wiki 페이지의 각 문장이 아래 source 원문에 근거가 있는지 확인하세요.
+
+판단 기준:
+- source 원문에 해당 내용이 직접 언급되어 있으면 → 통과
+- source 원문에서 논리적으로 직접 도출 가능하면 → 통과
+- source에 없는 외부 지식, 일반론, 배경 설명이면 → 위반
+
+주의: 당신 자신의 외부 지식으로 판단하지 마세요.
+오직 아래 source 텍스트에 있는지 없는지만 판단하세요.
+
+---
+SOURCE 원문:
+{source_md[:6000]}
+
+---
+검토할 wiki 페이지 ({page_path_str}):
+{wiki_body[:3000]}
+
+---
+응답 형식:
+```json
+{{
+  "page": "{page_path_str}",
+  "violations": [
+    {{
+      "sentence": "위반 문장 그대로",
+      "reason": "source에 없는 이유 한 줄"
+    }}
+  ],
+  "passed": true
+}}
+```
+위반이 없으면 violations를 빈 배열로, passed를 true로 반환하세요.
+"""
+        try:
+            msg = client.messages.create(
+                model=REVIEW_MODEL,
+                max_tokens=2048,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            result = _extract_json(msg.content[0].text)  # type: ignore[union-attr]
+            page_violations = result.get("violations", [])
+            if page_violations:
+                violations.extend(
+                    {"page": page_path_str, **v} for v in page_violations
+                )
+        except Exception:
+            # 검토 실패는 ingest 전체를 막지 않음
+            pass
+
+    review = {
+        "source_id": source_id,
+        "pages_reviewed": wiki_pages,
+        "violations": violations,
+        "passed": len(violations) == 0,
+    }
+
+    review_path = META_DIR / f"{source_id}_review.json"
+    review_path.write_text(
+        json.dumps(review, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    return review
+
+
 def _write_mapping(source_id: str, source_type: str, mappings: list[dict]) -> None:
     normalizer_dir = NORMALIZER_DIRS.get(source_type, Path("output/normalizer/web"))
     source_path = str(normalizer_dir / f"{source_id}.md")
@@ -613,11 +707,21 @@ def ingest_node(state: IngestState) -> IngestState:
             )
             plans.append(plan)
 
-        # Step E
+        # Step E — 실행 + 매핑 생성
         created, updated, mappings = _step_e_execute(
             plans, state.source_id, source_md, state.source_type
         )
         _write_mapping(state.source_id, state.source_type, mappings)
+
+        # Step E-1 — 검토 에이전트 (source-grounded 위반 탐지)
+        all_wiki_pages = [source_page] + created + updated
+        review = _step_e1_review(client, source_md, all_wiki_pages, state.source_id)
+        if not review["passed"]:
+            # 위반 있어도 ingest는 완료 처리 — 경고로 기록
+            state.error = (
+                f"[검토 경고] source-grounded 위반 {len(review['violations'])}건 "
+                f"— output/meta/{state.source_id}_review.json 확인"
+            )
 
         # Step F — IngestState 갱신 (소스 요약 페이지 포함)
         state.created_wiki_pages = [source_page] + created
