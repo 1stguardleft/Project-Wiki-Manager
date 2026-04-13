@@ -55,6 +55,14 @@ export async function fetchCompare(sourceId: string, wikiPath: string): Promise<
   return response.json() as Promise<CompareResponse>;
 }
 
+export async function listFiles(base: string = "wiki"): Promise<string[]> {
+  const query = new URLSearchParams({ base });
+  const response = await fetch(`${API_BASE}/files?${query.toString()}`);
+  if (!response.ok) throw new Error(await response.text());
+  const payload = (await response.json()) as { files: string[] };
+  return payload.files;
+}
+
 export async function uploadLocalFile(file: File): Promise<{ path: string; filename: string }> {
   const formData = new FormData();
   formData.append("file", file);

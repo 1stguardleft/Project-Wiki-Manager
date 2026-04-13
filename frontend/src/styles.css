@@ -42,6 +42,200 @@ code {
 
 #root {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── 앱 네비게이션 ─────────────────────────────────────── */
+
+.app-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 24px;
+  height: 52px;
+  background: rgba(14, 18, 27, 0.9);
+  border-bottom: 1px solid var(--panel-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+.app-nav__logo {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+.app-nav__tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.app-nav__tab {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+
+.app-nav__tab:hover {
+  color: #f8f5ef;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.app-nav__tab--active {
+  color: #f8f5ef;
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: 500;
+}
+
+/* ── Wiki 탐색기 ───────────────────────────────────────── */
+
+.wiki-explorer {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  height: calc(100vh - 52px);
+  overflow: hidden;
+}
+
+.wiki-explorer__sidebar {
+  background: rgba(14, 18, 27, 0.6);
+  border-right: 1px solid var(--panel-border);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.wiki-explorer__sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--panel-border);
+  position: sticky;
+  top: 0;
+  background: rgba(14, 18, 27, 0.9);
+}
+
+.wiki-explorer__sidebar-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.wiki-explorer__error {
+  color: var(--bad);
+  font-size: 0.88rem;
+  padding: 12px 16px;
+}
+
+.wiki-explorer__main {
+  overflow-y: auto;
+  background: rgba(16, 20, 30, 0.5);
+}
+
+.wiki-explorer__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.wiki-explorer__viewer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.wiki-explorer__viewer-header {
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--panel-border);
+  position: sticky;
+  top: 0;
+  background: rgba(14, 18, 27, 0.9);
+  backdrop-filter: blur(8px);
+}
+
+.wiki-explorer__viewer-path {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.wiki-explorer__viewer-body {
+  padding: 24px;
+  margin: 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: rgba(248, 245, 239, 0.88);
+  white-space: pre-wrap;
+  word-break: break-word;
+  flex: 1;
+}
+
+/* ── 파일 트리 ─────────────────────────────────────────── */
+
+.file-tree {
+  padding: 8px 0;
+  font-size: 0.85rem;
+}
+
+.tree-folder,
+.tree-file {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  text-align: left;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tree-folder:hover,
+.tree-file:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #f8f5ef;
+}
+
+.tree-folder {
+  font-weight: 500;
+  color: rgba(248, 245, 239, 0.75);
+}
+
+.tree-file--active {
+  background: rgba(248, 142, 94, 0.15) !important;
+  color: var(--accent) !important;
+}
+
+.tree-icon {
+  flex-shrink: 0;
+  font-style: normal;
+}
+
+.tree-empty {
+  color: var(--muted);
+  font-size: 0.85rem;
+  padding: 16px;
 }
 
 .shell {
