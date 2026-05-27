@@ -1,0 +1,12 @@
+# edges.yaml — typed relationships in wiki/graph/edges.jsonl
+# Each edge: {from, to, type, confidence?, evidence?}
+
+edge_types:
+  references:     { symmetric: false, desc: "A references B" }
+  relates_to:     { symmetric: true,  desc: "A and B are related" }
+  duplicate_of:   { symmetric: true,  desc: "A is a duplicate of B" }
+  merged_from:    { symmetric: false, desc: "page A was merged from source B" }
+  supersedes:     { symmetric: false, desc: "A supersedes (replaces) B" }
+  conflicts_with: { symmetric: true,  desc: "A conflicts with B" }
+
+confidence_values: [low, medium, high]

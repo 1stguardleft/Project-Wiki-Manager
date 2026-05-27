@@ -7,7 +7,25 @@
       "Bash(git init:*)",
       "Bash(git remote:*)",
       "Bash(git branch:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(rtk find *)",
+      "Bash(rtk ls *)",
+      "Bash(/bin/ls -la backend)",
+      "Bash(/bin/ls -la frontend)",
+      "Bash(/bin/ls app/agents)",
+      "Bash(/bin/ls app/services)",
+      "Bash(/bin/ls app/api)",
+      "Bash(rtk grep *)",
+      "Bash(rtk read *)",
+      "Bash(rtk curl *)",
+      "Bash(/bin/ls app/schema)",
+      "Bash(rtk npm *)",
+      "Bash(/bin/ls app/models)",
+      "Bash(python3 -m json.tool)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('count:',len\\(d['files']\\)\\); print\\('v3:',[f for f in d['files'] if 'v3' in f['path']]\\)\")",
+      "Bash(python3 -c ' *)",
+      "Read(//private/tmp/**)",
+      "Bash(python3 -c \"print\\(open\\('/tmp/b2.json'\\).read\\(\\)\\)\")"
     ]
   }
 }

@@ -1,0 +1,21 @@
+# Python
+backend/.venv/
+__pycache__/
+*.pyc
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Runtime data (regenerated)
+.chroma/
+
+# OS
+.DS_Store
+
+# Local env / secrets — never commit
+.env
+*.env
+backend/.env
+!*.env.example
+!.env.example

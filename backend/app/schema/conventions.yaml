@@ -1,0 +1,24 @@
+# conventions.yaml — naming, layout and SDLC phase mapping.
+
+# SDLC phase -> wiki subdirectory (Waterfall order)
+sdlc_phases:
+  requirements:   01-requirements
+  design:         02-design
+  implementation: 03-implementation
+  test:           04-test
+  deployment:     05-deployment
+  operation:      06-operation
+
+entities_dir: _entities
+
+# slug: lowercase latin / digits / Hangul, hyphen-separated
+slug_pattern: "^[a-z0-9가-힣]+(-[a-z0-9가-힣]+)*$"
+slug_max_words: 6
+
+# stop words removed when generating a slug from a title
+stop_words: [the, a, an, of, to, for, and, or, in, on, with, "정의서", "문서"]
+
+frontmatter_required: [title, slug, type, status]
+
+# wikilink syntax: [[slug]]
+wikilink_pattern: "\\[\\[([a-z0-9가-힣-]+)\\]\\]"

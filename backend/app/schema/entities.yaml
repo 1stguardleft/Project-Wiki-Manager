@@ -1,0 +1,30 @@
+# entities.yaml — page contract for the SDLC wiki.
+#
+# Two page types:
+#   deliverable — an SDLC artifact, lives under a phase directory (wiki/0N-*/)
+#   entity      — a cross-cutting term/component/concept, lives in wiki/_entities/
+#
+# Field attributes: type, required, default, values (enum).
+
+deliverable:
+  fields:
+    title:        { type: str, required: true }
+    slug:         { type: str, required: true }
+    type:         { type: enum, values: [deliverable, entity], required: true, default: deliverable }
+    sdlc_phase:   { type: enum, values: [requirements, design, implementation, test, deployment, operation], required: true }
+    tags:         { type: list_str, default: [] }
+    status:       { type: enum, values: [draft, active, superseded], required: true, default: active }
+    updated:      { type: date }
+    source_count: { type: int, default: 0 }
+    sources:      { type: list_str, default: [] }
+
+entity:
+  fields:
+    title:        { type: str, required: true }
+    slug:         { type: str, required: true }
+    type:         { type: enum, values: [deliverable, entity], required: true, default: entity }
+    tags:         { type: list_str, default: [] }
+    status:       { type: enum, values: [draft, active, superseded], required: true, default: active }
+    updated:      { type: date }
+    source_count: { type: int, default: 0 }
+    sources:      { type: list_str, default: [] }
