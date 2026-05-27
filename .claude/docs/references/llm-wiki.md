@@ -1,63 +1,75 @@
-LLM Wiki
-A pattern for building personal knowledge bases using LLMs.
+# LLM Wiki
 
-This is an idea file, it is designed to be copy pasted to your own LLM Agent (e.g. OpenAI Codex, Claude Code, OpenCode / Pi, or etc.). Its goal is to communicate the high level idea, but your agent will build out the specifics in collaboration with you.
+LLM을 활용해 개인 지식 베이스를 구축하는 패턴.
 
-The core idea
-Most people's experience with LLMs and documents looks like RAG: you upload a collection of files, the LLM retrieves relevant chunks at query time, and generates an answer. This works, but the LLM is rediscovering knowledge from scratch on every question. There's no accumulation. Ask a subtle question that requires synthesizing five documents, and the LLM has to find and piece together the relevant fragments every time. Nothing is built up. NotebookLM, ChatGPT file uploads, and most RAG systems work this way.
+이 파일은 아이디어 문서다. 사용자의 LLM 에이전트(예: OpenAI Codex, Claude Code, OpenCode / Pi 등)에 복사해 붙여 넣어 활용하도록 설계되었다. 목적은 고수준 아이디어를 전달하는 것이며, 구체적인 사항은 사용자가 에이전트와 협업해 만들어 나간다.
 
-The idea here is different. Instead of just retrieving from raw documents at query time, the LLM incrementally builds and maintains a persistent wiki — a structured, interlinked collection of markdown files that sits between you and the raw sources. When you add a new source, the LLM doesn't just index it for later retrieval. It reads it, extracts the key information, and integrates it into the existing wiki — updating entity pages, revising topic summaries, noting where new data contradicts old claims, strengthening or challenging the evolving synthesis. The knowledge is compiled once and then kept current, not re-derived on every query.
+## 핵심 아이디어
 
-This is the key difference: the wiki is a persistent, compounding artifact. The cross-references are already there. The contradictions have already been flagged. The synthesis already reflects everything you've read. The wiki keeps getting richer with every source you add and every question you ask.
+대부분의 사람이 LLM과 문서를 다루는 방식은 RAG와 같다. 파일 모음을 업로드하면 LLM이 질의 시점에 관련 청크를 검색해 답을 생성한다. 이 방식도 동작은 하지만, LLM은 매 질문마다 지식을 처음부터 다시 발굴해야 한다. 축적되는 것이 없다. 다섯 문서를 종합해야 풀리는 미묘한 질문을 하면, LLM은 매번 관련 단편을 찾아 다시 조합해야 한다. 쌓이는 것이 없다. NotebookLM, ChatGPT 파일 업로드, 그리고 대부분의 RAG 시스템이 이렇게 동작한다.
 
-You never (or rarely) write the wiki yourself — the LLM writes and maintains all of it. You're in charge of sourcing, exploration, and asking the right questions. The LLM does all the grunt work — the summarizing, cross-referencing, filing, and bookkeeping that makes a knowledge base actually useful over time. In practice, I have the LLM agent open on one side and Obsidian open on the other. The LLM makes edits based on our conversation, and I browse the results in real time — following links, checking the graph view, reading the updated pages. Obsidian is the IDE; the LLM is the programmer; the wiki is the codebase.
+여기서 제안하는 아이디어는 다르다. 질의 시점에 원문에서 단순히 검색만 하는 대신, LLM이 **지속적으로 위키를 점진적으로 구축하고 유지한다.** 위키는 사용자와 원문 사이에 자리한, 구조화되고 상호 링크된 마크다운 파일의 집합이다. 새로운 출처를 추가하면 LLM은 그것을 단순히 인덱싱만 하지 않는다. 읽고, 핵심 정보를 뽑아내, 기존 위키에 통합한다 — 엔티티 페이지를 갱신하고, 주제 요약을 다시 쓰고, 새 데이터가 기존 주장과 충돌하는 부분을 표시하며, 발전하는 종합 결과를 강화하거나 도전한다. 지식은 한 번 컴파일된 뒤 *계속 최신 상태로 유지*되며, 매 질문마다 다시 도출되지 않는다.
 
-This can apply to a lot of different contexts. A few examples:
+이것이 결정적 차이다. **위키는 지속되며 누적되는 산출물이다.** 상호 참조는 이미 걸려 있다. 충돌은 이미 표시되어 있다. 종합은 지금까지 읽은 모든 내용을 이미 반영하고 있다. 위키는 출처를 더하고 질문을 던질 때마다 더 풍부해진다.
 
-Personal: tracking your own goals, health, psychology, self-improvement — filing journal entries, articles, podcast notes, and building up a structured picture of yourself over time.
-Research: going deep on a topic over weeks or months — reading papers, articles, reports, and incrementally building a comprehensive wiki with an evolving thesis.
-Reading a book: filing each chapter as you go, building out pages for characters, themes, plot threads, and how they connect. By the end you have a rich companion wiki. Think of fan wikis like Tolkien Gateway — thousands of interlinked pages covering characters, places, events, languages, built by a community of volunteers over years. You could build something like that personally as you read, with the LLM doing all the cross-referencing and maintenance.
-Business/team: an internal wiki maintained by LLMs, fed by Slack threads, meeting transcripts, project documents, customer calls. Possibly with humans in the loop reviewing updates. The wiki stays current because the LLM does the maintenance that no one on the team wants to do.
-Competitive analysis, due diligence, trip planning, course notes, hobby deep-dives — anything where you're accumulating knowledge over time and want it organized rather than scattered.
-Architecture
-There are three layers:
+위키 본문은 거의(혹은 전혀) 사람이 쓰지 않는다 — LLM이 모두 작성하고 유지한다. 사람은 출처 수집, 탐색, 좋은 질문에 집중한다. LLM은 그 외의 잡일 — 요약, 상호 참조, 정리, 부기 — 즉 지식 베이스가 시간이 갈수록 실제로 유용해지게 하는 일을 모두 맡는다. 실제로는 한쪽에 LLM 에이전트를 띄우고 다른 한쪽에 Obsidian을 열어 둔다. LLM은 대화에 따라 편집하고, 사용자는 실시간으로 결과를 본다 — 링크를 따라가고, 그래프 뷰를 확인하고, 갱신된 페이지를 읽는다. Obsidian은 IDE, LLM은 프로그래머, 위키는 코드베이스다.
 
-Raw sources — your curated collection of source documents. Articles, papers, images, data files. These are immutable — the LLM reads from them but never modifies them. This is your source of truth.
+이 패턴은 다양한 맥락에 적용할 수 있다. 몇 가지 예시:
 
-The wiki — a directory of LLM-generated markdown files. Summaries, entity pages, concept pages, comparisons, an overview, a synthesis. The LLM owns this layer entirely. It creates pages, updates them when new sources arrive, maintains cross-references, and keeps everything consistent. You read it; the LLM writes it.
+- **개인**: 자신의 목표, 건강, 심리, 자기계발 추적 — 일기, 기사, 팟캐스트 노트를 정리하고 시간이 흐르며 자신에 대한 구조화된 그림을 쌓아 간다.
+- **연구**: 몇 주, 몇 달에 걸쳐 주제를 깊게 파고들기 — 논문, 기사, 보고서를 읽고 발전하는 가설을 담은 종합 위키를 점진적으로 구축한다.
+- **책 읽기**: 챕터를 읽을 때마다 정리하며 등장인물, 주제, 줄거리, 그리고 그것들의 연결을 다루는 페이지를 만들어 간다. 다 읽고 나면 풍부한 동반 위키가 남는다. [Tolkien Gateway](https://tolkiengateway.net/wiki/Main_Page) 같은 팬 위키 — 자원봉사자 커뮤니티가 수년에 걸쳐 만든, 인물·장소·사건·언어를 다루는 수천 개의 상호 링크된 페이지 — 를 떠올려 보라. 책을 읽으며 그런 수준의 위키를 개인적으로도 만들 수 있다. 모든 상호 참조와 유지 보수는 LLM이 처리한다.
+- **비즈니스/팀**: Slack 스레드, 회의록, 프로젝트 문서, 고객 미팅 자료를 입력으로 받아 LLM이 유지하는 사내 위키. 필요하다면 사람의 검토를 끼워 넣는다. 팀원 누구도 하기 싫어하는 유지 보수를 LLM이 처리하므로 위키는 항상 최신 상태가 유지된다.
+- **경쟁사 분석, 실사(due diligence), 여행 계획, 강의 노트, 취미 심층 탐구** — 시간이 흐르며 지식이 누적되는데 흩어두지 않고 정돈된 형태로 두고 싶은 모든 경우.
 
-The schema — a document (e.g. CLAUDE.md for Claude Code or AGENTS.md for Codex) that tells the LLM how the wiki is structured, what the conventions are, and what workflows to follow when ingesting sources, answering questions, or maintaining the wiki. This is the key configuration file — it's what makes the LLM a disciplined wiki maintainer rather than a generic chatbot. You and the LLM co-evolve this over time as you figure out what works for your domain.
+## 아키텍처
 
-Operations
-Ingest. You drop a new source into the raw collection and tell the LLM to process it. An example flow: the LLM reads the source, discusses key takeaways with you, writes a summary page in the wiki, updates the index, updates relevant entity and concept pages across the wiki, and appends an entry to the log. A single source might touch 10-15 wiki pages. Personally I prefer to ingest sources one at a time and stay involved — I read the summaries, check the updates, and guide the LLM on what to emphasize. But you could also batch-ingest many sources at once with less supervision. It's up to you to develop the workflow that fits your style and document it in the schema for future sessions.
+세 개의 계층이 있다.
 
-Query. You ask questions against the wiki. The LLM searches for relevant pages, reads them, and synthesizes an answer with citations. Answers can take different forms depending on the question — a markdown page, a comparison table, a slide deck (Marp), a chart (matplotlib), a canvas. The important insight: good answers can be filed back into the wiki as new pages. A comparison you asked for, an analysis, a connection you discovered — these are valuable and shouldn't disappear into chat history. This way your explorations compound in the knowledge base just like ingested sources do.
+**원본 출처(Raw sources)** — 사용자가 큐레이션한 원본 문서 모음. 기사, 논문, 이미지, 데이터 파일. 이 계층은 불변이다 — LLM은 읽을 뿐 수정하지 않는다. 이것이 진실의 원천(source of truth)이다.
 
-Lint. Periodically, ask the LLM to health-check the wiki. Look for: contradictions between pages, stale claims that newer sources have superseded, orphan pages with no inbound links, important concepts mentioned but lacking their own page, missing cross-references, data gaps that could be filled with a web search. The LLM is good at suggesting new questions to investigate and new sources to look for. This keeps the wiki healthy as it grows.
+**위키(The wiki)** — LLM이 생성한 마크다운 파일들의 디렉토리. 요약, 엔티티 페이지, 개념 페이지, 비교, 개요, 종합. LLM이 이 계층을 전적으로 소유한다. 페이지를 생성하고, 새 출처가 들어오면 갱신하며, 상호 참조를 유지하고, 일관성을 지킨다. 사람은 읽고, LLM이 쓴다.
 
-Indexing and logging
-Two special files help the LLM (and you) navigate the wiki as it grows. They serve different purposes:
+**스키마(The schema)** — LLM에게 위키가 어떻게 구성되어 있는지, 어떤 규약을 따르는지, 출처를 받아들이거나 질문에 답하거나 위키를 유지할 때 어떤 워크플로를 따라야 하는지 알려 주는 문서(예: Claude Code의 `CLAUDE.md`, Codex의 `AGENTS.md`). 이것이 핵심 설정 파일이다 — LLM을 일반 챗봇이 아닌 규율 있는 위키 관리자로 만드는 핵심이다. 도메인에 맞는 방식이 무엇인지 파악해 가면서 사용자와 LLM이 함께 진화시킨다.
 
-index.md is content-oriented. It's a catalog of everything in the wiki — each page listed with a link, a one-line summary, and optionally metadata like date or source count. Organized by category (entities, concepts, sources, etc.). The LLM updates it on every ingest. When answering a query, the LLM reads the index first to find relevant pages, then drills into them. This works surprisingly well at moderate scale (~100 sources, ~hundreds of pages) and avoids the need for embedding-based RAG infrastructure.
+## 운영
 
-log.md is chronological. It's an append-only record of what happened and when — ingests, queries, lint passes. A useful tip: if each entry starts with a consistent prefix (e.g. ## [2026-04-02] ingest | Article Title), the log becomes parseable with simple unix tools — grep "^## \[" log.md | tail -5 gives you the last 5 entries. The log gives you a timeline of the wiki's evolution and helps the LLM understand what's been done recently.
+**적재(Ingest).** 새 출처를 원본 컬렉션에 떨어뜨리고 LLM에게 처리를 요청한다. 예시 흐름: LLM이 출처를 읽고, 핵심 시사점을 사용자와 논의하고, 위키에 요약 페이지를 작성하고, 인덱스를 갱신하고, 관련 엔티티·개념 페이지를 위키 전반에 걸쳐 갱신한 뒤, 로그에 항목을 추가한다. 출처 하나로 10~15개 위키 페이지가 변경될 수 있다. 개인적으로는 출처를 한 번에 하나씩 적재하며 가까이서 관여하는 방식을 선호한다 — 요약을 읽고, 갱신을 확인하고, LLM에게 어디에 무게를 둘지 안내한다. 하지만 여러 출처를 한꺼번에 일괄 적재하고 감독을 줄이는 방식도 가능하다. 자신의 스타일에 맞는 워크플로를 만들어 스키마에 문서화해 두면 다음 세션에서도 이어 갈 수 있다.
 
-Optional: CLI tools
-At some point you may want to build small tools that help the LLM operate on the wiki more efficiently. A search engine over the wiki pages is the most obvious one — at small scale the index file is enough, but as the wiki grows you want proper search. qmd is a good option: it's a local search engine for markdown files with hybrid BM25/vector search and LLM re-ranking, all on-device. It has both a CLI (so the LLM can shell out to it) and an MCP server (so the LLM can use it as a native tool). You could also build something simpler yourself — the LLM can help you vibe-code a naive search script as the need arises.
+**질의(Query).** 위키를 대상으로 질문한다. LLM은 관련 페이지를 찾아 읽고, 인용을 달아 답을 종합한다. 질문에 따라 답의 형태는 달라질 수 있다 — 마크다운 페이지, 비교 표, 슬라이드 덱(Marp), 차트(matplotlib), 캔버스. 중요한 통찰은 다음이다. **좋은 답변은 새 페이지로 위키에 다시 정리해 넣을 수 있다.** 사용자가 요청한 비교, 분석, 발견한 연결 — 이런 것들은 가치가 있으므로 채팅 기록 속으로 사라지면 안 된다. 이렇게 하면 사용자의 탐색이 적재된 출처와 마찬가지로 지식 베이스에 함께 쌓인다.
 
-Tips and tricks
-Obsidian Web Clipper is a browser extension that converts web articles to markdown. Very useful for quickly getting sources into your raw collection.
-Download images locally. In Obsidian Settings → Files and links, set "Attachment folder path" to a fixed directory (e.g. raw/assets/). Then in Settings → Hotkeys, search for "Download" to find "Download attachments for current file" and bind it to a hotkey (e.g. Ctrl+Shift+D). After clipping an article, hit the hotkey and all images get downloaded to local disk. This is optional but useful — it lets the LLM view and reference images directly instead of relying on URLs that may break. Note that LLMs can't natively read markdown with inline images in one pass — the workaround is to have the LLM read the text first, then view some or all of the referenced images separately to gain additional context. It's a bit clunky but works well enough.
-Obsidian's graph view is the best way to see the shape of your wiki — what's connected to what, which pages are hubs, which are orphans.
-Marp is a markdown-based slide deck format. Obsidian has a plugin for it. Useful for generating presentations directly from wiki content.
-Dataview is an Obsidian plugin that runs queries over page frontmatter. If your LLM adds YAML frontmatter to wiki pages (tags, dates, source counts), Dataview can generate dynamic tables and lists.
-The wiki is just a git repo of markdown files. You get version history, branching, and collaboration for free.
-Why this works
-The tedious part of maintaining a knowledge base is not the reading or the thinking — it's the bookkeeping. Updating cross-references, keeping summaries current, noting when new data contradicts old claims, maintaining consistency across dozens of pages. Humans abandon wikis because the maintenance burden grows faster than the value. LLMs don't get bored, don't forget to update a cross-reference, and can touch 15 files in one pass. The wiki stays maintained because the cost of maintenance is near zero.
+**린트(Lint).** 주기적으로 LLM에게 위키 건강 점검을 시킨다. 확인할 항목: 페이지 간 모순, 새 출처에 의해 무효화된 오래된 주장, 들어오는 링크가 없는 고아 페이지, 언급은 되지만 자체 페이지가 없는 중요한 개념, 누락된 상호 참조, 웹 검색으로 메울 수 있는 데이터 공백. LLM은 새로 탐구할 질문이나 찾아볼 출처를 제안하는 데 능하다. 이 과정을 통해 위키는 성장하면서도 건강한 상태를 유지한다.
 
-The human's job is to curate sources, direct the analysis, ask good questions, and think about what it all means. The LLM's job is everything else.
+## 인덱싱과 로깅
 
-The idea is related in spirit to Vannevar Bush's Memex (1945) — a personal, curated knowledge store with associative trails between documents. Bush's vision was closer to this than to what the web became: private, actively curated, with the connections between documents as valuable as the documents themselves. The part he couldn't solve was who does the maintenance. The LLM handles that.
+위키가 성장할 때 LLM(과 사람)이 길을 찾기 쉽도록 돕는 두 개의 특수 파일이 있다. 둘은 역할이 다르다.
 
-Note
-This document is intentionally abstract. It describes the idea, not a specific implementation. The exact directory structure, the schema conventions, the page formats, the tooling — all of that will depend on your domain, your preferences, and your LLM of choice. Everything mentioned above is optional and modular — pick what's useful, ignore what isn't. For example: your sources might be text-only, so you don't need image handling at all. Your wiki might be small enough that the index file is all you need, no search engine required. You might not care about slide decks and just want markdown pages. You might want a completely different set of output formats. The right way to use this is to share it with your LLM agent and work together to instantiate a version that fits your needs. The document's only job is to communicate the pattern. Your LLM can figure out the rest.ß
+**index.md**는 내용 중심이다. 위키에 있는 모든 페이지의 카탈로그로, 각 페이지마다 링크, 한 줄 요약, 그리고 선택적으로 날짜나 출처 수 같은 메타데이터를 함께 적는다. 카테고리(엔티티, 개념, 출처 등)별로 정리한다. LLM은 적재할 때마다 이를 갱신한다. 질의에 답할 때 LLM은 먼저 인덱스를 읽어 관련 페이지를 찾은 뒤 본문으로 파고든다. 이 방식은 중간 규모(~100개 출처, ~수백 페이지)에서 의외로 잘 동작하며, 임베딩 기반 RAG 인프라 없이도 충분하다.
+
+**log.md**는 시간순이다. 무엇이 언제 일어났는지에 대한 추가 전용(append-only) 기록이다 — 적재, 질의, 린트 패스. 유용한 팁: 각 항목을 일관된 접두사로 시작하면(예: `## [2026-04-02] ingest | Article Title`) 단순 유닉스 도구로도 파싱이 가능하다 — `grep "^## \[" log.md | tail -5`로 최근 5개 항목을 볼 수 있다. 로그는 위키 진화의 타임라인을 제공하고, LLM이 최근에 무엇을 했는지 파악하는 데 도움을 준다.
+
+## 선택 사항: CLI 도구
+
+어느 시점에는 LLM이 위키를 더 효율적으로 다룰 수 있도록 작은 도구를 만들고 싶어질 수 있다. 위키 페이지에 대한 검색 엔진이 가장 분명한 예다 — 작은 규모에서는 인덱스 파일로 충분하지만, 위키가 커지면 제대로 된 검색이 필요해진다. [qmd](https://github.com/tobi/qmd)가 좋은 선택지다. 마크다운 파일에 대한 로컬 검색 엔진으로, BM25/벡터 하이브리드 검색과 LLM 재랭킹을 모두 온디바이스로 제공한다. CLI(LLM이 셸로 호출 가능)와 MCP 서버(LLM이 네이티브 도구로 사용 가능)를 모두 갖추고 있다. 더 단순한 도구를 직접 만들어도 된다 — 필요할 때 LLM과 함께 단순한 검색 스크립트를 vibe-coding으로 만들면 된다.
+
+## 팁과 트릭
+
+- **Obsidian Web Clipper**는 웹 기사를 마크다운으로 변환해 주는 브라우저 확장이다. 출처를 원본 컬렉션에 빠르게 넣기에 매우 유용하다.
+- **이미지는 로컬로 내려받기.** Obsidian 설정 → Files and links에서 "Attachment folder path"를 고정 디렉토리(예: `raw/assets/`)로 지정한다. 그다음 설정 → Hotkeys에서 "Download"로 검색해 "Download attachments for current file"을 단축키(예: Ctrl+Shift+D)에 연결한다. 기사를 클리핑한 뒤 단축키를 누르면 모든 이미지가 로컬 디스크로 내려온다. 선택 사항이지만 유용하다 — 깨질 수 있는 URL에 의존하지 않고 LLM이 이미지를 직접 보고 참조할 수 있다. 다만 LLM은 인라인 이미지가 포함된 마크다운을 한 번에 네이티브로 읽지 못한다 — 우회법은 LLM이 먼저 본문을 읽은 뒤 참조된 이미지 일부 또는 전부를 별도로 살펴 추가 맥락을 얻게 하는 것이다. 약간 투박하지만 충분히 잘 동작한다.
+- **Obsidian의 그래프 뷰**는 위키의 형태를 보기에 가장 좋은 방법이다 — 무엇이 무엇과 연결되어 있는지, 어떤 페이지가 허브이고 어떤 페이지가 고아인지 한눈에 볼 수 있다.
+- **Marp**는 마크다운 기반 슬라이드 덱 포맷이다. Obsidian에 플러그인이 있다. 위키 내용에서 곧바로 발표 자료를 만들기에 좋다.
+- **Dataview**는 페이지의 frontmatter를 대상으로 쿼리를 실행하는 Obsidian 플러그인이다. LLM이 위키 페이지에 YAML frontmatter(태그, 날짜, 출처 수 등)를 추가한다면 Dataview로 동적 표와 목록을 생성할 수 있다.
+- 위키는 그저 마크다운 파일들의 git 저장소다. 버전 관리, 브랜치, 협업이 무료로 따라온다.
+
+## 왜 이게 작동하는가
+
+지식 베이스 유지의 고된 부분은 읽기나 생각이 아니라 부기다. 상호 참조 갱신, 요약 최신화, 새 데이터가 옛 주장과 충돌할 때 표시, 수십 페이지에 걸친 일관성 유지. 사람들은 결국 위키를 포기한다 — 유지 비용이 가치보다 빠르게 커지기 때문이다. LLM은 지루해하지 않고, 상호 참조 갱신을 잊지 않으며, 한 번에 15개 파일을 건드릴 수 있다. 유지 비용이 거의 0이기 때문에 위키는 계속 유지된다.
+
+사람의 일은 출처를 큐레이션하고, 분석 방향을 잡고, 좋은 질문을 던지며, 그것이 무엇을 의미하는지 생각하는 것이다. 나머지는 모두 LLM의 일이다.
+
+이 아이디어는 정신적으로 Vannevar Bush의 Memex(1945)와 닿아 있다 — 문서들 사이의 연상 경로(associative trails)를 갖춘, 개인이 직접 큐레이션하는 지식 저장소. Bush의 비전은 오늘날의 웹보다 이쪽에 더 가까웠다. 사적이고, 능동적으로 큐레이션되며, 문서 간의 연결이 문서 자체만큼 가치 있는 형태. 그가 풀지 못한 부분은 "그 유지 보수를 누가 하느냐"였다. 그 일을 LLM이 한다.
+
+
+## 비고
+
+이 문서는 의도적으로 추상적이다. 아이디어를 설명할 뿐 특정 구현을 규정하지 않는다. 정확한 디렉토리 구조, 스키마 규약, 페이지 포맷, 도구 — 모두 사용자의 도메인, 취향, 그리고 선택한 LLM에 따라 달라진다. 위에서 언급한 모든 것은 선택적이고 모듈식이다 — 유용한 것은 가져가고, 그렇지 않은 것은 무시하면 된다. 예를 들어 출처가 텍스트뿐이라면 이미지 처리는 전혀 필요 없다. 위키가 충분히 작다면 인덱스 파일 하나로 끝나며 검색 엔진은 필요 없다. 슬라이드 덱이 필요 없고 마크다운 페이지만 원할 수도 있다. 완전히 다른 출력 형식 집합을 원할 수도 있다. 이 문서를 LLM 에이전트와 공유하고, 함께 자신의 요구에 맞는 버전을 구체화해 가는 것이 올바른 사용법이다. 이 문서의 유일한 역할은 패턴을 전달하는 것이다. 나머지는 LLM이 알아낼 수 있다.
