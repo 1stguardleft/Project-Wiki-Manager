@@ -526,3 +526,6 @@ action=merge relation=augmentation page=[[직원-관리-직원-기본정보-테�
 ## [2026-05-28 21:06] ingest | 고객 관리 - 고객 검색 - 요구사항 (2차)
 action=merge relation=duplicate page=[[고객-관리-고객-검색-요구사항-1차]]
 
+## [2026-05-28 22:22] ingest | 고객 관리 - 고객 검색 - 요구사항 (2차)
+action=merge relation=duplicate page=[[고객-관리-고객-검색-요구사항-1차]]
+

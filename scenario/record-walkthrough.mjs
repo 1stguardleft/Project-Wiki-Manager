@@ -235,20 +235,28 @@ const ensureOverlayCss = async (page) => {
   })
 }
 
-const titleCard = async (page, title, subtitle, holdMs = 4500) => {
+const titleCard = async (page, title, subtitle, holdMs = 4500, subtitleAbove = false) => {
   await ensureOverlayCss(page)
-  await page.evaluate(({ title, subtitle }) => {
+  await page.evaluate(({ title, subtitle, subtitleAbove }) => {
     document.querySelectorAll('.__walk_card').forEach((e) => e.remove())
     const el = document.createElement('div'); el.className = '__walk_card'
     const t = document.createElement('div'); t.className = 'title'; t.textContent = title
-    el.appendChild(t)
-    if (subtitle) {
-      const s = document.createElement('div'); s.className = 'subtitle'; s.textContent = subtitle
-      el.appendChild(s)
+    const s = subtitle
+      ? Object.assign(document.createElement('div'), { className: 'subtitle', textContent: subtitle })
+      : null
+    if (s && subtitleAbove) {
+      // 작은 줄을 큰 줄 위에 두는 클로징 변형 — title 기본 margin-bottom 을
+      // 끄고, 두 줄 사이 간격은 subtitle 의 margin-bottom 으로 옮긴다.
+      s.style.marginBottom = '14px'
+      t.style.marginBottom = '0'
+      el.appendChild(s); el.appendChild(t)
+    } else {
+      el.appendChild(t)
+      if (s) el.appendChild(s)
     }
     document.body.appendChild(el)
     requestAnimationFrame(() => el.classList.add('show'))
-  }, { title, subtitle: subtitle || '' })
+  }, { title, subtitle: subtitle || '', subtitleAbove })
   await page.waitForTimeout(holdMs)
   await page.evaluate(() => {
     document.querySelectorAll('.__walk_card').forEach((el) => {
@@ -504,13 +512,21 @@ async function clickNodeByLabel(page, label) {
 // 보라색 펄스 outline 을 *지속* 강조한다(다음 focusAgent 또는 clearSustain 까지).
 // 호출 직후 caption() 을 띄우면, 자막이 떠 있는 동안 어느 에이전트가 설명 대상인지
 // 시청자가 분명히 알 수 있다("자막에 맞춰 에이전트 강조" 요구사항).
+//
+// 주의: sustainHighlight 은 *클릭 + scrollIntoView 후* 에 호출한다. React Flow 가
+// 클릭 시 선택 상태(테두리/스케일) 재렌더 + 패널 갱신으로 노드를 미세하게 밀어내,
+// 클릭 전에 캡처한 좌표가 어긋났기 때문(sc-004-verify.png 회귀, 2026-05-28).
 async function focusAgent(page, label) {
   const n = page.locator('.react-flow__node', { hasText: label }).first()
   if (!(await n.count())) { log(`  agent node not found: ${label}`); return }
-  await sustainHighlight(page, n)
   await n.evaluate((el) => el.dispatchEvent(new MouseEvent('click', { bubbles: true })))
+  // 우측 상세 패널 갱신 + React Flow 선택 상태 재렌더가 모두 settle 될 시간
+  await page.waitForTimeout(420)
+  // 노드가 일부 잘려 있어도 좌표가 어긋나지 않게 화면 중앙으로 끌어옴
+  await n.evaluate((el) => el.scrollIntoView({ block: 'center', inline: 'center' })).catch(() => {})
+  await page.waitForTimeout(180)
+  await sustainHighlight(page, n)
   log(`  focused agent: ${label}`)
-  await page.waitForTimeout(420)   // 우측 상세 패널이 갱신될 짧은 시간
 }
 
 try {
@@ -531,7 +547,7 @@ try {
   await scenarioCard(page, 'SC-001',
     '단일 문서 적재 → 위키 페이지 자동 생성',
     '멀티 에이전트 파이프라인이 SDLC 단계와 도메인을 분류해 위키 페이지를 자동으로 생성합니다.')
-  await caption(page, '여기저기 흩어져 있던 개발 산출물을 한 번의 클릭으로 멀티 에이전트 파이프라인에 태웁니다.', 4200)
+  await caption(page, '분산된 개발 산출물을 한 번의 적재 요청으로 멀티 에이전트 파이프라인에 투입합니다.', 4200)
   await shot(page, 'sc-001-ingest')
 
   // 2차/01-요구사항/고객관리/고객검색/고객검색.md — 1차 이미 적재돼 있어
@@ -556,7 +572,7 @@ try {
   // (네이티브 select 의 dropdown 은 OS 가 그려서 영상에 안 잡히므로, 표시 텍스트를 직접 갈아 가며 노출)
   const policySelect = page.locator('select').first()
   await flash(page, policySelect)
-  await caption(page, '충돌 정책을 고릅니다. LLM 자동 화해, 사람 검토 보존, 신규 우선, 기존 우선 — 네 가지 정책을 문서마다 따로 정할 수 있습니다.', 0)
+  await caption(page, '충돌 정책은 문서 단위로 지정합니다. LLM 자동 병합, 수동 검토 보존, 신규 우선, 기존 우선 — 네 가지 옵션을 제공합니다.', 0)
   for (const v of ['manual', 'prefer_incoming', 'prefer_existing', 'llm_merge']) {
     await policySelect.selectOption(v)
     await page.waitForTimeout(1300)
@@ -580,7 +596,7 @@ try {
   // SC-001 에서는 워크플로우/에이전트 상세 설명은 하지 않는다 — SC-004 에서 따로 다룸.
   // 여기서는 "워크플로우를 통해 문서가 적재되는 모습" 만 짧게 보여 줌.
   await page.waitForTimeout(5000)  // 파이프라인이 몇 단계 진행돼 동작감이 느껴질 정도만
-  await caption(page, '워크플로우를 통해서 문서를 적재합니다. 각 에이전트의 역할은 시나리오 4에서 자세히 살펴봅니다.', 5000)
+  await caption(page, '문서가 파이프라인을 따라 처리됩니다. 각 에이전트의 세부 역할은 시나리오 4에서 다룹니다.', 5000)
   await shot(page, 'sc-001-pipeline')
 
   // ──────────────────────────────────────────────────────────────────────
@@ -592,13 +608,13 @@ try {
   await scenarioCard(page, 'SC-002',
     '중복·충돌 문서 적재 → LLM 자동 병합',
     '신규·기존 문서의 의미 관계를 LLM이 판정하고, 충돌 정책에 따라 한 페이지로 자동 병합합니다.')
-  await caption(page, '벡터 유사도로 같은 주제의 기존 페이지를 자동으로 찾아내, 충돌판정과 병합 노드가 파이프라인에 자동으로 끼어듭니다.', 5500)
+  await caption(page, '벡터 유사도 검색이 동일 주제의 기존 페이지를 식별하면, 파이프라인이 충돌판정·병합 단계를 자동으로 활성화합니다.', 5500)
   await clickNodeByLabel(page, '충돌판정')
   await shot(page, 'sc-002-conflict')
-  await caption(page, 'LLM이 두 문서의 의미 관계를 보강·중복·모순·구체화 중 무엇인지 판정한 다음, 본문을 한 페이지로 자동 병합합니다.', 6200)
+  await caption(page, 'LLM이 두 문서의 의미 관계를 보강·중복·모순·구체화 네 가지로 판별한 뒤, 단일 페이지로 통합합니다.', 6200)
   await clickNodeByLabel(page, '병합')
   await shot(page, 'sc-002-merge')
-  await caption(page, '병합 직후 누락검토 노드가 커버리지를 계산해, 양쪽 내용이 빠짐없이 들어갔는지 검증합니다. 부족하면 자동으로 병합 단계로 한 번 더 돌아갑니다.', 0)
+  await caption(page, '병합 직후 누락검토 단계가 양쪽 본문의 커버리지를 정량 평가하며, 임계값 미달 시 병합으로 1회 자동 재진입합니다.', 0)
   await page.waitForFunction(() => {
     const t = document.body.innerText
     return /완료/.test(t) || !!document.querySelector('a[href*="/wiki?slug"]')
@@ -619,7 +635,7 @@ try {
   await page.waitForTimeout(1500)
   const searchInput = page.locator('input[placeholder*="하이브리드 검색"]').first()
   if (!(await searchInput.count())) throw new Error('search input not found')
-  await caption(page, '하이브리드 검색입니다. BM25 키워드 매칭과 의미 벡터 검색을 RRF로 융합해, 단어와 뜻을 동시에 따져 관련 페이지를 찾아 줍니다.', 6000)
+  await caption(page, '하이브리드 검색은 BM25 키워드 매칭과 의미 벡터 검색을 RRF로 결합해, 어휘 일치와 의미 유사도를 동시에 반영합니다.', 6000)
   await flash(page, searchInput)
   await searchInput.click()
   await searchInput.fill('고객 검색')
@@ -630,7 +646,7 @@ try {
 
   const queryInput = page.locator('input[placeholder*="위키에 질문하기"]').first()
   if (await queryInput.count()) {
-    await caption(page, '이번에는 자연어로 질문해 봅니다. LLM이 관련 페이지를 추려 본문을 인용하면서, 어느 페이지에서 가져온 근거인지 wikilink로 함께 알려 줍니다.', 6500)
+    await caption(page, '자연어 질의응답은 관련 페이지 본문을 인용하며, 근거 출처를 wikilink로 함께 제시합니다.', 6500)
     await flash(page, queryInput)
     await queryInput.click()
     await queryInput.fill('고객 검색에서 지원하는 필터 조건은?')
@@ -660,42 +676,42 @@ try {
   await page.waitForTimeout(1500)
 
   // 전체 그림 — 13개 노드, LLM 배지가 붙은 8개 에이전트가 강조됨
-  await caption(page, '13개의 에이전트가 SSE로 실시간 상태를 흘려보내며 협업합니다. 이 중 LLM 배지가 붙은 8개 에이전트를 파이프라인 순서대로 펼쳐 보겠습니다.', 6500)
+  await caption(page, '13개 에이전트가 SSE 스트림으로 실시간 상태를 공유하며 협업합니다. LLM 배지가 표시된 8개 에이전트를 파이프라인 순서대로 살펴봅니다.', 6500)
   await shot(page, 'sc-004-pipeline')
 
   // ── LLM 에이전트 8종을 파이프라인 순서대로 ──
   // 각 에이전트: focusAgent (=클릭+sustain 강조) → 자막 (자막 떠 있는 동안 강조 지속) → 캡처
 
   await focusAgent(page, '정규화')
-  await caption(page, '정규화 — 본문을 마크다운으로 다듬고, SDLC 단계와 도메인·서브도메인을 LLM이 함께 분류합니다.', 5200)
+  await caption(page, '정규화 — 본문을 마크다운 구조로 정렬하고, SDLC 단계와 도메인·서브도메인을 LLM이 분류합니다.', 5200)
   await shot(page, 'sc-004-normalize')
 
   await focusAgent(page, '도메인 분해')
-  await caption(page, '도메인 분해 — 한 문서가 여러 도메인을 다루면 LLM이 도메인 단위로 잘라, 자식 run으로 병렬 분기시킵니다.', 5500)
+  await caption(page, '도메인 분해 — 복수 도메인을 포함한 문서를 LLM이 단위별로 분할해 자식 run으로 병렬 처리합니다.', 5500)
   await shot(page, 'sc-004-decompose')
 
   await focusAgent(page, '임베딩')
-  await caption(page, '임베딩 — 본문 청크를 임베딩 모델로 벡터화해 벡터 DB인 Chroma 에 저장합니다.', 4800)
+  await caption(page, '임베딩 — 본문 청크를 임베딩 모델로 벡터화해 벡터 DB(Chroma)에 적재합니다.', 4800)
   await shot(page, 'sc-004-embed')
 
   await focusAgent(page, '유사도')
-  await caption(page, '유사도 — 벡터 거리로 가까운 기존 페이지 후보를 추린 뒤, LLM이 같은 페이지인지 다른 페이지인지 다시 한 번 판정합니다.', 5800)
+  await caption(page, '유사도 — 벡터 거리 기준으로 후보 페이지를 선별한 뒤, LLM이 동일성 여부를 재판정합니다.', 5800)
   await shot(page, 'sc-004-similarity')
 
   await focusAgent(page, '충돌판정')
-  await caption(page, '충돌판정 — 신규와 기존 문서의 의미 관계를 LLM이 보강·중복·모순·구체화 네 종류로 분류합니다.', 5500)
+  await caption(page, '충돌판정 — 신규·기존 문서의 의미 관계를 LLM이 보강·중복·모순·구체화 네 가지로 판별합니다.', 5500)
   await shot(page, 'sc-004-conflict')
 
   await focusAgent(page, '병합')
-  await caption(page, '병합 — 분류된 관계와 충돌 정책에 따라 두 본문을 LLM이 한 페이지로 통합합니다.', 5000)
+  await caption(page, '병합 — 판별된 관계와 충돌 정책에 따라 LLM이 두 본문을 단일 페이지로 통합합니다.', 5000)
   await shot(page, 'sc-004-merge')
 
   await focusAgent(page, '누락검토')
-  await caption(page, '누락검토 — 병합 본문의 커버리지를 LLM이 계산해 빠진 내용이 없는지 점검하고, 부족하면 병합 단계로 자동으로 한 번 더 돌립니다.', 6300)
+  await caption(page, '누락검토 — 병합 결과의 커버리지를 LLM이 정량 평가하며, 임계값 미달 시 병합 단계로 1회 자동 재진입합니다.', 6300)
   await shot(page, 'sc-004-verify')
 
   await focusAgent(page, '상호참조')
-  await caption(page, '상호참조 — 의미적으로 연결되는 다른 페이지를 LLM이 찾아 "연관 도메인" 표와 지식 그래프 엣지를 동시에 갱신합니다.', 6300)
+  await caption(page, '상호참조 — LLM이 의미적으로 연관된 페이지를 식별해 "연관 도메인" 표와 지식 그래프 엣지를 동시에 갱신합니다.', 6300)
   await shot(page, 'sc-004-crossref')
 
   await clearSustain(page)   // 다음 시나리오로 넘어가기 전 강조 해제
@@ -711,12 +727,30 @@ try {
     '병합 전과 후를 라인 단위 diff로 비교하고, 일부 또는 전체를 되돌리거나 직접 편집합니다.')
   await page.goto(`${FRONTEND}/merges`, { waitUntil: 'domcontentloaded' })
   await page.waitForTimeout(1500)
-  await caption(page, '병합 전과 후를 side-by-side 라인 단위 diff로 비교하고, 특정 hunk 또는 전체를 되돌릴 수 있습니다. 되돌린 본문은 곧바로 재임베딩되어 검색 결과에도 즉시 반영됩니다.', 7000)
+  await caption(page, '병합 전후를 라인 단위 side-by-side diff로 비교하며, 특정 hunk 또는 전체 되돌리기를 지원합니다. 되돌린 본문은 즉시 재임베딩되어 검색 결과에 반영됩니다.', 7000)
   const firstMerge = page.locator('.list-item').first()
   if (await firstMerge.count()) { await flash(page, firstMerge); await firstMerge.click() }
   await page.waitForTimeout(2500)
-  await caption(page, '충돌이 한 건도 없는 항목은 화면이 산만해지지 않도록 표시에서 자동으로 숨깁니다.', 5000)
+  await caption(page, '충돌이 없는 항목은 가독성을 위해 목록에서 자동으로 제외됩니다.', 5000)
+
+  // ── 복구 옵션 두 가지를 차례로 강조하며 설명 ───────────────────────────
+  // 전체 되돌리기 — 헤더 우측 .btn-danger
+  const revertAllBtn = page.locator('button.btn-danger', { hasText: /전체 되돌리기/ }).first()
+  if (await revertAllBtn.count()) {
+    await sustainHighlight(page, revertAllBtn)
+    await caption(page, '전체 되돌리기 — 이번 병합 전체를 일괄 취소하고 병합 직전 본문으로 복원합니다.', 5500)
+  }
+  // 부분 되돌리기 — diff 표의 첫 hunk 옆 .hunk-revert (↩ 복원)
+  const hunkRevertBtn = page.locator('button.hunk-revert').first()
+  if (await hunkRevertBtn.count()) {
+    // 표 안쪽이라 화면 밖에 있을 수 있어 중앙으로 끌어와 좌표 신뢰도 확보
+    await hunkRevertBtn.evaluate((el) => el.scrollIntoView({ block: 'center', inline: 'center' })).catch(() => {})
+    await page.waitForTimeout(180)
+    await sustainHighlight(page, hunkRevertBtn)
+    await caption(page, '부분 되돌리기 — 변경 hunk 단위로 원하는 부분만 선택해 변경 전 내용으로 복원합니다.', 5500)
+  }
   await shot(page, 'sc-005-diff')
+  await clearSustain(page)
 
   // ──────────────────────────────────────────────────────────────────────
   // SC-006 : 지식 그래프 탐색
@@ -730,7 +764,18 @@ try {
   await page.goto(`${FRONTEND}/graph`, { waitUntil: 'domcontentloaded' })
   await page.waitForSelector('.react-flow__node', { timeout: 8000 }).catch(() => {})
   await page.waitForTimeout(1500)
-  await caption(page, '구현·검증·구체화·참조·연관·중복·대체·충돌·병합출처 등 9종 엣지 타입과 상·중·하 신뢰도를 색으로 구분합니다.', 6500)
+  // fitView 기본 배율로는 7-레인 전체를 맞추느라 칩 라벨이 너무 작아 영상에서 안 읽힘
+  // (sc-006-cross-only.png 회귀, 2026-05-28). React Flow Controls 의 zoom-in 을
+  // 두 번 눌러 칩이 또렷이 보이는 배율까지 확대한 뒤 캡션/캡처.
+  const zoomInBtn = page.locator('.react-flow__controls-zoomin').first()
+  if (await zoomInBtn.count()) {
+    for (let i = 0; i < 2; i++) {
+      await zoomInBtn.click().catch(() => {})
+      await page.waitForTimeout(220)
+    }
+  }
+  await page.waitForTimeout(400)   // zoom transform settle
+  await caption(page, '구현·검증·구체화·참조·연관·중복·대체·충돌·병합출처 9종 엣지 타입과 상·중·하 신뢰도가 색상으로 구분됩니다.', 6500)
   await shot(page, 'sc-006-graph-base')
 
   // ── 관계 한 개만 골라 evidence 팝업을 확대해서 자세히 설명한다 ──
@@ -742,7 +787,7 @@ try {
   // injectDemo() 가 edges.jsonl *끝*에 append → GraphExplorer 가 edges 배열에 같은
   // 순서로 받아 `id: \`e${i}\`` 로 매김 → React Flow 가 배열 순서대로 DOM 렌더.
   // 따라서 *마지막* .react-flow__edge 가 곧 [DEMO] 엣지.
-  await caption(page, '엣지를 하나 골라, 어떤 정보가 담겨 있는지 자세히 살펴보겠습니다.', 4000)
+  await caption(page, '엣지 하나를 선택해 담긴 정보를 상세히 확인합니다.', 4000)
   const allEdges = await page.$$('.react-flow__edge')
   const matchedEdge = allEdges.length ? allEdges[allEdges.length - 1] : null
   if (matchedEdge) {
@@ -780,12 +825,12 @@ try {
   await shot(page, 'sc-006-edge-evidence')
 
   // 다섯 단의 구조를 캡션으로 차례로 짚는다 (확대된 팝업이 화면에 계속 떠 있는 상태)
-  await caption(page, '엣지를 클릭하면 LLM이 직접 적어 둔 연결 정보가 다섯 단으로 펼쳐집니다.', 4500)
-  await caption(page, '요약 — 두 페이지가 어떤 점에서 연결되는지 한 줄로 짚어 줍니다.', 4500)
-  await caption(page, '연관 사유 — 왜 이 두 페이지를 함께 봐야 하는지 LLM이 풀어서 설명합니다.', 5000)
-  await caption(page, '근거 인용 — 양쪽 본문에서 직접 인용한 문장으로 추론의 출처를 확인할 수 있습니다.', 5500)
-  await caption(page, '공유 개념 — 두 페이지가 공통으로 다루는 개념·코드·식별자를 모아 보여 줍니다.', 5000)
-  await caption(page, '함께 볼 때 — 한쪽을 수정하거나 검토할 때 같이 봐야 할 시점을 알려 줍니다.', 5000)
+  await caption(page, '엣지를 선택하면 LLM이 작성한 연결 정보가 다섯 단계로 표시됩니다.', 4500)
+  await caption(page, '요약 — 두 페이지의 연결 지점을 한 줄로 요약합니다.', 4500)
+  await caption(page, '연관 사유 — 두 페이지를 함께 검토해야 하는 근거를 LLM이 서술합니다.', 5000)
+  await caption(page, '근거 인용 — 양쪽 본문에서 직접 인용한 문장으로 판단의 출처를 제시합니다.', 5500)
+  await caption(page, '공유 개념 — 두 페이지가 공통으로 다루는 개념·코드·식별자를 정리합니다.', 5000)
+  await caption(page, '함께 볼 때 — 한쪽을 수정·검토할 때 동시 참조가 필요한 시점을 안내합니다.', 5000)
 
   // 팝업 원상복귀 후 닫기
   await page.evaluate(() => {
@@ -802,13 +847,14 @@ try {
   await setScenarioBadge(page, null, null)   // 뱃지 해제(클로징 카드와 겹치지 않게)
   await page.goto(`${FRONTEND}/wiki`, { waitUntil: 'domcontentloaded' })
   await page.waitForTimeout(1500)
-  await caption(page, '위키는 한 번 만들고 끝이 아니라, 새 문서가 들어올 때마다 계속 자동으로 유지됩니다.', 5200)
+  await caption(page, '위키는 일회성 구축에 그치지 않고, 신규 문서 적재마다 자동으로 갱신·유지됩니다.', 5200)
   await shot(page, 'sc-closing')
   await clearCaption(page)
   await titleCard(page,
-    '한 번 만들고 끝이 아니라,',
     '계속 유지합니다.',
-    4500)
+    '한 번 만들고 끝이 아니라,',
+    4500,
+    true)   // subtitle 을 큰 줄 위에 배치 — "끝이 아니라, … 계속 유지합니다." 강조 흐름
 
   await page.waitForTimeout(800)
 } catch (e) {

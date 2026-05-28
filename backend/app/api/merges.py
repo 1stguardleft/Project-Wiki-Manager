@@ -15,7 +15,10 @@ router = APIRouter(prefix="/api")
 
 @router.get("/merges")
 def list_merges() -> dict:
-    return {"merges": merge_store.list_all()}
+    """충돌 이력만 노출 — augmentation/duplicate 같은 자동 병합은 사람이
+    검토할 거리가 없으므로 제외한다(KPI 집계는 별도로 전체 레코드를 사용)."""
+    rows = [m for m in merge_store.list_all() if m.get("relation") == "contradiction"]
+    return {"merges": rows}
 
 
 @router.get("/merges/{mid}/diff")
