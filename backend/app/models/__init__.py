@@ -11,7 +11,9 @@ class IngestRequest(BaseModel):
     url: Optional[str] = None
     filename: Optional[str] = None
     content: Optional[str] = None
-    conflict_policy: Optional[Literal["manual", "prefer_incoming", "prefer_existing"]] = None
+    conflict_policy: Optional[
+        Literal["llm_merge", "manual", "prefer_incoming", "prefer_existing"]
+    ] = None
 
 
 class IngestResponse(BaseModel):

@@ -33,12 +33,15 @@ def start_ingest(req: IngestRequest) -> IngestResponse:
 
 @router.get("/runs/{run_id}/events")
 async def run_events(run_id: str) -> StreamingResponse:
-    source = runs.claim(run_id)
-    if source is None:
-        raise HTTPException(404, "unknown or already-started run")
-
-    bus.create(run_id)
-    asyncio.create_task(graph.run(run_id, source))
+    # First connection for a pending run → claim it and launch the pipeline.
+    # Re-connection (reload / HMR / dropped stream) → bus already exists, so just
+    # re-subscribe; bus.stream replays the full history before live events.
+    if not bus.has(run_id):
+        source = runs.claim(run_id)
+        if source is None:
+            raise HTTPException(404, "unknown or already-started run")
+        bus.create(run_id)
+        asyncio.create_task(graph.run(run_id, source))
 
     async def gen():
         async for event in bus.stream(run_id):

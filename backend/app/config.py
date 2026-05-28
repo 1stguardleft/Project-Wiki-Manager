@@ -46,6 +46,14 @@ GRAPH_DIR = WIKI_DIR / "graph"
 INDEX_FILE = WIKI_DIR / "index.md"
 LOG_FILE = WIKI_DIR / "log.md"
 EDGES_FILE = GRAPH_DIR / "edges.jsonl"
+# Manifest of already-ingested source files (rel-path -> {page_slug, at}). Lives
+# under GRAPH_DIR so a full graph/data reset clears it alongside the wiki.
+INGESTED_FILE = GRAPH_DIR / "ingested.json"
+# Persisted merge records (id -> before/after/conflicts/policy/status/coverage/...).
+# Survives process restarts so the KPI page can aggregate coverage / auto-resolve
+# ratios across sessions. Cleared by /api/wiki/reset together with the other
+# graph artifacts.
+MERGES_FILE = GRAPH_DIR / "merges.json"
 CHROMA_DIR = REPO_ROOT / ".chroma"
 
 SCHEMA_DIR = Path(__file__).resolve().parent / "schema"
@@ -77,18 +85,72 @@ else:
 # When offline, LLM/embedding calls use deterministic fallbacks.
 LLM_ENABLED = LLM_PROVIDER != "offline"
 
-# How a document judged to *contradict* an existing page is resolved. The
-# global default; an ingest request may override it per source.
+# How a document judged to *contradict* an existing page is resolved. Each
+# value names a resolver in app.agents.resolvers.REGISTRY, so the active
+# behaviour is a one-line switch and adding a new one needs no pipeline edits.
+# This is the global default; an ingest request may override it per source.
+#   llm_merge       — (default) the LLM reconciles both into ONE page, keeping
+#                     the more recent/authoritative claim with a change note;
+#                     fully automatic (no human), recorded as `auto_resolved`.
 #   manual          — keep both pages, link with `conflicts_with`, leave the
 #                     merge record `pending` for a human to accept/revert.
 #   prefer_incoming — the newer doc wins: it becomes an active page, the older
 #                     one is marked `superseded` and linked via `supersedes`.
 #   prefer_existing — the existing page wins: the incoming doc is parked as a
 #                     `rejected` page, linked with `conflicts_with`.
-CONFLICT_POLICIES = ("manual", "prefer_incoming", "prefer_existing")
-CONFLICT_POLICY = os.environ.get("CONFLICT_POLICY", "manual").strip().lower()
-if CONFLICT_POLICY not in CONFLICT_POLICIES:
-    CONFLICT_POLICY = "manual"
+CONFLICT_STRATEGIES = ("llm_merge", "manual", "prefer_incoming", "prefer_existing")
+CONFLICT_STRATEGY = os.environ.get("CONFLICT_STRATEGY", "llm_merge").strip().lower()
+if CONFLICT_STRATEGY not in CONFLICT_STRATEGIES:
+    CONFLICT_STRATEGY = "llm_merge"
+
+# Auto-apply the llm_merge result unless the model's self-reported confidence is
+# below this. 0 = always auto-apply (never route to a human); raise it later to
+# turn on a confidence-gated manual review without any code change.
+try:
+    CONFLICT_AUTO_THRESHOLD = float(os.environ.get("CONFLICT_AUTO_THRESHOLD", "0"))
+except ValueError:
+    CONFLICT_AUTO_THRESHOLD = 0.0
+
+# Back-compat aliases (older callers / the health endpoint referenced these).
+CONFLICT_POLICIES = CONFLICT_STRATEGIES
+CONFLICT_POLICY = CONFLICT_STRATEGY
+
+# Offline fallback gate for `relates_to` edges: when no LLM is available the
+# crossref node can't *judge* relatedness, so it keeps a link only when the
+# nearest matching chunk is within this cosine distance (Chroma uses
+# distance = 1 - cosine_similarity, so 0 = identical, 0.6 ≈ cosine similarity
+# 0.4). When the LLM is enabled it is the gatekeeper instead and this is unused.
+try:
+    RELATES_MAX_DISTANCE = float(os.environ.get("RELATES_MAX_DISTANCE", "0.6"))
+except ValueError:
+    RELATES_MAX_DISTANCE = 0.6
+
+# Crossref Agent는 위키에 비교할 페이지가 거의 없을 때(초기 적재) LLM이 억지로
+# 관계를 만들어내는 경향이 있어 노이즈가 잘 생긴다. 위키 전체 페이지 수가 이
+# 임계값 미만이면 crossref 단계는 LLM 호출을 건너뛰고 자동 섹션을 비워둔다.
+# 이후 `POST /api/wiki/rebuild-crossref` 로 누적된 코퍼스 기준으로 일괄 재생성.
+try:
+    MIN_PAGES_FOR_CROSSREF = int(os.environ.get("MIN_PAGES_FOR_CROSSREF", "5"))
+except ValueError:
+    MIN_PAGES_FOR_CROSSREF = 5
+
+# Merge gate for the `similarity` node: a vector candidate is only offered to the
+# merge judge when its cosine distance is within this bound. Template-shaped
+# requirement/design docs share headings + vocabulary, so unrelated pages still
+# land at ~0.4; a true duplicate / same-feature version sits well below this.
+# Stricter than RELATES_MAX_DISTANCE because merging is destructive (it rewrites
+# an existing page) whereas a relates_to edge is additive.
+try:
+    SIMILARITY_MAX_DISTANCE = float(os.environ.get("SIMILARITY_MAX_DISTANCE", "0.30"))
+except ValueError:
+    SIMILARITY_MAX_DISTANCE = 0.30
+
+# Artificial per-node pause (seconds) so the live workflow view is watchable —
+# the offline pipeline otherwise finishes in milliseconds. 0 disables it.
+try:
+    STEP_DELAY_SEC = float(os.environ.get("STEP_DELAY_SEC", "1.0"))
+except ValueError:
+    STEP_DELAY_SEC = 1.0
 
 
 def ensure_dirs() -> None:

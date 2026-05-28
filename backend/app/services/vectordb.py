@@ -59,3 +59,15 @@ def query(text: str, k: int = 8, phase: str | None = None) -> list[dict]:
 
 def count() -> int:
     return _coll().count()
+
+
+def reset() -> None:
+    """Drop the whole vector collection (recreated empty on next access).
+
+    Done in-process via the Chroma client so we never rmtree a directory the
+    running server still holds open."""
+    try:
+        _coll()  # ensure the client exists
+        _client.delete_collection(_COLLECTION)
+    except Exception:  # noqa: BLE001 — collection may already be absent
+        pass

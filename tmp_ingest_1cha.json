@@ -1,0 +1,6638 @@
+[
+  {
+    "run_id": "c8e64a1ff0ad",
+    "file": "01-요구사항/고객관리/고객검색/고객검색.md",
+    "page_slug": "고객-관리-고객-검색-요구사항-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 고객 관리 - 고객 검색 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 13248,
+        "summary": "단계=requirements slug=고객-관리-고객-검색-요구사항-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 13058,
+        "summary": "단일 도메인: 고객 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 7개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1719,
+        "summary": "벡터 7개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1337,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1891,
+        "summary": "page=[[고객-관리-고객-검색-요구사항-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 1016,
+        "summary": "상호참조 0건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1010,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "e127bfad508c",
+    "file": "01-요구사항/고객관리/고객기본정보/고객기본정보.md",
+    "page_slug": "고객-관리-고객-기본정보-요구사항-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "제목: 고객 관리 - 고객 기본정보 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 13750,
+        "summary": "단계=requirements slug=고객-관리-고객-기본정보-요구사항-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 20470,
+        "summary": "단일 도메인: 고객 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1007,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1887,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1400,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2007,
+        "summary": "page=[[고객-관리-고객-기본정보-요구사항-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 1009,
+        "summary": "상호참조 0건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1011,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "ccac0498c25c",
+    "file": "01-요구사항/고객관리/고객변경이력/고객변경이력.md",
+    "page_slug": "고객-관리-고객-변경-이력-요구사항",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 고객 관리 - 고객 변경 이력 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 10517,
+        "summary": "단계=requirements slug=고객-관리-고객-변경-이력-요구사항"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 11751,
+        "summary": "단일 도메인: 고객 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 7개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 2225,
+        "summary": "벡터 7개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1434,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1004,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2137,
+        "summary": "page=[[고객-관리-고객-변경-이력-요구사항]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 1053,
+        "summary": "상호참조 0건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1008,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "6b4c8291a0b7",
+    "file": "01-요구사항/공통인프라/공통API응답/공통API응답.md",
+    "page_slug": "공통-인프라-공통-api-응답-요구사항",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 공통/인프라 - 공통 API 응답 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 17229,
+        "summary": "단계=requirements slug=공통-인프라-공통-api-응답-요구사항"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 17404,
+        "summary": "단일 도메인: 공통/인프라"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1828,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1321,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2209,
+        "summary": "page=[[공통-인프라-공통-api-응답-요구사항]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 1012,
+        "summary": "상호참조 0건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1005,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "ef436f1b49fd",
+    "file": "01-요구사항/공통인프라/전역예외처리/전역예외처리.md",
+    "page_slug": "공통-인프라-전역-예외-처리-요구사항",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 공통/인프라 - 전역 예외 처리 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 27914,
+        "summary": "단계=requirements slug=공통-인프라-전역-예외-처리-요구사항"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 17510,
+        "summary": "단일 도메인: 공통/인프라"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1755,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1428,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2119,
+        "summary": "page=[[공통-인프라-전역-예외-처리-요구사항]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 10515,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1023,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "ba05f33605f2",
+    "file": "01-요구사항/대시보드/매출집계/매출집계.md",
+    "page_slug": "대시보드-매출-집계-요구사항-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "제목: 대시보드 - 매출 집계 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 8821,
+        "summary": "단계=requirements slug=대시보드-매출-집계-요구사항-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 18714,
+        "summary": "단일 도메인: 대시보드"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 2047,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1471,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2249,
+        "summary": "page=[[대시보드-매출-집계-요구사항-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 7260,
+        "summary": "상호참조 0건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1037,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "21bcb7d19eef",
+    "file": "01-요구사항/대시보드/운영알림지표/운영알림지표.md",
+    "page_slug": "대시보드-운영-알림-지표-요구사항-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 대시보드 - 운영 알림 지표 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 16562,
+        "summary": "단계=requirements slug=대시보드-운영-알림-지표-요구사항-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 22875,
+        "summary": "단일 도메인: 대시보드"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1761,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1700,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1552,
+        "summary": "page=[[대시보드-운영-알림-지표-요구사항-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 14577,
+        "summary": "상호참조 0건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1045,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "ae8a4a3125f8",
+    "file": "01-요구사항/대시보드/집계통계/집계통계.md",
+    "page_slug": "대시보드-집계-통계-요구사항-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 대시보드 - 집계 통계 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 19392,
+        "summary": "단계=requirements slug=대시보드-집계-통계-요구사항-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 23283,
+        "summary": "단일 도메인: 대시보드"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1556,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1419,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 10032,
+        "summary": "page=[[대시보드-집계-통계-요구사항-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 20087,
+        "summary": "상호참조 0건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1041,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "0a9fee71e9bb",
+    "file": "01-요구사항/부서관리/부서기본정보/부서기본정보.md",
+    "page_slug": "부서-관리-부서-기본정보-요구사항-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 부서 관리 - 부서 기본정보 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 15741,
+        "summary": "단계=requirements slug=부서-관리-부서-기본정보-요구사항-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 19071,
+        "summary": "단일 도메인: 부서 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1953,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1455,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2257,
+        "summary": "page=[[부서-관리-부서-기본정보-요구사항-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 12289,
+        "summary": "상호참조 0건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1049,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "5af41d27e12e",
+    "file": "01-요구사항/상품관리/SKU식별/SKU식별.md",
+    "page_slug": "상품-관리-sku-식별-요구사항-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 상품 관리 - SKU 식별 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 7315,
+        "summary": "단계=requirements slug=상품-관리-sku-식별-요구사항-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 15186,
+        "summary": "단일 도메인: 상품 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1657,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1447,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2424,
+        "summary": "page=[[상품-관리-sku-식별-요구사항-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 1012,
+        "summary": "상호참조 0건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1010,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "d7832c646a21",
+    "file": "01-요구사항/상품관리/상품기본정보/상품기본정보.md",
+    "page_slug": "상품-관리-상품-기본정보-요구사항-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 상품 관리 - 상품 기본정보 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 20854,
+        "summary": "단계=requirements slug=상품-관리-상품-기본정보-요구사항-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 22928,
+        "summary": "단일 도메인: 상품 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1740,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1395,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1928,
+        "summary": "page=[[상품-관리-상품-기본정보-요구사항-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 10271,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1086,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "5f246fab83b5",
+    "file": "01-요구사항/상품관리/상품분류/상품분류.md",
+    "page_slug": "상품-관리-상품-분류-요구사항-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 상품 관리 - 상품 분류 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 16887,
+        "summary": "단계=requirements slug=상품-관리-상품-분류-요구사항-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 17548,
+        "summary": "단일 도메인: 상품 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1963,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1287,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 999,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2106,
+        "summary": "page=[[상품-관리-상품-분류-요구사항-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 12974,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1061,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "66c1288889da",
+    "file": "01-요구사항/상품관리/재고관리/재고관리.md",
+    "page_slug": "상품-관리-재고-관리-요구사항-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "제목: 상품 관리 - 재고 관리 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 17754,
+        "summary": "단계=requirements slug=상품-관리-재고-관리-요구사항-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 17941,
+        "summary": "단일 도메인: 상품 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1685,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1378,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2069,
+        "summary": "page=[[상품-관리-재고-관리-요구사항-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 13442,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1025,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "64fe09202e78",
+    "file": "01-요구사항/주문관리/금액계산/금액계산.md",
+    "page_slug": "주문-관리-금액-계산-요구사항-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "제목: 주문 관리 - 금액 계산 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 12279,
+        "summary": "단계=requirements slug=주문-관리-금액-계산-요구사항-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 14352,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1744,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1334,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1865,
+        "summary": "page=[[주문-관리-금액-계산-요구사항-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 18707,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1022,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "e6d3bbb5098b",
+    "file": "01-요구사항/주문관리/재고연동/재고연동.md",
+    "page_slug": "주문-관리-재고-연동-요구사항-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 주문 관리 - 재고 연동 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 26763,
+        "summary": "단계=requirements slug=주문-관리-재고-연동-요구사항-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 16684,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1669,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1371,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2098,
+        "summary": "page=[[주문-관리-재고-연동-요구사항-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 21107,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1041,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "74dfaf33ce68",
+    "file": "01-요구사항/주문관리/주문상태관리/주문상태관리.md",
+    "page_slug": "주문-관리-주문-상태-관리-요구사항",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 주문 관리 - 주문 상태 관리 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 18226,
+        "summary": "단계=requirements slug=주문-관리-주문-상태-관리-요구사항"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 19037,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1814,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1427,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1911,
+        "summary": "page=[[주문-관리-주문-상태-관리-요구사항]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 22413,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1057,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "a8eee1ad28b7",
+    "file": "01-요구사항/주문관리/주문조회필터/주문조회필터.md",
+    "page_slug": "주문-관리-주문-조회-필터-요구사항",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 주문 관리 - 주문 조회 필터 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 15290,
+        "summary": "단계=requirements slug=주문-관리-주문-조회-필터-요구사항"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 19017,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1540,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1397,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2356,
+        "summary": "page=[[주문-관리-주문-조회-필터-요구사항]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 20377,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1030,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "8faf7dd15e80",
+    "file": "01-요구사항/주문관리/주문처리/주문처리.md",
+    "page_slug": "주문-관리-주문-처리-요구사항-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 주문 관리 - 주문 처리 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 14911,
+        "summary": "단계=requirements slug=주문-관리-주문-처리-요구사항-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 26642,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1639,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1526,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2263,
+        "summary": "page=[[주문-관리-주문-처리-요구사항-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 22749,
+        "summary": "상호참조 4건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1013,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "f86c96fdbf94",
+    "file": "01-요구사항/직원관리/급여인사정보/급여인사정보.md",
+    "page_slug": "직원-관리-급여-인사-정보-요구사항",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 직원 관리 - 급여/인사 정보 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 16260,
+        "summary": "단계=requirements slug=직원-관리-급여-인사-정보-요구사항"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 18521,
+        "summary": "단일 도메인: 직원 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1764,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1308,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2125,
+        "summary": "page=[[직원-관리-급여-인사-정보-요구사항]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 1087,
+        "summary": "상호참조 0건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1066,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "aeba3530289e",
+    "file": "01-요구사항/직원관리/부서배치/부서배치.md",
+    "page_slug": "직원-관리-부서-배치-요구사항-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 직원 관리 - 부서 배치 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 13286,
+        "summary": "단계=requirements slug=직원-관리-부서-배치-요구사항-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 17637,
+        "summary": "단일 도메인: 직원 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 9개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1640,
+        "summary": "벡터 9개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1333,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1520,
+        "summary": "page=[[직원-관리-부서-배치-요구사항-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 15514,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1014,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "9e4068d204e2",
+    "file": "01-요구사항/직원관리/직원기본정보/직원기본정보.md",
+    "page_slug": "직원-관리-직원-기본정보-요구사항-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 직원 관리 - 직원 기본정보 - 요구사항 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 16066,
+        "summary": "단계=requirements slug=직원-관리-직원-기본정보-요구사항-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 20557,
+        "summary": "단일 도메인: 직원 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1782,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1276,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2078,
+        "summary": "page=[[직원-관리-직원-기본정보-요구사항-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 999,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 15190,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1039,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "fae7ad0fdf4f",
+    "file": "02-설계/고객관리/고객검색/고객검색.md",
+    "page_slug": "고객-관리-고객-검색-설계-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 고객 관리 - 고객 검색 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 7628,
+        "summary": "단계=design slug=고객-관리-고객-검색-설계-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 11284,
+        "summary": "단일 도메인: 고객 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 6개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1568,
+        "summary": "벡터 6개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1457,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2124,
+        "summary": "page=[[고객-관리-고객-검색-설계-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 20256,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1068,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "a3f2cee23db5",
+    "file": "02-설계/고객관리/고객기본정보/고객기본정보.md",
+    "page_slug": "고객-관리-고객-기본정보-설계-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 고객 관리 - 고객 기본정보 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 17918,
+        "summary": "단계=design slug=고객-관리-고객-기본정보-설계-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 18186,
+        "summary": "단일 도메인: 고객 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1710,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1328,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2045,
+        "summary": "page=[[고객-관리-고객-기본정보-설계-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 22185,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1068,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "f467ad5a3cd2",
+    "file": "02-설계/고객관리/고객변경이력/고객변경이력.md",
+    "page_slug": "고객-관리-고객-변경-이력-설계",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 고객 관리 - 고객 변경 이력 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 5469,
+        "summary": "단계=design slug=고객-관리-고객-변경-이력-설계"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 12687,
+        "summary": "단일 도메인: 고객 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 6개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1740,
+        "summary": "벡터 6개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1361,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2251,
+        "summary": "page=[[고객-관리-고객-변경-이력-설계]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 23304,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1057,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "0191907013e0",
+    "file": "02-설계/공통인프라/공통API응답/공통API응답.md",
+    "page_slug": "공통-인프라-공통-api-응답-설계",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "제목: 공통/인프라 - 공통 API 응답 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 10579,
+        "summary": "단계=design slug=공통-인프라-공통-api-응답-설계"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 12518,
+        "summary": "단일 도메인: 공통/인프라"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 7개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1799,
+        "summary": "벡터 7개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1355,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1541,
+        "summary": "page=[[공통-인프라-공통-api-응답-설계]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 7019,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1056,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "1979c188562c",
+    "file": "02-설계/공통인프라/전역예외처리/전역예외처리.md",
+    "page_slug": "공통-인프라-전역-예외-처리-설계",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 공통/인프라 - 전역 예외 처리 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 9139,
+        "summary": "단계=design slug=공통-인프라-전역-예외-처리-설계"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 11628,
+        "summary": "단일 도메인: 공통/인프라"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 6개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1597,
+        "summary": "벡터 6개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1401,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1535,
+        "summary": "page=[[공통-인프라-전역-예외-처리-설계]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 7794,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1016,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "1cc981cbe74a",
+    "file": "02-설계/대시보드/매출집계/매출집계.md",
+    "page_slug": "대시보드-매출-집계-설계-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 대시보드 - 매출 집계 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 12642,
+        "summary": "단계=design slug=대시보드-매출-집계-설계-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 14219,
+        "summary": "단일 도메인: 대시보드"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1836,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1426,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2160,
+        "summary": "page=[[대시보드-매출-집계-설계-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 15881,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1021,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "81aed3f96b14",
+    "file": "02-설계/대시보드/운영알림지표/운영알림지표.md",
+    "page_slug": "대시보드-운영-알림-지표-설계-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 대시보드 - 운영 알림 지표 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 10027,
+        "summary": "단계=design slug=대시보드-운영-알림-지표-설계-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 15745,
+        "summary": "단일 도메인: 대시보드"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1585,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1540,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1534,
+        "summary": "page=[[대시보드-운영-알림-지표-설계-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 21921,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1048,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "6b6f87c72468",
+    "file": "02-설계/대시보드/집계통계/집계통계.md",
+    "page_slug": "대시보드-집계-통계-설계-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "제목: 대시보드 - 집계 통계 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 19811,
+        "summary": "단계=design slug=대시보드-집계-통계-설계-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 16483,
+        "summary": "단일 도메인: 대시보드"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1998,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1309,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2216,
+        "summary": "page=[[대시보드-집계-통계-설계-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 19219,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1145,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "d24ef6f17052",
+    "file": "02-설계/부서관리/부서기본정보/부서기본정보.md",
+    "page_slug": "부서-관리-부서-기본정보-설계-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 부서 관리 - 부서 기본정보 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 21777,
+        "summary": "단계=design slug=부서-관리-부서-기본정보-설계-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 13501,
+        "summary": "단일 도메인: 부서 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1851,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1297,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1886,
+        "summary": "page=[[부서-관리-부서-기본정보-설계-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 19393,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1027,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "6a6a038916a8",
+    "file": "02-설계/상품관리/SKU식별/SKU식별.md",
+    "page_slug": "상품-관리-sku-식별-설계-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 상품 관리 - SKU 식별 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 8737,
+        "summary": "단계=design slug=상품-관리-sku-식별-설계-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 10805,
+        "summary": "단일 도메인: 상품 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 7개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1459,
+        "summary": "벡터 7개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1678,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1815,
+        "summary": "page=[[상품-관리-sku-식별-설계-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 15994,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1036,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "cd013fff4e14",
+    "file": "02-설계/상품관리/상품기본정보/상품기본정보.md",
+    "page_slug": "상품-관리-상품-기본정보-설계-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 상품 관리 - 상품 기본정보 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 15351,
+        "summary": "단계=design slug=상품-관리-상품-기본정보-설계-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 17264,
+        "summary": "단일 도메인: 상품 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 2146,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1416,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1873,
+        "summary": "page=[[상품-관리-상품-기본정보-설계-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 15688,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1097,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "bc0ccbd3885d",
+    "file": "02-설계/상품관리/상품분류/상품분류.md",
+    "page_slug": "상품-관리-상품-분류-설계-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 상품 관리 - 상품 분류 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 11096,
+        "summary": "단계=design slug=상품-관리-상품-분류-설계-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 11637,
+        "summary": "단일 도메인: 상품 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1752,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1369,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2107,
+        "summary": "page=[[상품-관리-상품-분류-설계-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 16332,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1106,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "dd48ed9490b5",
+    "file": "02-설계/상품관리/재고관리/재고관리.md",
+    "page_slug": "상품-관리-재고-관리-설계-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 상품 관리 - 재고 관리 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 9817,
+        "summary": "단계=design slug=상품-관리-재고-관리-설계-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 12778,
+        "summary": "단일 도메인: 상품 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1859,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1442,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1796,
+        "summary": "page=[[상품-관리-재고-관리-설계-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 11442,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1054,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "3029c6cb6634",
+    "file": "02-설계/주문관리/금액계산/금액계산.md",
+    "page_slug": "주문-관리-금액-계산-설계-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 주문 관리 - 금액 계산 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 7343,
+        "summary": "단계=design slug=주문-관리-금액-계산-설계-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 8405,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 7개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1784,
+        "summary": "벡터 7개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1494,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1899,
+        "summary": "page=[[주문-관리-금액-계산-설계-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 9131,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1090,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "80aea92f6be1",
+    "file": "02-설계/주문관리/재고연동/재고연동.md",
+    "page_slug": "주문-관리-재고-연동-설계-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 주문 관리 - 재고 연동 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 9232,
+        "summary": "단계=design slug=주문-관리-재고-연동-설계-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 9336,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 6개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1641,
+        "summary": "벡터 6개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1385,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2001,
+        "summary": "page=[[주문-관리-재고-연동-설계-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 11953,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1039,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "52bd29abb317",
+    "file": "02-설계/주문관리/주문상태관리/주문상태관리.md",
+    "page_slug": "주문-관리-주문-상태-관리-설계",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 주문 관리 - 주문 상태 관리 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 14700,
+        "summary": "단계=design slug=주문-관리-주문-상태-관리-설계"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 11092,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 2071,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1609,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1914,
+        "summary": "page=[[주문-관리-주문-상태-관리-설계]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 10419,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1043,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "996fae8f22a6",
+    "file": "02-설계/주문관리/주문조회필터/주문조회필터.md",
+    "page_slug": "주문-관리-주문-조회-필터-설계",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 주문 관리 - 주문 조회 필터 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 7850,
+        "summary": "단계=design slug=주문-관리-주문-조회-필터-설계"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 8346,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 7개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1780,
+        "summary": "벡터 7개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1453,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1865,
+        "summary": "page=[[주문-관리-주문-조회-필터-설계]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 999,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 16799,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1067,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "ea98ba5cc989",
+    "file": "02-설계/주문관리/주문처리/주문처리.md",
+    "page_slug": "주문-관리-주문-처리-설계-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 주문 관리 - 주문 처리 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 13069,
+        "summary": "단계=design slug=주문-관리-주문-처리-설계-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 13506,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1793,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1427,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1491,
+        "summary": "page=[[주문-관리-주문-처리-설계-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 17169,
+        "summary": "상호참조 3건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1028,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "17704549c913",
+    "file": "02-설계/직원관리/급여인사정보/급여인사정보.md",
+    "page_slug": "직원-관리-급여-인사-정보-설계",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 직원 관리 - 급여/인사 정보 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 7772,
+        "summary": "단계=design slug=직원-관리-급여-인사-정보-설계"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 7775,
+        "summary": "단일 도메인: 직원 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 7개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1772,
+        "summary": "벡터 7개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1299,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2052,
+        "summary": "page=[[직원-관리-급여-인사-정보-설계]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 9683,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1078,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "deb0740eda48",
+    "file": "02-설계/직원관리/부서배치/부서배치.md",
+    "page_slug": "직원-관리-부서-배치-설계-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 직원 관리 - 부서 배치 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 6150,
+        "summary": "단계=design slug=직원-관리-부서-배치-설계-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 7629,
+        "summary": "단일 도메인: 직원 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 7개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1785,
+        "summary": "벡터 7개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1313,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1894,
+        "summary": "page=[[직원-관리-부서-배치-설계-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 10087,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1043,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "8aeb21885dfc",
+    "file": "02-설계/직원관리/직원기본정보/직원기본정보.md",
+    "page_slug": "직원-관리-직원-기본정보-설계-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 직원 관리 - 직원 기본정보 - 설계 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 13008,
+        "summary": "단계=design slug=직원-관리-직원-기본정보-설계-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 12503,
+        "summary": "단일 도메인: 직원 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1908,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1307,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1812,
+        "summary": "page=[[직원-관리-직원-기본정보-설계-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 9132,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1119,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "48a51d6b38d6",
+    "file": "03-구현/고객관리/고객검색/고객검색.md",
+    "page_slug": "고객-관리-고객-검색-구현-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 고객 관리 - 고객 검색 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 3274,
+        "summary": "단계=implementation slug=고객-관리-고객-검색-구현-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 5429,
+        "summary": "단일 도메인: 고객 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "청크 5개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1564,
+        "summary": "벡터 5개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1299,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1947,
+        "summary": "page=[[고객-관리-고객-검색-구현-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 999,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 15462,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1097,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "65f52f0c32c8",
+    "file": "03-구현/고객관리/고객기본정보/고객기본정보.md",
+    "page_slug": "고객-관리-고객-기본정보-구현-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 고객 관리 - 고객 기본정보 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 8707,
+        "summary": "단계=implementation slug=고객-관리-고객-기본정보-구현-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 8923,
+        "summary": "단일 도메인: 고객 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1960,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1412,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2151,
+        "summary": "page=[[고객-관리-고객-기본정보-구현-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 999,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 9332,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1100,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "1018e956dad5",
+    "file": "03-구현/고객관리/고객변경이력/고객변경이력.md",
+    "page_slug": "고객-관리-고객-변경-이력-구현",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 고객 관리 - 고객 변경 이력 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 6871,
+        "summary": "단계=implementation slug=고객-관리-고객-변경-이력-구현"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 5749,
+        "summary": "단일 도메인: 고객 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 5개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1594,
+        "summary": "벡터 5개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1325,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1996,
+        "summary": "page=[[고객-관리-고객-변경-이력-구현]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 18588,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1193,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "1727494dc705",
+    "file": "03-구현/공통인프라/공통API응답/공통API응답.md",
+    "page_slug": "공통-인프라-공통-api-응답-구현",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 공통/인프라 - 공통 API 응답 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 5717,
+        "summary": "단계=implementation slug=공통-인프라-공통-api-응답-구현"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 8779,
+        "summary": "단일 도메인: 공통/인프라"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1652,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1458,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2038,
+        "summary": "page=[[공통-인프라-공통-api-응답-구현]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 9706,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1075,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "b85400d407eb",
+    "file": "03-구현/공통인프라/전역예외처리/전역예외처리.md",
+    "page_slug": "공통-인프라-전역-예외-처리-구현",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "제목: 공통/인프라 - 전역 예외 처리 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 9303,
+        "summary": "단계=implementation slug=공통-인프라-전역-예외-처리-구현"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 8321,
+        "summary": "단일 도메인: 공통/인프라"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 7개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1979,
+        "summary": "벡터 7개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1465,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1656,
+        "summary": "page=[[공통-인프라-전역-예외-처리-구현]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 10077,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1120,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "666e60cd1f8c",
+    "file": "03-구현/대시보드/매출집계/매출집계.md",
+    "page_slug": "대시보드-매출-집계-구현-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 대시보드 - 매출 집계 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 11383,
+        "summary": "단계=implementation slug=대시보드-매출-집계-구현-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 9479,
+        "summary": "단일 도메인: 대시보드"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1833,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1511,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1833,
+        "summary": "page=[[대시보드-매출-집계-구현-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 8158,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1033,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "90c1571e5e3d",
+    "file": "03-구현/대시보드/운영알림지표/운영알림지표.md",
+    "page_slug": "대시보드-운영-알림-지표-구현-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 대시보드 - 운영 알림 지표 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 6561,
+        "summary": "단계=implementation slug=대시보드-운영-알림-지표-구현-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 9590,
+        "summary": "단일 도메인: 대시보드"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 999,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 2208,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1354,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1972,
+        "summary": "page=[[대시보드-운영-알림-지표-구현-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 9521,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1035,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "84ad7deaa619",
+    "file": "03-구현/대시보드/집계통계/집계통계.md",
+    "page_slug": "대시보드-집계-통계-구현-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 대시보드 - 집계 통계 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 11524,
+        "summary": "단계=implementation slug=대시보드-집계-통계-구현-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 9776,
+        "summary": "단일 도메인: 대시보드"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1656,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1312,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1823,
+        "summary": "page=[[대시보드-집계-통계-구현-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 13473,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1137,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "fe85239a4da3",
+    "file": "03-구현/부서관리/부서기본정보/부서기본정보.md",
+    "page_slug": "부서-관리-부서-기본정보-구현-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 부서 관리 - 부서 기본정보 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 5154,
+        "summary": "단계=implementation slug=부서-관리-부서-기본정보-구현-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 7302,
+        "summary": "단일 도메인: 부서 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 999,
+        "summary": "청크 7개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1988,
+        "summary": "벡터 7개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1398,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1875,
+        "summary": "page=[[부서-관리-부서-기본정보-구현-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 11966,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1085,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "99c6cd6bb3d9",
+    "file": "03-구현/상품관리/SKU식별/SKU식별.md",
+    "page_slug": "상품-관리-sku-식별-구현-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 상품 관리 - SKU 식별 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 5962,
+        "summary": "단계=implementation slug=상품-관리-sku-식별-구현-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 7021,
+        "summary": "단일 도메인: 상품 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 2216,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1346,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2031,
+        "summary": "page=[[상품-관리-sku-식별-구현-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 10258,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1112,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "34b1ea04e177",
+    "file": "03-구현/상품관리/상품기본정보/상품기본정보.md",
+    "page_slug": "상품-관리-상품-기본정보-구현-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 상품 관리 - 상품 기본정보 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 6436,
+        "summary": "단계=implementation slug=상품-관리-상품-기본정보-구현-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 9254,
+        "summary": "단일 도메인: 상품 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1768,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1509,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1958,
+        "summary": "page=[[상품-관리-상품-기본정보-구현-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 11783,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1198,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "0bc9a4300d61",
+    "file": "03-구현/상품관리/상품분류/상품분류.md",
+    "page_slug": "상품-관리-상품-분류-구현-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 상품 관리 - 상품 분류 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 4604,
+        "summary": "단계=implementation slug=상품-관리-상품-분류-구현-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 7411,
+        "summary": "단일 도메인: 상품 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1960,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1376,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1818,
+        "summary": "page=[[상품-관리-상품-분류-구현-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 8881,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1042,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "ec69ac673a40",
+    "file": "03-구현/상품관리/재고관리/재고관리.md",
+    "page_slug": "상품-관리-재고-관리-구현-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 상품 관리 - 재고 관리 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 7471,
+        "summary": "단계=implementation slug=상품-관리-재고-관리-구현-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 8119,
+        "summary": "단일 도메인: 상품 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1651,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1331,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1840,
+        "summary": "page=[[상품-관리-재고-관리-구현-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 6930,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1032,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "a0641211573a",
+    "file": "03-구현/주문관리/금액계산/금액계산.md",
+    "page_slug": "주문-관리-금액-계산-구현-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 주문 관리 - 금액 계산 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 6918,
+        "summary": "단계=implementation slug=주문-관리-금액-계산-구현-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 6436,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "청크 7개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1748,
+        "summary": "벡터 7개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1415,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2023,
+        "summary": "page=[[주문-관리-금액-계산-구현-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 10673,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1028,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "67b2023698c8",
+    "file": "03-구현/주문관리/재고연동/재고연동.md",
+    "page_slug": "주문-관리-재고-연동-구현-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 주문 관리 - 재고 연동 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 5766,
+        "summary": "단계=implementation slug=주문-관리-재고-연동-구현-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 7087,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1869,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1386,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1682,
+        "summary": "page=[[주문-관리-재고-연동-구현-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 13113,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1151,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "a538d6aebcb5",
+    "file": "03-구현/주문관리/주문상태관리/주문상태관리.md",
+    "page_slug": "주문-관리-주문-상태-관리-구현",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 주문 관리 - 주문 상태 관리 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 7102,
+        "summary": "단계=implementation slug=주문-관리-주문-상태-관리-구현"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 7771,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1927,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1359,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1967,
+        "summary": "page=[[주문-관리-주문-상태-관리-구현]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 999,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 10740,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1027,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "c96f67186829",
+    "file": "03-구현/주문관리/주문조회필터/주문조회필터.md",
+    "page_slug": "주문-관리-주문-조회-필터-구현",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 주문 관리 - 주문 조회 필터 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 5989,
+        "summary": "단계=implementation slug=주문-관리-주문-조회-필터-구현"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 7250,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 2018,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1314,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 999,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1447,
+        "summary": "page=[[주문-관리-주문-조회-필터-구현]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 16072,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1047,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "d3db93848723",
+    "file": "03-구현/주문관리/주문처리/주문처리.md",
+    "page_slug": "주문-관리-주문-처리-구현-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 주문 관리 - 주문 처리 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 7622,
+        "summary": "단계=implementation slug=주문-관리-주문-처리-구현-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 9883,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1866,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1440,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1847,
+        "summary": "page=[[주문-관리-주문-처리-구현-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 10655,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1035,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "7a789b6ff5f0",
+    "file": "03-구현/직원관리/급여인사정보/급여인사정보.md",
+    "page_slug": "직원-관리-급여-인사-정보-구현",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 직원 관리 - 급여/인사 정보 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 4845,
+        "summary": "단계=implementation slug=직원-관리-급여-인사-정보-구현"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 5855,
+        "summary": "단일 도메인: 직원 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 7개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 3557,
+        "summary": "벡터 7개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1329,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1782,
+        "summary": "page=[[직원-관리-급여-인사-정보-구현]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 10246,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1030,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "3c339e002ea4",
+    "file": "03-구현/직원관리/부서배치/부서배치.md",
+    "page_slug": "직원-관리-부서-배치-구현-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 직원 관리 - 부서 배치 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 7706,
+        "summary": "단계=implementation slug=직원-관리-부서-배치-구현-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 6797,
+        "summary": "단일 도메인: 직원 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 7개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1963,
+        "summary": "벡터 7개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 2464,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2037,
+        "summary": "page=[[직원-관리-부서-배치-구현-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 10052,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1037,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "eba4a134bbc8",
+    "file": "03-구현/직원관리/직원기본정보/직원기본정보.md",
+    "page_slug": "직원-관리-직원-기본정보-구현-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "제목: 직원 관리 - 직원 기본정보 - 구현 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 6807,
+        "summary": "단계=implementation slug=직원-관리-직원-기본정보-구현-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 8070,
+        "summary": "단일 도메인: 직원 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "청크 8개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 2987,
+        "summary": "벡터 8개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1832,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2081,
+        "summary": "page=[[직원-관리-직원-기본정보-구현-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 11268,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1167,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "6ba6fd3721f4",
+    "file": "04-테스트/고객관리/고객검색/고객검색.md",
+    "page_slug": "고객-관리-고객-검색-테스트-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 고객 관리 - 고객 검색 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 5222,
+        "summary": "단계=test slug=고객-관리-고객-검색-테스트-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 7970,
+        "summary": "단일 도메인: 고객 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "청크 5개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1606,
+        "summary": "벡터 5개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 2792,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1803,
+        "summary": "page=[[고객-관리-고객-검색-테스트-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 13196,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1195,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "64eb12420d46",
+    "file": "04-테스트/고객관리/고객기본정보/고객기본정보.md",
+    "page_slug": "고객-관리-고객-기본정보-테스트-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 고객 관리 - 고객 기본정보 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 7930,
+        "summary": "단계=test slug=고객-관리-고객-기본정보-테스트-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 7983,
+        "summary": "단일 도메인: 고객 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1004,
+        "summary": "청크 6개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1790,
+        "summary": "벡터 6개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 2418,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 5720,
+        "summary": "page=[[고객-관리-고객-기본정보-테스트-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 4569,
+        "summary": "상호참조 0건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1039,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "4165eb778e7e",
+    "file": "04-테스트/고객관리/고객변경이력/고객변경이력.md",
+    "page_slug": "고객-관리-고객-변경-이력-테스트",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1005,
+        "summary": "제목: 고객 관리 - 고객 변경 이력 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 4047,
+        "summary": "단계=test slug=고객-관리-고객-변경-이력-테스트"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 4823,
+        "summary": "단일 도메인: 고객 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 3개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1918,
+        "summary": "벡터 3개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1343,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2515,
+        "summary": "page=[[고객-관리-고객-변경-이력-테스트]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 7358,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1173,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "294b32e72bb9",
+    "file": "04-테스트/공통인프라/공통API응답/공통API응답.md",
+    "page_slug": "공통-인프라-공통-api-응답-테스트",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 공통/인프라 - 공통 API 응답 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 6822,
+        "summary": "단계=test slug=공통-인프라-공통-api-응답-테스트"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 6971,
+        "summary": "단일 도메인: 공통/인프라"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 5개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 3158,
+        "summary": "벡터 5개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1481,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2389,
+        "summary": "page=[[공통-인프라-공통-api-응답-테스트]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 13064,
+        "summary": "상호참조 3건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1053,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "9f194df7c073",
+    "file": "04-테스트/공통인프라/전역예외처리/전역예외처리.md",
+    "page_slug": "공통-인프라-전역-예외-처리-테스트",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 공통/인프라 - 전역 예외 처리 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 6050,
+        "summary": "단계=test slug=공통-인프라-전역-예외-처리-테스트"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 6773,
+        "summary": "단일 도메인: 공통/인프라"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 5개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1728,
+        "summary": "벡터 5개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1912,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1900,
+        "summary": "page=[[공통-인프라-전역-예외-처리-테스트]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 10646,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1032,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "dff4f87349c6",
+    "file": "04-테스트/대시보드/매출집계/매출집계.md",
+    "page_slug": "대시보드-매출-집계-테스트-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 대시보드 - 매출 집계 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 8488,
+        "summary": "단계=test slug=대시보드-매출-집계-테스트-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 9150,
+        "summary": "단일 도메인: 대시보드"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 6개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1700,
+        "summary": "벡터 6개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1496,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2134,
+        "summary": "page=[[대시보드-매출-집계-테스트-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 999,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 9645,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1128,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "63db6b59a341",
+    "file": "04-테스트/대시보드/운영알림지표/운영알림지표.md",
+    "page_slug": "대시보드-운영-알림-지표-테스트-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "제목: 대시보드 - 운영 알림 지표 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 7980,
+        "summary": "단계=test slug=대시보드-운영-알림-지표-테스트-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 9029,
+        "summary": "단일 도메인: 대시보드"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 6개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1741,
+        "summary": "벡터 6개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1297,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1985,
+        "summary": "page=[[대시보드-운영-알림-지표-테스트-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 8944,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1032,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "96b49e9dc1e2",
+    "file": "04-테스트/대시보드/집계통계/집계통계.md",
+    "page_slug": "대시보드-집계-통계-테스트-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1003,
+        "summary": "제목: 대시보드 - 집계 통계 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 7766,
+        "summary": "단계=test slug=대시보드-집계-통계-테스트-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 9319,
+        "summary": "단일 도메인: 대시보드"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 6개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1621,
+        "summary": "벡터 6개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1336,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2021,
+        "summary": "page=[[대시보드-집계-통계-테스트-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 11123,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1110,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "599810903a4a",
+    "file": "04-테스트/부서관리/부서기본정보/부서기본정보.md",
+    "page_slug": "부서-관리-부서-기본정보-테스트-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 부서 관리 - 부서 기본정보 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 5125,
+        "summary": "단계=test slug=부서-관리-부서-기본정보-테스트-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 8566,
+        "summary": "단일 도메인: 부서 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 5개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1472,
+        "summary": "벡터 5개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1327,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1853,
+        "summary": "page=[[부서-관리-부서-기본정보-테스트-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 8465,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1039,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "352ca7e2e5a1",
+    "file": "04-테스트/상품관리/SKU식별/SKU식별.md",
+    "page_slug": "상품-관리-sku-식별-테스트-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 상품 관리 - SKU 식별 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 6103,
+        "summary": "단계=test slug=상품-관리-sku-식별-테스트-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 7160,
+        "summary": "단일 도메인: 상품 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 6개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1471,
+        "summary": "벡터 6개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1394,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1469,
+        "summary": "page=[[상품-관리-sku-식별-테스트-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 10154,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1034,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "6417e5bfc6a0",
+    "file": "04-테스트/상품관리/상품기본정보/상품기본정보.md",
+    "page_slug": "상품-관리-상품-기본정보-테스트-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1003,
+        "summary": "제목: 상품 관리 - 상품 기본정보 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 8919,
+        "summary": "단계=test slug=상품-관리-상품-기본정보-테스트-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 9464,
+        "summary": "단일 도메인: 상품 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 6개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 2015,
+        "summary": "벡터 6개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1481,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1692,
+        "summary": "page=[[상품-관리-상품-기본정보-테스트-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 10158,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1049,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "b9fb8b1469f2",
+    "file": "04-테스트/상품관리/상품분류/상품분류.md",
+    "page_slug": "상품-관리-상품-분류-테스트-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 상품 관리 - 상품 분류 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 5700,
+        "summary": "단계=test slug=상품-관리-상품-분류-테스트-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 8055,
+        "summary": "단일 도메인: 상품 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 6개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1443,
+        "summary": "벡터 6개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1468,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1954,
+        "summary": "page=[[상품-관리-상품-분류-테스트-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 6864,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1061,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "2bfc7a13d79f",
+    "file": "04-테스트/상품관리/재고관리/재고관리.md",
+    "page_slug": "상품-관리-재고-관리-테스트-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "제목: 상품 관리 - 재고 관리 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 6718,
+        "summary": "단계=test slug=상품-관리-재고-관리-테스트-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 7064,
+        "summary": "단일 도메인: 상품 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 6개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1821,
+        "summary": "벡터 6개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1393,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1774,
+        "summary": "page=[[상품-관리-재고-관리-테스트-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 8130,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1113,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "b80fed3cb057",
+    "file": "04-테스트/주문관리/금액계산/금액계산.md",
+    "page_slug": "주문-관리-금액-계산-테스트-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "제목: 주문 관리 - 금액 계산 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 4980,
+        "summary": "단계=test slug=주문-관리-금액-계산-테스트-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 6463,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 4개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1593,
+        "summary": "벡터 4개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1472,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2005,
+        "summary": "page=[[주문-관리-금액-계산-테스트-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 10286,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1044,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "468e2033f535",
+    "file": "04-테스트/주문관리/재고연동/재고연동.md",
+    "page_slug": "주문-관리-재고-연동-테스트-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 주문 관리 - 재고 연동 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 4241,
+        "summary": "단계=test slug=주문-관리-재고-연동-테스트-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 6510,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 4개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1628,
+        "summary": "벡터 4개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1295,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 2057,
+        "summary": "page=[[주문-관리-재고-연동-테스트-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 11901,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1052,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "9d75f32459a7",
+    "file": "04-테스트/주문관리/주문상태관리/주문상태관리.md",
+    "page_slug": "주문-관리-주문-상태-관리-테스트",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 주문 관리 - 주문 상태 관리 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 5228,
+        "summary": "단계=test slug=주문-관리-주문-상태-관리-테스트"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 7177,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 5개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1590,
+        "summary": "벡터 5개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1531,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1872,
+        "summary": "page=[[주문-관리-주문-상태-관리-테스트]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 10937,
+        "summary": "상호참조 2건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1166,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "8885fb66c46c",
+    "file": "04-테스트/주문관리/주문조회필터/주문조회필터.md",
+    "page_slug": "주문-관리-주문-조회-필터-테스트",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 주문 관리 - 주문 조회 필터 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 4601,
+        "summary": "단계=test slug=주문-관리-주문-조회-필터-테스트"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 6995,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 4개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1507,
+        "summary": "벡터 4개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1410,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1407,
+        "summary": "page=[[주문-관리-주문-조회-필터-테스트]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 7169,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1054,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "eaddd55671f9",
+    "file": "04-테스트/주문관리/주문처리/주문처리.md",
+    "page_slug": "주문-관리-주문-처리-테스트-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 주문 관리 - 주문 처리 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 6754,
+        "summary": "단계=test slug=주문-관리-주문-처리-테스트-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 8428,
+        "summary": "단일 도메인: 주문 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 6개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1725,
+        "summary": "벡터 6개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1348,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1924,
+        "summary": "page=[[주문-관리-주문-처리-테스트-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 13978,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1155,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "6124daafd835",
+    "file": "04-테스트/직원관리/급여인사정보/급여인사정보.md",
+    "page_slug": "직원-관리-급여-인사-정보-테스트",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "제목: 직원 관리 - 급여/인사 정보 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 4651,
+        "summary": "단계=test slug=직원-관리-급여-인사-정보-테스트"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 6679,
+        "summary": "단일 도메인: 직원 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "청크 4개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1923,
+        "summary": "벡터 4개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1293,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1723,
+        "summary": "page=[[직원-관리-급여-인사-정보-테스트]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 999,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 4147,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1052,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "7c09429a83ef",
+    "file": "04-테스트/직원관리/부서배치/부서배치.md",
+    "page_slug": "직원-관리-부서-배치-테스트-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "제목: 직원 관리 - 부서 배치 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 4624,
+        "summary": "단계=test slug=직원-관리-부서-배치-테스트-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 6139,
+        "summary": "단일 도메인: 직원 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 4개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1658,
+        "summary": "벡터 4개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1379,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1639,
+        "summary": "page=[[직원-관리-부서-배치-테스트-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 7431,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1038,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  },
+  {
+    "run_id": "6dd1084dc973",
+    "file": "04-테스트/직원관리/직원기본정보/직원기본정보.md",
+    "page_slug": "직원-관리-직원-기본정보-테스트-1차",
+    "merge_id": null,
+    "status": "completed",
+    "error": null,
+    "spawned_runs": [],
+    "nodes": {
+      "fetch": {
+        "status": "succeeded",
+        "duration_ms": 1002,
+        "summary": "제목: 직원 관리 - 직원 기본정보 - 테스트 (1차)"
+      },
+      "parse": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "완료"
+      },
+      "normalize": {
+        "status": "succeeded",
+        "duration_ms": 5223,
+        "summary": "단계=test slug=직원-관리-직원-기본정보-테스트-1차"
+      },
+      "decompose": {
+        "status": "succeeded",
+        "duration_ms": 7199,
+        "summary": "단일 도메인: 직원 관리"
+      },
+      "chunk": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "청크 4개"
+      },
+      "embed": {
+        "status": "succeeded",
+        "duration_ms": 1557,
+        "summary": "벡터 4개 저장"
+      },
+      "similarity": {
+        "status": "succeeded",
+        "duration_ms": 1291,
+        "summary": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)"
+      },
+      "conflict": {
+        "status": "succeeded",
+        "duration_ms": 1001,
+        "summary": "none (충돌 0건)"
+      },
+      "merge": {
+        "status": "succeeded",
+        "duration_ms": 1485,
+        "summary": "page=[[직원-관리-직원-기본정보-테스트-1차]]"
+      },
+      "verify": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "누락 0건 · 커버리지 100%"
+      },
+      "crossref": {
+        "status": "succeeded",
+        "duration_ms": 8729,
+        "summary": "상호참조 1건"
+      },
+      "index": {
+        "status": "succeeded",
+        "duration_ms": 1160,
+        "summary": "인덱스 재생성"
+      },
+      "log": {
+        "status": "succeeded",
+        "duration_ms": 1000,
+        "summary": "처리 이력 기록"
+      }
+    },
+    "similarity": "create (동일 (도메인·서브도메인·단계) 페이지 없음 — 별개 페이지로 생성)",
+    "conflict": "none (충돌 0건)",
+    "verify": "누락 0건 · 커버리지 100%"
+  }
+]

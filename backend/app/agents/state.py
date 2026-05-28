@@ -15,6 +15,12 @@ class IngestState(TypedDict, total=False):
     normalized_md: Optional[str]
     sdlc_phase: Optional[str]
     slug: Optional[str]
+    domain: Optional[str]         # business domain (고객/주문/상품 …), self-organized
+    subdomain: Optional[str]      # specific topic within the domain (고객 검색 …)
+
+    # composite-document decomposition (도메인 분해 Agent)
+    units: list                   # [{domain, subdomain, title, body, target_slug?}]
+    spawned_runs: list            # child run_ids when the doc was split by sub-domain
 
     chunks: list
     vector_ids: list
@@ -25,5 +31,9 @@ class IngestState(TypedDict, total=False):
 
     page_slug: Optional[str]
     merge_id: Optional[str]
+    # merge-coverage loop (누락검토 Agent → merge)
+    merge_audit: dict             # {mode: "reconciled"|"split"|"created", target, before, incoming, merged}
+    coverage_report: dict         # {coverage: 0..1, omissions: list[str], summary}
+    merge_retries: int
     edges: list
     errors: list

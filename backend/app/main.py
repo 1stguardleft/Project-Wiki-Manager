@@ -8,9 +8,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app import config
-from app.api import ingest, merges, sources, wiki
+from app.api import ingest, kpi, merges, sources, wiki
 from app.schema import loader
-from app.services import vectordb
+from app.services import vectordb, wiki_engine
 
 app = FastAPI(title="Project Wiki Manager", version="0.1.0")
 
@@ -24,14 +24,15 @@ app.include_router(ingest.router)
 app.include_router(sources.router)
 app.include_router(wiki.router)
 app.include_router(merges.router)
+app.include_router(kpi.router)
 
 
 @app.on_event("startup")
 def _startup() -> None:
     config.ensure_dirs()
-    # seed SDLC phase directories + entities dir so the layout is visible
-    for sub in list(loader.SDLC_PHASES.values()) + [loader.ENTITIES_DIR]:
-        (config.WIKI_DIR / sub).mkdir(parents=True, exist_ok=True)
+    # seed the numbered 단계>도메인>서브도메인 skeleton + entities dir so the layout is visible
+    wiki_engine.ensure_skeleton()
+    (config.WIKI_DIR / loader.ENTITIES_DIR).mkdir(parents=True, exist_ok=True)
 
 
 @app.get("/api/health")
@@ -40,8 +41,12 @@ def health() -> dict:
             "provider": config.LLM_PROVIDER,
             "chat_model": config.OPENAI_CHAT_MODEL,
             "embed_model": config.OPENAI_EMBED_MODEL,
-            "conflict_policy": config.CONFLICT_POLICY,
-            "conflict_policies": list(config.CONFLICT_POLICIES)}
+            "conflict_strategy": config.CONFLICT_STRATEGY,
+            "conflict_strategies": list(config.CONFLICT_STRATEGIES),
+            "conflict_auto_threshold": config.CONFLICT_AUTO_THRESHOLD,
+            # legacy keys kept for the existing frontend dropdown
+            "conflict_policy": config.CONFLICT_STRATEGY,
+            "conflict_policies": list(config.CONFLICT_STRATEGIES)}
 
 
 @app.get("/api/stats")

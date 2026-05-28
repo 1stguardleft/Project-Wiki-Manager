@@ -34,14 +34,16 @@ def _openai():
     return _client
 
 
-def chat(prompt: str, system: str = "", *, json_mode: bool = False) -> str:
+def chat(prompt: str, system: str = "", *, json_mode: bool = False,
+         temperature: float = 0.2) -> str:
     if not config.LLM_ENABLED:
         return _fallback_chat(prompt, json_mode=json_mode)
     msgs = []
     if system:
         msgs.append({"role": "system", "content": system})
     msgs.append({"role": "user", "content": prompt})
-    kwargs = {"model": config.OPENAI_CHAT_MODEL, "messages": msgs, "temperature": 0.2}
+    kwargs = {"model": config.OPENAI_CHAT_MODEL, "messages": msgs,
+              "temperature": temperature}
     if json_mode:
         kwargs["response_format"] = {"type": "json_object"}
     resp = _openai().chat.completions.create(**kwargs)

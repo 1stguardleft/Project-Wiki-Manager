@@ -4,6 +4,10 @@
 edge_types:
   references:     { symmetric: false, desc: "A references B" }
   relates_to:     { symmetric: true,  desc: "A and B are related" }
+  # SDLC cross-references chosen by the crossref agent (see nodes.CROSSREF_EDGE_TYPES)
+  implements:     { symmetric: false, desc: "A implements B (e.g. design → requirement)" }
+  verifies:       { symmetric: false, desc: "A verifies B (e.g. test → design/requirement)" }
+  refines:        { symmetric: false, desc: "A refines/elaborates B within the same phase" }
   duplicate_of:   { symmetric: true,  desc: "A is a duplicate of B" }
   merged_from:    { symmetric: false, desc: "page A was merged from source B" }
   supersedes:     { symmetric: false, desc: "A supersedes (replaces) B" }

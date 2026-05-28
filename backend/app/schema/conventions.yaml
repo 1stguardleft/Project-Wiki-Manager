@@ -1,13 +1,14 @@
 # conventions.yaml — naming, layout and SDLC phase mapping.
 
-# SDLC phase -> wiki subdirectory (Waterfall order)
+# SDLC phase -> wiki subdirectory (Waterfall order, 100단위 번호 체계).
+# 도메인/서브도메인 중첩 번호는 domain_map.yaml 참조.
 sdlc_phases:
-  requirements:   01-requirements
-  design:         02-design
-  implementation: 03-implementation
-  test:           04-test
-  deployment:     05-deployment
-  operation:      06-operation
+  requirements:   "100 요구사항"
+  design:         "200 디자인"
+  implementation: "300 개발"
+  test:           "400 테스트"
+  deployment:     "500 배포"
+  operation:      "600 운영"
 
 entities_dir: _entities
 

@@ -25,7 +25,21 @@
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('count:',len\\(d['files']\\)\\); print\\('v3:',[f for f in d['files'] if 'v3' in f['path']]\\)\")",
       "Bash(python3 -c ' *)",
       "Read(//private/tmp/**)",
-      "Bash(python3 -c \"print\\(open\\('/tmp/b2.json'\\).read\\(\\)\\)\")"
+      "Bash(python3 -c \"print\\(open\\('/tmp/b2.json'\\).read\\(\\)\\)\")",
+      "Bash(rtk git *)",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('app/api/sources.py'\\).read\\(\\)\\); print\\('sources.py OK'\\)\")",
+      "Bash(./.venv/bin/python *)",
+      "Bash(pkill -f \"uvicorn app.main:app\")",
+      "Bash(./.venv/bin/uvicorn app.main:app *)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('provider=',d['provider'],'| llm_enabled=',d['llm_enabled'],'| strategy=',d['conflict_strategy']\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(repr\\(e\\)\\) for e in d['entries'][:3]]\")",
+      "Bash(rtk proxy *)",
+      "Bash(grep -nA40 \"wf-footer\\\\|wf-status\\\\|wf-foot\")",
+      "Bash(sed -n '/def get_graph/,/return/p' backend/app/services/wiki_engine.py)",
+      "Bash(sed -n '80,120p' backend/app/config.py)",
+      "Bash(rtk ps *)",
+      "Bash(rtk wc *)",
+      "Bash(.venv/bin/uvicorn app.main:app --reload --port 8000)"
     ]
   }
 }

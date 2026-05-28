@@ -1,0 +1,40 @@
+# domain_map.yaml — numbered folder taxonomy (도메인맵.md v1.0 기준)
+# 폴더 구조: {SDLC 단계(100단위)} > {도메인(10단위)} > {서브도메인(1단위)} > slug.md
+#   번호 = 단계번호 + 도메인tens*10 + 서브도메인unit
+#   예) 100 요구사항 / 130 고객 관리 / 132 고객 검색   (요구사항100 + 고객tens3*10 + 검색unit2)
+
+# SDLC 단계 -> {번호, 라벨}  (phase key 는 코드 내부값, 폴더는 "번호 라벨")
+phases:
+  requirements:   { num: 100, label: 요구사항 }
+  design:         { num: 200, label: 디자인 }
+  implementation: { num: 300, label: 개발 }
+  test:           { num: 400, label: 테스트 }
+  deployment:     { num: 500, label: 배포 }
+  operation:      { num: 600, label: 운영 }
+
+# 도메인(등장 순서 = tens) -> 서브도메인(순서 = unit). 도메인맵.md 순서 그대로.
+domains:
+  - name: 대시보드
+    tens: 1
+    subdomains: [집계 통계, 운영 알림 지표, 매출 집계]
+  - name: 상품 관리
+    tens: 2
+    subdomains: [상품 기본정보, 상품 분류, 재고 관리, SKU 식별]
+  - name: 고객 관리
+    tens: 3
+    subdomains: [고객 기본정보, 고객 검색, 고객 변경 이력]
+  - name: 주문 관리
+    tens: 4
+    subdomains: [주문 처리, 주문 상태 관리, 주문 조회 필터, 재고 연동, 금액 계산]
+  - name: 직원 관리
+    tens: 5
+    subdomains: [직원 기본정보, 부서 배치, 급여/인사 정보]
+  - name: 부서 관리
+    tens: 6
+    subdomains: [부서 기본정보]
+  - name: 공통/인프라
+    tens: 7
+    subdomains: [공통 API 응답, 전역 예외 처리]
+
+# 카탈로그에 없는 도메인/서브도메인의 fallback 자릿수 (예: 190 기타 도메인, 139 기타 서브)
+fallback: { domain_tens: 9, subdomain_unit: 9 }

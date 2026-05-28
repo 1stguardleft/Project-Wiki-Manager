@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import MarkdownView from '../components/Markdown.jsx'
 import { api } from '../api/client.js'
 
 const POLICIES = [
+  { value: 'llm_merge', label: '자동 화해 (추천) — LLM이 모순을 해소해 한 페이지로 통합 (사람 개입 0)' },
   { value: 'manual', label: '사용자 처리 — 두 페이지 보존 후 수동 검토' },
   { value: 'prefer_incoming', label: '후반영건 자동 반영 — 신규 우선 (기존은 superseded)' },
   { value: 'prefer_existing', label: '선반영건 유지 — 기존 우선 (신규는 rejected 보관)' },
@@ -13,7 +15,7 @@ export default function IngestView() {
   const [url, setUrl] = useState('')
   const [filename, setFilename] = useState('')
   const [content, setContent] = useState('')
-  const [policy, setPolicy] = useState('manual')
+  const [policy, setPolicy] = useState('llm_merge')
   const [busy, setBusy] = useState(false)
   const [health, setHealth] = useState(null)
 
@@ -24,13 +26,21 @@ export default function IngestView() {
   const [dirs, setDirs] = useState([])
   const [files, setFiles] = useState([])
   const [selected, setSelected] = useState(() => new Set())
+  const [hideIngested, setHideIngested] = useState(false)
+  const [ingestedMap, setIngestedMap] = useState({}) // 분석됨 경로→제목 누적(폴더 이동 포함)
+  const [reConfirm, setReConfirm] = useState(null) // 재분석 확인 대기 중인 분석됨 경로 목록
+  const confirmRef = useRef(null)
   const [loadErr, setLoadErr] = useState('')
+  // file preview (browse mode)
+  const [preview, setPreview] = useState(null)
+  const [previewBusy, setPreviewBusy] = useState(false)
+  const [previewErr, setPreviewErr] = useState('')
   const nav = useNavigate()
 
   useEffect(() => {
     api.health().then((h) => {
       setHealth(h)
-      setPolicy(h.conflict_policy || 'manual')
+      setPolicy(h.conflict_policy || 'llm_merge')
     }).catch(() => {})
   }, [])
 
@@ -40,24 +50,44 @@ export default function IngestView() {
       .then((d) => {
         setRoot(d.root); setCwd(d.cwd || ''); setParent(d.parent)
         setDirs(d.dirs || []); setFiles(d.files || [])
+        // 폴더를 이동해도 분석됨 여부(+제목)를 기억(교차 폴더 선택 확인용)
+        setIngestedMap((prev) => {
+          const n = { ...prev }
+          for (const f of d.files || []) { if (f.ingested) n[f.path] = f.title; else delete n[f.path] }
+          return n
+        })
       })
       .catch((e) => setLoadErr(e.message))
   }
   useEffect(() => { if (mode === 'browse') loadFiles('') }, [mode]) // eslint-disable-line
 
-  const toggle = (path) => setSelected((s) => {
+  // 확인 패널이 떠 있을 때 선택이 바뀌면 패널을 닫아 내용과 선택을 동기화
+  useEffect(() => { if (reConfirm) confirmRef.current?.focus() }, [reConfirm])
+  const toggle = (path) => { setReConfirm(null); setSelected((s) => {
     const n = new Set(s)
     n.has(path) ? n.delete(path) : n.add(path)
     return n
-  })
-  const curPaths = files.map((f) => f.path)
+  }) }
+  const doneCount = files.filter((f) => f.ingested).length
+  const visibleFiles = hideIngested ? files.filter((f) => !f.ingested) : files
+  const curPaths = visibleFiles.map((f) => f.path)
   const allSelected = curPaths.length > 0 && curPaths.every((p) => selected.has(p))
-  const toggleAll = () => setSelected((s) => {
+  const toggleAll = () => { setReConfirm(null); setSelected((s) => {
     const n = new Set(s)
     curPaths.forEach((p) => (allSelected ? n.delete(p) : n.add(p)))
     return n
-  })
+  }) }
   const crumbs = cwd ? cwd.split('/') : []
+
+  function openPreview(path) {
+    setPreviewErr('')
+    setPreviewBusy(true)
+    setPreview({ path, loading: true })
+    api.sourceFile(path)
+      .then((d) => setPreview(d))
+      .catch((e) => { setPreview(null); setPreviewErr(e.message) })
+      .finally(() => setPreviewBusy(false))
+  }
 
   function gotoRuns(runs) {
     const ids = runs.map((r) => r.run_id)
@@ -65,8 +95,9 @@ export default function IngestView() {
     nav(`/runs/${first}${rest.length ? `?queue=${rest.join(',')}` : ''}`)
   }
 
-  async function startBrowse() {
+  async function runBatch() {
     setBusy(true)
+    setReConfirm(null)
     try {
       const paths = Array.from(selected)
       const { runs } = await api.ingestBatch(paths, policy)
@@ -75,6 +106,13 @@ export default function IngestView() {
       alert('적재 시작 실패: ' + e.message)
       setBusy(false)
     }
+  }
+
+  function startBrowse() {
+    // 이미 분석된 문서가 선택에 포함되면 재분석 전에 한 번 더 확인
+    const dupes = Array.from(selected).filter((p) => p in ingestedMap)
+    if (dupes.length) { setReConfirm(dupes); return }
+    runBatch()
   }
 
   async function startSingle() {
@@ -129,7 +167,17 @@ export default function IngestView() {
                   </span>
                 ))}
               </div>
-              <button className="secondary" onClick={() => loadFiles(cwd)}>↻ 새로고침</button>
+              <div className="row" style={{ gap: 12 }}>
+                {doneCount > 0 && (
+                  <label className="filter-toggle" title="현재 폴더에서 이미 분석한 문서를 목록에서 숨깁니다">
+                    <input type="checkbox" className="cb" checked={hideIngested}
+                      aria-label="미분석 문서만 보기" onChange={(e) => setHideIngested(e.target.checked)} />
+                    미분석만 보기
+                    <span className="muted">(분석됨 {doneCount}건)</span>
+                  </label>
+                )}
+                <button className="secondary" onClick={() => loadFiles(cwd)}>↻ 새로고침</button>
+              </div>
             </div>
             {loadErr && <p className="badge failed" style={{ display: 'inline-block', marginTop: 10 }}>{loadErr}</p>}
             {!loadErr && dirs.length === 0 && files.length === 0 && (
@@ -165,12 +213,21 @@ export default function IngestView() {
                       <td colSpan={4} className="kv">md {d.md_count}건 · {d.path}</td>
                     </tr>
                   ))}
-                  {files.map((f) => (
+                  {visibleFiles.map((f) => (
                     <tr key={f.path}
-                      className={`src-row ${selected.has(f.path) ? 'selected' : ''}`}
+                      className={`src-row ${selected.has(f.path) ? 'selected' : ''} ${preview?.path === f.path ? 'previewing' : ''}`}
                       onClick={() => toggle(f.path)}>
-                      <td><input type="checkbox" className="cb" checked={selected.has(f.path)} readOnly /></td>
-                      <td className="src-title">📄 {f.title}</td>
+                      <td><input type="checkbox" className="cb" checked={selected.has(f.path)}
+                        aria-label={`${f.title} 선택`}
+                        onChange={() => toggle(f.path)} onClick={(e) => e.stopPropagation()} /></td>
+                      <td className="src-title">
+                        📄 {f.title}
+                        {f.ingested && (
+                          <span className="badge" title="이미 분석되어 위키에 반영된 문서입니다 (다시 선택해 재적재할 수도 있습니다)">✓ 분석됨</span>
+                        )}
+                        <button className="preview-btn" title="내용 미리보기"
+                          onClick={(e) => { e.stopPropagation(); openPreview(f.path) }}>👁 미리보기</button>
+                      </td>
                       <td>{f.author || <span className="muted">—</span>}</td>
                       <td className="kv">{f.created || '—'}</td>
                       <td className="kv">{f.modified || '—'}</td>
@@ -180,8 +237,36 @@ export default function IngestView() {
                 </tbody>
               </table>
             )}
+            {hideIngested && files.length > 0 && visibleFiles.length === 0 && (
+              <p className="muted" style={{ marginTop: 10 }}>이 폴더의 문서는 모두 분석되었습니다.</p>
+            )}
             {selected.size > 0 && (
               <p className="muted" style={{ marginTop: 10 }}>선택됨: {selected.size}건 (다른 폴더 포함)</p>
+            )}
+            {previewErr && (
+              <p className="badge failed" style={{ display: 'inline-block', marginTop: 12 }}>미리보기 실패: {previewErr}</p>
+            )}
+            {preview && (
+              <div className="src-preview">
+                <div className="panel-head">
+                  <strong>📄 {preview.title || preview.path}</strong>
+                  <button className="icon-btn" title="미리보기 닫기"
+                    onClick={() => { setPreview(null); setPreviewErr('') }}>✕</button>
+                </div>
+                {previewBusy || preview.loading ? (
+                  <p className="muted" style={{ marginTop: 10 }}>불러오는 중…</p>
+                ) : (
+                  <>
+                    <p className="kv" style={{ marginTop: 8 }}>
+                      {preview.path} · {preview.lines}줄 · {(preview.size / 1024).toFixed(1)} KB
+                    </p>
+                    <MarkdownView className="md-body preview-body">{preview.content}</MarkdownView>
+                    {preview.truncated && (
+                      <p className="muted" style={{ marginTop: 8 }}>… 앞부분만 표시됩니다. 전체 내용은 적재 시 처리됩니다.</p>
+                    )}
+                  </>
+                )}
+              </div>
             )}
           </div>
         )}
@@ -210,6 +295,28 @@ export default function IngestView() {
           ))}
         </select>
 
+        {reConfirm && (
+          <div className="reingest-confirm" role="alert" ref={confirmRef} tabIndex={-1}>
+            <strong>⚠️ 이미 분석된 문서 {reConfirm.length}건이 포함되어 있습니다.</strong>
+            <p className="muted" style={{ margin: '6px 0' }}>다시 적재하면 해당 문서를 <b>재분석</b>합니다. 계속할까요?</p>
+            <ul className="reingest-list">
+              {reConfirm.slice(0, 6).map((p) => (
+                <li key={p}>
+                  <span className="badge succeeded">✓ 분석됨</span>{' '}
+                  {ingestedMap[p] || p}
+                </li>
+              ))}
+              {reConfirm.length > 6 && <li className="kv">… 외 {reConfirm.length - 6}건</li>}
+            </ul>
+            <div className="row" style={{ marginTop: 8 }}>
+              <button disabled={busy} onClick={runBatch}>
+                {busy ? '시작 중…' : '재분석 진행'}
+              </button>
+              <button className="secondary" disabled={busy} onClick={() => setReConfirm(null)}>취소</button>
+            </div>
+          </div>
+        )}
+
         <div style={{ marginTop: 16 }}>
           {mode === 'browse' ? (
             <button disabled={busy || selected.size === 0} onClick={startBrowse}>
@@ -222,11 +329,9 @@ export default function IngestView() {
           )}
         </div>
       </div>
-      <p className="muted">
-        {mode === 'browse'
-          ? '여러 건을 선택하면 순차적으로 적재되며, 각 파일의 워크플로우를 차례로 보여줍니다.'
-          : '적재를 시작하면 멀티 에이전트 워크플로우 뷰로 이동합니다.'}
-      </p>
+      {mode !== 'browse' && (
+        <p className="muted">적재를 시작하면 멀티 에이전트 워크플로우 뷰로 이동합니다.</p>
+      )}
     </div>
   )
 }
